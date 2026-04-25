@@ -17,9 +17,7 @@ Thumbs.db
 # Environment files
 .env
 
-# Spring Boot config (IMPORTANT - secrets)
-src/main/resources/application.properties
-src/main/resources/application.yml
+
 
 # Docker
 *.tar
