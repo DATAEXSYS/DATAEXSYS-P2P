@@ -1,0 +1,29 @@
+# Maven build
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Environment files
+.env
+
+# Spring Boot config (IMPORTANT - secrets)
+src/main/resources/application.properties
+src/main/resources/application.yml
+
+# Docker
+*.tar
+
+# Misc
+*.swp
+*.bak
