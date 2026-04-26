@@ -8,15 +8,38 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Network)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Network Quick Qml)
 
-include_directories(include)
+# =========================
+# INCLUDE PATHS
+# =========================
+include_directories(include src)
 
-file(GLOB SOURCES
+# =========================
+# RECURSIVE SOURCE COLLECTION
+# =========================
+
+file(GLOB_RECURSE SOURCES
     src/*.cpp
+)
+
+file(GLOB_RECURSE HEADERS
     include/*.h
 )
 
-add_executable(P2PFrontend ${SOURCES})
+# =========================
+# EXECUTABLE
+# =========================
 
-target_link_libraries(P2PFrontend Qt5::Widgets Qt5::Network)
+add_executable(P2PFrontend
+    ${SOURCES}
+    ${HEADERS}
+    qml.qrc
+)
+
+target_link_libraries(P2PFrontend
+    Qt5::Widgets
+    Qt5::Network
+    Qt5::Quick
+    Qt5::Qml
+)

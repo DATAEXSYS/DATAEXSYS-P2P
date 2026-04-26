@@ -1,5 +1,5 @@
-#ifndef NETWORKAPI_H
-#define NETWORKAPI_H
+#ifndef APICLIENT_H
+#define APICLIENT_H
 
 #include <QObject>
 #include <QNetworkAccessManager>
@@ -10,22 +10,15 @@
 
 using json = nlohmann::json;
 
-class NetworkApi : public QObject {
+class ApiClient : public QObject {
     Q_OBJECT
 
 public:
-    explicit NetworkApi(QObject *parent = nullptr);
+    explicit ApiClient(QObject *parent = nullptr);
 
-    // GET /api/networks
     void getNetworks();
-
-    // GET /api/networks/{networkId}
     void getNetwork(const QString &networkId);
-
-    // POST /api/networks
     void createNetwork(const json &network);
-
-    // PUT /api/networks/{networkId}/peers?count=
     void updatePeers(const QString &networkId, int count);
 
 signals:
@@ -41,7 +34,8 @@ private slots:
 private:
     QNetworkAccessManager *manager;
 
-    QString baseUrl = "http://localhost:8080/api/networks";
+    QString baseUrl =
+        "https://dataexsys-p2p-production.up.railway.app/api/networks";
 };
 
 #endif

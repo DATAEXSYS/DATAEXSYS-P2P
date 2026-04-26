@@ -1,16 +1,17 @@
-#include "api/NetworkApi.h"
+#include "backend/ApiClient.h"
+
 #include <QNetworkRequest>
 #include <QUrlQuery>
 
-NetworkApi::NetworkApi(QObject *parent)
+ApiClient::ApiClient(QObject *parent)
     : QObject(parent)
 {
     manager = new QNetworkAccessManager(this);
 }
 
 // ================= GET ALL NETWORKS =================
-void NetworkApi::getNetworks() {
-    QNetworkRequest request(QUrl(baseUrl));
+void ApiClient::getNetworks() {
+    QNetworkRequest request{QUrl(baseUrl)};
 
     QNetworkReply *reply = manager->get(request);
 
@@ -20,9 +21,9 @@ void NetworkApi::getNetworks() {
 }
 
 // ================= GET SINGLE NETWORK =================
-void NetworkApi::getNetwork(const QString &networkId) {
+void ApiClient::getNetwork(const QString &networkId) {
     QUrl url(baseUrl + "/" + networkId);
-    QNetworkRequest request(url);
+    QNetworkRequest request{url};
 
     QNetworkReply *reply = manager->get(request);
 
@@ -32,11 +33,13 @@ void NetworkApi::getNetwork(const QString &networkId) {
 }
 
 // ================= CREATE NETWORK =================
-void NetworkApi::createNetwork(const json &network) {
-    QNetworkRequest request(QUrl(baseUrl));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+void ApiClient::createNetwork(const json &network) {
+    QNetworkRequest request{QUrl(baseUrl)};
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      "application/json");
 
-    QByteArray body = QByteArray::fromStdString(network.dump());
+    QByteArray body =
+        QByteArray::fromStdString(network.dump());
 
     QNetworkReply *reply = manager->post(request, body);
 
@@ -46,14 +49,14 @@ void NetworkApi::createNetwork(const json &network) {
 }
 
 // ================= UPDATE PEERS =================
-void NetworkApi::updatePeers(const QString &networkId, int count) {
+void ApiClient::updatePeers(const QString &networkId, int count) {
     QUrl url(baseUrl + "/" + networkId + "/peers");
 
     QUrlQuery query;
     query.addQueryItem("count", QString::number(count));
     url.setQuery(query);
 
-    QNetworkRequest request(url);
+    QNetworkRequest request{url};
 
     QNetworkReply *reply = manager->put(request, QByteArray());
 
@@ -63,7 +66,7 @@ void NetworkApi::updatePeers(const QString &networkId, int count) {
 }
 
 // ================= COMMON RESPONSE HANDLER =================
-void NetworkApi::handleReply(QNetworkReply *reply) {
+void ApiClient::handleReply(QNetworkReply *reply) {
 
     if (reply->error() != QNetworkReply::NoError) {
         emit error(reply->errorString());
@@ -72,22 +75,27 @@ void NetworkApi::handleReply(QNetworkReply *reply) {
     }
 
     QByteArray response = reply->readAll();
+    QString url = reply->url().toString();
+
     reply->deleteLater();
 
     try {
         json data = json::parse(response.toStdString());
 
-        QString url = reply->url().toString();
+        // ================= ROUTING =================
 
-        if (url.contains("/peers")) {
+        if (url.endsWith("/peers")) {
             emit peersUpdated(data);
         }
+
         else if (url.endsWith("/networks")) {
             emit networksReceived(data);
         }
+
         else if (url.contains("/networks/")) {
             emit networkReceived(data);
         }
+
         else {
             emit networksReceived(data);
         }

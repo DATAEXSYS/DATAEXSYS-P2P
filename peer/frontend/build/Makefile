@@ -155,6 +155,30 @@ P2PFrontend_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend_autogen.dir/build.make CMakeFiles/P2PFrontend_autogen.dir/build
 .PHONY : P2PFrontend_autogen/fast
 
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.o: P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.o
+
+# target to build an object file
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o
+
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.i: P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.i
+
+# target to preprocess a source file
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i
+
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.s: P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.s
+
+# target to generate assembly for a file
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s
+.PHONY : P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s
+
 P2PFrontend_autogen/mocs_compilation.o: P2PFrontend_autogen/mocs_compilation.cpp.o
 .PHONY : P2PFrontend_autogen/mocs_compilation.o
 
@@ -178,6 +202,78 @@ P2PFrontend_autogen/mocs_compilation.s: P2PFrontend_autogen/mocs_compilation.cpp
 P2PFrontend_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.s
 .PHONY : P2PFrontend_autogen/mocs_compilation.cpp.s
+
+src/backend/ApiClient.o: src/backend/ApiClient.cpp.o
+.PHONY : src/backend/ApiClient.o
+
+# target to build an object file
+src/backend/ApiClient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o
+.PHONY : src/backend/ApiClient.cpp.o
+
+src/backend/ApiClient.i: src/backend/ApiClient.cpp.i
+.PHONY : src/backend/ApiClient.i
+
+# target to preprocess a source file
+src/backend/ApiClient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.i
+.PHONY : src/backend/ApiClient.cpp.i
+
+src/backend/ApiClient.s: src/backend/ApiClient.cpp.s
+.PHONY : src/backend/ApiClient.s
+
+# target to generate assembly for a file
+src/backend/ApiClient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.s
+.PHONY : src/backend/ApiClient.cpp.s
+
+src/backend/AppController.o: src/backend/AppController.cpp.o
+.PHONY : src/backend/AppController.o
+
+# target to build an object file
+src/backend/AppController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o
+.PHONY : src/backend/AppController.cpp.o
+
+src/backend/AppController.i: src/backend/AppController.cpp.i
+.PHONY : src/backend/AppController.i
+
+# target to preprocess a source file
+src/backend/AppController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.i
+.PHONY : src/backend/AppController.cpp.i
+
+src/backend/AppController.s: src/backend/AppController.cpp.s
+.PHONY : src/backend/AppController.s
+
+# target to generate assembly for a file
+src/backend/AppController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.s
+.PHONY : src/backend/AppController.cpp.s
+
+src/backend/NetworkService.o: src/backend/NetworkService.cpp.o
+.PHONY : src/backend/NetworkService.o
+
+# target to build an object file
+src/backend/NetworkService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o
+.PHONY : src/backend/NetworkService.cpp.o
+
+src/backend/NetworkService.i: src/backend/NetworkService.cpp.i
+.PHONY : src/backend/NetworkService.i
+
+# target to preprocess a source file
+src/backend/NetworkService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.i
+.PHONY : src/backend/NetworkService.cpp.i
+
+src/backend/NetworkService.s: src/backend/NetworkService.cpp.s
+.PHONY : src/backend/NetworkService.s
+
+# target to generate assembly for a file
+src/backend/NetworkService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s
+.PHONY : src/backend/NetworkService.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -203,29 +299,29 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/mainwindow.o: src/mainwindow.cpp.o
-.PHONY : src/mainwindow.o
+src/models/NetworkModel.o: src/models/NetworkModel.cpp.o
+.PHONY : src/models/NetworkModel.o
 
 # target to build an object file
-src/mainwindow.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o
-.PHONY : src/mainwindow.cpp.o
+src/models/NetworkModel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o
+.PHONY : src/models/NetworkModel.cpp.o
 
-src/mainwindow.i: src/mainwindow.cpp.i
-.PHONY : src/mainwindow.i
+src/models/NetworkModel.i: src/models/NetworkModel.cpp.i
+.PHONY : src/models/NetworkModel.i
 
 # target to preprocess a source file
-src/mainwindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.i
-.PHONY : src/mainwindow.cpp.i
+src/models/NetworkModel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.i
+.PHONY : src/models/NetworkModel.cpp.i
 
-src/mainwindow.s: src/mainwindow.cpp.s
-.PHONY : src/mainwindow.s
+src/models/NetworkModel.s: src/models/NetworkModel.cpp.s
+.PHONY : src/models/NetworkModel.s
 
 # target to generate assembly for a file
-src/mainwindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.s
-.PHONY : src/mainwindow.cpp.s
+src/models/NetworkModel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.s
+.PHONY : src/models/NetworkModel.cpp.s
 
 # Help Target
 help:
@@ -238,15 +334,27 @@ help:
 	@echo "... P2PFrontend_autogen"
 	@echo "... P2PFrontend_autogen_timestamp_deps"
 	@echo "... P2PFrontend"
+	@echo "... P2PFrontend_autogen/EWIEGA46WW/qrc_qml.o"
+	@echo "... P2PFrontend_autogen/EWIEGA46WW/qrc_qml.i"
+	@echo "... P2PFrontend_autogen/EWIEGA46WW/qrc_qml.s"
 	@echo "... P2PFrontend_autogen/mocs_compilation.o"
 	@echo "... P2PFrontend_autogen/mocs_compilation.i"
 	@echo "... P2PFrontend_autogen/mocs_compilation.s"
+	@echo "... src/backend/ApiClient.o"
+	@echo "... src/backend/ApiClient.i"
+	@echo "... src/backend/ApiClient.s"
+	@echo "... src/backend/AppController.o"
+	@echo "... src/backend/AppController.i"
+	@echo "... src/backend/AppController.s"
+	@echo "... src/backend/NetworkService.o"
+	@echo "... src/backend/NetworkService.i"
+	@echo "... src/backend/NetworkService.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/mainwindow.o"
-	@echo "... src/mainwindow.i"
-	@echo "... src/mainwindow.s"
+	@echo "... src/models/NetworkModel.o"
+	@echo "... src/models/NetworkModel.i"
+	@echo "... src/models/NetworkModel.s"
 .PHONY : help
 
 

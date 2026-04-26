@@ -205,7 +205,28 @@
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfig.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake",
-		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake"
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Quick/Qt5QuickConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Quick/Qt5QuickConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5QmlModels/Qt5QmlModelsConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5QmlModels/Qt5QmlModelsConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5QmlConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5QmlConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QDebugMessageServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QLocalClientConnectionFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlDebugServerFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlDebuggerServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlInspectorServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlNativeDebugConnectorFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlNativeDebugServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlPreviewServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQmlProfilerServiceFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QQuickProfilerAdapterFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5Qml_QTcpServerConnectionFactory.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5QmlConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5QmlConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml/Qt5QmlConfig.cmake",
+		"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend",
 	"DEP_FILE" : "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/deps",
@@ -213,9 +234,33 @@
 	"HEADERS" : 
 	[
 		[
-			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/mainwindow.h",
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/ApiClient.h",
 			"MU",
-			"6YEA5652QU/moc_mainwindow.cpp",
+			"NHSO4IKFBR/moc_ApiClient.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/AppController.h",
+			"MU",
+			"NHSO4IKFBR/moc_AppController.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/NetworkService.h",
+			"MU",
+			"NHSO4IKFBR/moc_NetworkService.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/models/Network.h",
+			"MU",
+			"EPPU6REHSQ/moc_Network.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/models/NetworkModel.h",
+			"MU",
+			"EPPU6REHSQ/moc_NetworkModel.cpp",
 			null
 		]
 	],
@@ -228,6 +273,9 @@
 		"QT_GUI_LIB",
 		"QT_NETWORK_LIB",
 		"QT_NO_DEBUG",
+		"QT_QMLMODELS_LIB",
+		"QT_QML_LIB",
+		"QT_QUICK_LIB",
 		"QT_WIDGETS_LIB"
 	],
 	"MOC_DEPEND_FILTERS" : 
@@ -240,12 +288,16 @@
 	"MOC_INCLUDES" : 
 	[
 		"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include",
+		"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src",
 		"/usr/include/x86_64-linux-gnu/qt5",
 		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
 		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
 		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
 		"/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
+		"/usr/include/x86_64-linux-gnu/qt5/QtQuick",
+		"/usr/include/x86_64-linux-gnu/qt5/QtQmlModels",
+		"/usr/include/x86_64-linux-gnu/qt5/QtQml",
 		"/usr/include/c++/13",
 		"/usr/include/x86_64-linux-gnu/c++/13",
 		"/usr/include/c++/13/backward",
@@ -280,12 +332,27 @@
 	"SOURCES" : 
 	[
 		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/main.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/mainwindow.cpp",
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp",
 			"MU",
 			null
 		]

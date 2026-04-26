@@ -76,10 +76,25 @@ P2PFrontend_autogen/timestamp: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
 	/usr/bin/cmake -E cmake_autogen /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/AutogenInfo.json ""
 	/usr/bin/cmake -E touch /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/timestamp
 
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml.qrc
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: CMakeFiles/P2PFrontend_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/main.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/theme/Colors.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/Sidebar.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/NetworkCard.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/StatusBadge.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Settings.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Networks.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Peers.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Home.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /usr/lib/qt5/bin/rcc
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for qml.qrc"
+	/usr/bin/cmake -E cmake_autorcc /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json 
+
 CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
 CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: P2PFrontend_autogen/mocs_compilation.cpp
 CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o -MF CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/mocs_compilation.cpp
 
 CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.i: cmake_force
@@ -90,10 +105,52 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.s: cmake_for
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/mocs_compilation.cpp -o CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.s
 
+CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
+CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp
+CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp
+
+CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp > CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.i
+
+CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp -o CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.s
+
+CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
+CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp
+CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp
+
+CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp > CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.i
+
+CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp -o CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.s
+
+CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
+CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp
+CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp
+
+CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp > CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.i
+
+CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp -o CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s
+
 CMakeFiles/P2PFrontend.dir/src/main.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
 CMakeFiles/P2PFrontend.dir/src/main.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/main.cpp
 CMakeFiles/P2PFrontend.dir/src/main.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/P2PFrontend.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/P2PFrontend.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/main.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/main.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/main.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/main.cpp
 
 CMakeFiles/P2PFrontend.dir/src/main.cpp.i: cmake_force
@@ -104,39 +161,64 @@ CMakeFiles/P2PFrontend.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/main.cpp -o CMakeFiles/P2PFrontend.dir/src/main.cpp.s
 
-CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
-CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/mainwindow.cpp
-CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/mainwindow.cpp
+CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
+CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp
+CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o -MF CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o.d -o CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp
 
-CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/mainwindow.cpp > CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.i
+CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp > CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.i
 
-CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/mainwindow.cpp -o CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.s
+CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp -o CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.s
+
+CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o: CMakeFiles/P2PFrontend.dir/flags.make
+CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o: P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp
+CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o: CMakeFiles/P2PFrontend.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o -MF CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o.d -o CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o -c /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp
+
+CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp > CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.i
+
+CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp -o CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.s
 
 # Object files for target P2PFrontend
 P2PFrontend_OBJECTS = \
 "CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o" \
+"CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o" \
+"CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o" \
+"CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o" \
 "CMakeFiles/P2PFrontend.dir/src/main.cpp.o" \
-"CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o"
+"CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o" \
+"CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o"
 
 # External object files for target P2PFrontend
 P2PFrontend_EXTERNAL_OBJECTS =
 
 P2PFrontend: CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o
+P2PFrontend: CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o
+P2PFrontend: CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o
+P2PFrontend: CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o
 P2PFrontend: CMakeFiles/P2PFrontend.dir/src/main.cpp.o
-P2PFrontend: CMakeFiles/P2PFrontend.dir/src/mainwindow.cpp.o
+P2PFrontend: CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o
+P2PFrontend: CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp.o
 P2PFrontend: CMakeFiles/P2PFrontend.dir/build.make
 P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
-P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
+P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Quick.so.5.15.13
 P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
+P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5QmlModels.so.5.15.13
+P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Qml.so.5.15.13
+P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
 P2PFrontend: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
 P2PFrontend: CMakeFiles/P2PFrontend.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable P2PFrontend"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable P2PFrontend"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/P2PFrontend.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -147,6 +229,7 @@ CMakeFiles/P2PFrontend.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/P2PFrontend.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/P2PFrontend.dir/clean
 
+CMakeFiles/P2PFrontend.dir/depend: P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp
 CMakeFiles/P2PFrontend.dir/depend: P2PFrontend_autogen/timestamp
 	cd /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/P2PFrontend.dir/depend
