@@ -1,0 +1,87 @@
+
+# =====================================================
+# GLOBAL BUILD OUTPUTS (ANY DEPTH)
+# =====================================================
+
+**/build/
+**/cmake-build-*/
+**/out/
+**/dist/
+**/target/
+
+# Object / binary files anywhere
+**/*.o
+**/*.obj
+**/*.so
+**/*.dll
+**/*.exe
+
+# =====================================================
+# QT / CMAKE GENERATED FILES (ANY DEPTH)
+# =====================================================
+
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/Makefile
+**/compile_commands.json
+
+# Qt MOC / UIC generated files anywhere
+**/moc_*
+**/ui_*
+**/qrc_*
+
+# Qt Creator / user files
+**/*.user
+**/*.pro.user
+**/*.qmlproject.user
+
+# =====================================================
+# SPRING BOOT (BOOTSTRAPPER MODULE)
+# =====================================================
+
+Bootstrapper/**/target/
+Bootstrapper/**/logs/
+**/*.class
+
+# Maven wrapper junk
+.mvn/
+Bootstrapper/.mvn/
+
+# =====================================================
+# IDEs (ANY DEPTH)
+# =====================================================
+
+**/.vscode/
+**/.idea/
+**/*.iml
+
+# =====================================================
+# SYSTEM FILES
+# =====================================================
+
+**/.DS_Store
+**/Thumbs.db
+
+# =====================================================
+# LOGS / TEMP
+# =====================================================
+
+**/*.log
+**/*.tmp
+**/*.swp
+**/*.swo
+
+# =====================================================
+# NODE (future-proofing)
+# =====================================================
+
+**/node_modules/
+**/npm-debug.log*
+
+# =====================================================
+# QT BUILDS IN YOUR PROJECT STRUCTURE
+# =====================================================
+
+peer/frontend/build/
+
