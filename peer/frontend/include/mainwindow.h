@@ -2,16 +2,19 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QNetworkAccessManager>
+
+#include "ui/components/NetworkPanel.h"
+#include "service/NetworkService.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
 
 private:
-    QNetworkAccessManager *manager;
+    NetworkPanel *panel;
+    NetworkService *service;
 };
 
 #endif
