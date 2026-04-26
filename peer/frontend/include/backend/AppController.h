@@ -2,7 +2,6 @@
 #define APPCONTROLLER_H
 
 #include <QObject>
-#include <QTimer>
 #include "backend/NetworkService.h"
 #include "models/NetworkModel.h"
 
@@ -28,13 +27,13 @@ signals:
     void errorOccurred(const QString &message);
 
 private slots:
-    void onNetworksReceived(const std::vector<Network> &networks);
+    void onNetworksChanged(const std::vector<Network> &networks);
+    void onConnectionStatusChanged(bool connected);
     void onError(const QString &message);
 
 private:
     NetworkService *m_networkService;
     NetworkModel *m_networkModel;
-    QTimer *m_refreshTimer;
     bool m_isOnline = false;
     int m_totalPeers = 0;
 };

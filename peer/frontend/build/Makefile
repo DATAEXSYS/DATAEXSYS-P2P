@@ -251,6 +251,30 @@ src/backend/AppController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.s
 .PHONY : src/backend/AppController.cpp.s
 
+src/backend/DiffEngine.o: src/backend/DiffEngine.cpp.o
+.PHONY : src/backend/DiffEngine.o
+
+# target to build an object file
+src/backend/DiffEngine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.o
+.PHONY : src/backend/DiffEngine.cpp.o
+
+src/backend/DiffEngine.i: src/backend/DiffEngine.cpp.i
+.PHONY : src/backend/DiffEngine.i
+
+# target to preprocess a source file
+src/backend/DiffEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.i
+.PHONY : src/backend/DiffEngine.cpp.i
+
+src/backend/DiffEngine.s: src/backend/DiffEngine.cpp.s
+.PHONY : src/backend/DiffEngine.s
+
+# target to generate assembly for a file
+src/backend/DiffEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.s
+.PHONY : src/backend/DiffEngine.cpp.s
+
 src/backend/NetworkService.o: src/backend/NetworkService.cpp.o
 .PHONY : src/backend/NetworkService.o
 
@@ -274,6 +298,54 @@ src/backend/NetworkService.s: src/backend/NetworkService.cpp.s
 src/backend/NetworkService.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s
 .PHONY : src/backend/NetworkService.cpp.s
+
+src/backend/PollingManager.o: src/backend/PollingManager.cpp.o
+.PHONY : src/backend/PollingManager.o
+
+# target to build an object file
+src/backend/PollingManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.o
+.PHONY : src/backend/PollingManager.cpp.o
+
+src/backend/PollingManager.i: src/backend/PollingManager.cpp.i
+.PHONY : src/backend/PollingManager.i
+
+# target to preprocess a source file
+src/backend/PollingManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.i
+.PHONY : src/backend/PollingManager.cpp.i
+
+src/backend/PollingManager.s: src/backend/PollingManager.cpp.s
+.PHONY : src/backend/PollingManager.s
+
+# target to generate assembly for a file
+src/backend/PollingManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.s
+.PHONY : src/backend/PollingManager.cpp.s
+
+src/backend/StateStore.o: src/backend/StateStore.cpp.o
+.PHONY : src/backend/StateStore.o
+
+# target to build an object file
+src/backend/StateStore.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.o
+.PHONY : src/backend/StateStore.cpp.o
+
+src/backend/StateStore.i: src/backend/StateStore.cpp.i
+.PHONY : src/backend/StateStore.i
+
+# target to preprocess a source file
+src/backend/StateStore.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.i
+.PHONY : src/backend/StateStore.cpp.i
+
+src/backend/StateStore.s: src/backend/StateStore.cpp.s
+.PHONY : src/backend/StateStore.s
+
+# target to generate assembly for a file
+src/backend/StateStore.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.s
+.PHONY : src/backend/StateStore.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -346,9 +418,18 @@ help:
 	@echo "... src/backend/AppController.o"
 	@echo "... src/backend/AppController.i"
 	@echo "... src/backend/AppController.s"
+	@echo "... src/backend/DiffEngine.o"
+	@echo "... src/backend/DiffEngine.i"
+	@echo "... src/backend/DiffEngine.s"
 	@echo "... src/backend/NetworkService.o"
 	@echo "... src/backend/NetworkService.i"
 	@echo "... src/backend/NetworkService.s"
+	@echo "... src/backend/PollingManager.o"
+	@echo "... src/backend/PollingManager.i"
+	@echo "... src/backend/PollingManager.s"
+	@echo "... src/backend/StateStore.o"
+	@echo "... src/backend/StateStore.i"
+	@echo "... src/backend/StateStore.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

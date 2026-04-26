@@ -2,19 +2,35 @@
 #include <QDebug>
 
 NetworkService::NetworkService(QObject *parent) : QObject(parent) {
-    apiClient = new ApiClient(this);
+    m_apiClient = new ApiClient(this);
+    m_store = new StateStore(this);
+    m_diffEngine = new DiffEngine(m_store, this);
+    m_pollingManager = new PollingManager(this);
 
-    connect(apiClient, &ApiClient::networksReceived, this, &NetworkService::onNetworksReceived);
-    connect(apiClient, &ApiClient::networkReceived, this, &NetworkService::onNetworkReceived);
-    connect(apiClient, &ApiClient::peersUpdated, this, &NetworkService::onPeersUpdated);
-    connect(apiClient, &ApiClient::error, this, &NetworkService::onError);
+    // --- PIPELINE CONNECTIONS ---
+
+    // 1. Polling -> API Fetch
+    connect(m_pollingManager, &PollingManager::tick, this, &NetworkService::performPoll);
+
+    // 2. API Response -> Diff Engine
+    connect(m_apiClient, &ApiClient::networksReceived, this, &NetworkService::onNetworksReceived);
+    
+    // 3. Diff Engine -> Polling Manager (Adaptive)
+    connect(m_diffEngine, &DiffEngine::changeDetected, m_pollingManager, &PollingManager::onActivityDetected);
+    connect(m_diffEngine, &DiffEngine::noChangeDetected, m_pollingManager, &PollingManager::onNoActivityDetected);
+
+    // 4. API Error -> Pipeline
+    connect(m_apiClient, &ApiClient::error, this, &NetworkService::onError);
+
+    m_pollingManager->start();
+    performPoll(); // Initial poll
 }
 
-void NetworkService::fetchNetworks() {
-    apiClient->getNetworks();
+void NetworkService::performPoll() {
+    m_apiClient->getNetworks();
 }
 
-void NetworkService::addNetwork(const Network &network) {
+void NetworkService::createNetwork(const Network &network) {
     json j;
     j["name"] = network.name.toStdString();
     j["type"] = network.type.toStdString();
@@ -22,32 +38,26 @@ void NetworkService::addNetwork(const Network &network) {
     j["bootstrapUrl"] = network.bootstrapUrl.toStdString();
     j["networkId"] = network.networkId.toStdString();
     
-    apiClient->createNetwork(j);
+    m_apiClient->createNetwork(j);
 }
 
 void NetworkService::updatePeerCount(const QString &networkId, int count) {
-    apiClient->updatePeers(networkId, count);
+    m_apiClient->updatePeers(networkId, count);
 }
 
 void NetworkService::onNetworksReceived(json data) {
+    m_store->setConnected(true);
     std::vector<Network> networks;
     if (data.is_array()) {
         for (const auto &item : data) {
             networks.push_back(parseNetwork(item));
         }
     }
-    emit networksLoaded(networks);
-}
-
-void NetworkService::onNetworkReceived(json data) {
-    emit networkUpdated(parseNetwork(data));
-}
-
-void NetworkService::onPeersUpdated(json data) {
-    emit networkUpdated(parseNetwork(data));
+    m_diffEngine->processNetworks(networks);
 }
 
 void NetworkService::onError(QString message) {
+    m_store->setConnected(false);
     emit errorOccurred(message);
 }
 

@@ -246,9 +246,27 @@
 			null
 		],
 		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/DiffEngine.h",
+			"MU",
+			"NHSO4IKFBR/moc_DiffEngine.cpp",
+			null
+		],
+		[
 			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/NetworkService.h",
 			"MU",
 			"NHSO4IKFBR/moc_NetworkService.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/PollingManager.h",
+			"MU",
+			"NHSO4IKFBR/moc_PollingManager.cpp",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/StateStore.h",
+			"MU",
+			"NHSO4IKFBR/moc_StateStore.cpp",
 			null
 		],
 		[
@@ -342,7 +360,22 @@
 			null
 		],
 		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/DiffEngine.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/PollingManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/StateStore.cpp",
 			"MU",
 			null
 		],

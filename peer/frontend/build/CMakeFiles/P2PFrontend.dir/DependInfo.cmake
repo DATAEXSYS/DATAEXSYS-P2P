@@ -13,7 +13,10 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/mocs_compilation.cpp" "CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o.d"
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/ApiClient.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/ApiClient.cpp.o.d"
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/AppController.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/AppController.cpp.o.d"
+  "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/DiffEngine.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.o.d"
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/NetworkService.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.o.d"
+  "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/PollingManager.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.o.d"
+  "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/backend/StateStore.cpp" "CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.o.d"
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/main.cpp" "CMakeFiles/P2PFrontend.dir/src/main.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/main.cpp.o.d"
   "/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp" "CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o" "gcc" "CMakeFiles/P2PFrontend.dir/src/models/NetworkModel.cpp.o.d"
   )

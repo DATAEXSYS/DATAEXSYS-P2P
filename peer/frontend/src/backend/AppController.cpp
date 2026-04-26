@@ -1,23 +1,25 @@
 #include "backend/AppController.h"
 #include <numeric>
+#include <QRandomGenerator>
 
 AppController::AppController(QObject *parent) : QObject(parent) {
     m_networkService = new NetworkService(this);
     m_networkModel = new NetworkModel(this);
     
-    m_refreshTimer = new QTimer(this);
-    m_refreshTimer->setInterval(5000); // 5 seconds
-    connect(m_refreshTimer, &QTimer::timeout, this, &AppController::refreshNetworks);
-    m_refreshTimer->start();
+    auto store = m_networkService->store();
 
-    connect(m_networkService, &NetworkService::networksLoaded, this, &AppController::onNetworksReceived);
+    // --- BINDING TO STATE STORE ---
+    connect(store, &StateStore::networksChanged, this, &AppController::onNetworksChanged);
+    connect(store, &StateStore::connectionStatusChanged, this, &AppController::onConnectionStatusChanged);
+    
+    // --- ERROR HANDLING ---
     connect(m_networkService, &NetworkService::errorOccurred, this, &AppController::onError);
-
-    refreshNetworks();
 }
 
 void AppController::refreshNetworks() {
-    m_networkService->fetchNetworks();
+    // In this architecture, refresh is handled by the PollingManager.
+    // We can still trigger an immediate poll if needed.
+    // m_networkService->performPoll(); 
 }
 
 void AppController::createNetwork(const QString &name, const QString &type, const QString &description) {
@@ -25,12 +27,16 @@ void AppController::createNetwork(const QString &name, const QString &type, cons
     n.name = name;
     n.type = type;
     n.description = description;
-    n.networkId = name.toLower().replace(" ", "-") + "-" + QString::number(qrand() % 1000);
+    
+    uint32_t randomVal = QRandomGenerator::global()->generate() % 1000;
+    n.networkId = name.toLower().replace(" ", "-") + "-" + QString::number(randomVal);
     n.bootstrapUrl = "https://bootstrap.dataexsys.io/" + n.networkId;
-    m_networkService->addNetwork(n);
+    
+    m_networkService->createNetwork(n);
 }
 
-void AppController::onNetworksReceived(const std::vector<Network> &networks) {
+void AppController::onNetworksChanged(const std::vector<Network> &networks) {
+    // Only update the model when data actually changes (ensured by DiffEngine)
     m_networkModel->setNetworks(networks);
     
     int total = std::accumulate(networks.begin(), networks.end(), 0, [](int sum, const Network &n) {
@@ -41,17 +47,15 @@ void AppController::onNetworksReceived(const std::vector<Network> &networks) {
         m_totalPeers = total;
         emit totalPeersChanged();
     }
+}
 
-    if (!m_isOnline) {
-        m_isOnline = true;
+void AppController::onConnectionStatusChanged(bool connected) {
+    if (m_isOnline != connected) {
+        m_isOnline = connected;
         emit isOnlineChanged();
     }
 }
 
 void AppController::onError(const QString &message) {
-    if (m_isOnline) {
-        m_isOnline = false;
-        emit isOnlineChanged();
-    }
     emit errorOccurred(message);
 }
