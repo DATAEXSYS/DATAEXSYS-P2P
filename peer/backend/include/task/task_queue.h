@@ -1,23 +1,28 @@
+// task_queue.h
+
 #ifndef TASK_QUEUE_H
 #define TASK_QUEUE_H
 
-#include <functional>
+#include "task.h"
+
 #include <queue>
+#include <vector>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <future>
-#include <vector>
+#include <atomic>
 
 class TaskQueue {
 public:
-    using Task = std::function<void()>;
-
-    TaskQueue(size_t threadCount = 2);
+    TaskQueue(size_t threadCount = std::thread::hardware_concurrency());
     ~TaskQueue();
 
-    // push task (async execution)
-    void push(Task task);
+    // non-copyable
+    TaskQueue(const TaskQueue&) = delete;
+    TaskQueue& operator=(const TaskQueue&) = delete;
+
+    // add task
+    void push(const Task& task);
 
     // stop queue
     void stop();
@@ -25,13 +30,25 @@ public:
 private:
     void workerLoop();
 
+private:
+    struct TaskCompare {
+        bool operator()(const Task& a, const Task& b) const {
+            return a.getRunTime() > b.getRunTime();
+        }
+    };
+
+    std::priority_queue<
+        Task,
+        std::vector<Task>,
+        TaskCompare
+    > tasks;
+
     std::vector<std::thread> workers;
 
-    std::queue<Task> tasks;
     std::mutex mtx;
     std::condition_variable cv;
 
-    bool running = true;
+    std::atomic<bool> running;
 };
 
 #endif
