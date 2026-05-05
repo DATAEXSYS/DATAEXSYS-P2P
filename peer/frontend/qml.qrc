@@ -8,6 +8,13 @@
         <file>qml/components/Sidebar.qml</file>
         <file>qml/components/NetworkCard.qml</file>
         <file>qml/components/StatusBadge.qml</file>
+        <file>qml/components/TrustDiary.qml</file>
+        <file>qml/components/SecurityConsole.qml</file>
+        <file>qml/components/NetworkGraph.qml</file>
+        <file>qml/components/PacketVisualizer.qml</file>
+        <file>qml/components/CertificateFlow.qml</file>
+        <file>qml/components/BlockchainView.qml</file>
+        <file>qml/components/ChatDashboard.qml</file>
         <file>qml/theme/Colors.qml</file>
     </qresource>
 </RCC>

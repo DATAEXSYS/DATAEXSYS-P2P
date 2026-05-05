@@ -80,9 +80,16 @@ P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: CMakeFiles/P2PFrontend_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/main.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/theme/Colors.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/CertificateFlow.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/Sidebar.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/NetworkCard.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/TrustDiary.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/NetworkGraph.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/StatusBadge.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/ChatDashboard.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/BlockchainView.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/SecurityConsole.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/components/PacketVisualizer.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Settings.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Networks.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/qml/pages/Peers.qml

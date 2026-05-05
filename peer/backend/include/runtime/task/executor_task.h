@@ -16,19 +16,25 @@ class ExecutorTask {
 public:
     static constexpr size_t SOO_SIZE = 64 - sizeof(void*) - sizeof(std::source_location);
 
+    ExecutorTask() : vtable(nullptr) {}
+
+    explicit operator bool() const { return vtable != nullptr; }
+
     template <typename F>
-    requires std::invocable<F> && std::move_constructible<F>
+    requires std::invocable<std::decay_t<F>> && std::move_constructible<std::decay_t<F>>
     ExecutorTask(F&& f, std::source_location loc = std::source_location::current())
         : location(loc) {
-        if constexpr (sizeof(F) <= SOO_SIZE) {
-            new (&buffer) F(std::forward<F>(f));
-            vtable = &soo_vtable<F>;
+        using DecayedF = std::decay_t<F>;
+        if constexpr (sizeof(DecayedF) <= SOO_SIZE) {
+            new (&buffer) DecayedF(std::forward<F>(f));
+            vtable = &soo_vtable<DecayedF>;
         } else {
-            auto ptr = std::make_unique<F>(std::forward<F>(f));
-            new (&buffer) std::unique_ptr<F>(std::move(ptr));
-            vtable = &heap_vtable<F>;
+            auto ptr = std::make_unique<DecayedF>(std::forward<F>(f));
+            new (&buffer) std::unique_ptr<DecayedF>(std::move(ptr));
+            vtable = &heap_vtable<DecayedF>;
         }
     }
+
 
     ~ExecutorTask() {
         if (vtable) vtable->destroy(&buffer);

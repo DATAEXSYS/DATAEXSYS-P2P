@@ -20,27 +20,30 @@ include_directories(
 )
 
 link_directories(${SODIUM_LIBRARY_DIRS})
-
-# -------------------------
 # source files
 # -------------------------
 
 # Runtime core sources
-file(GLOB_RECURSE RUNTIME_SOURCES
-    ${CMAKE_SOURCE_DIR}/source/runtime/*.cpp
+set(RUNTIME_SOURCES
+    source/runtime/scheduler.cpp
+    source/runtime/worker.cpp
+    source/task/task_queue.cpp
 )
 
-# Main application sources (excluding runtime and examples)
-file(GLOB_RECURSE APP_SOURCES
-    ${CMAKE_SOURCE_DIR}/source/identity/*.cpp
-    ${CMAKE_SOURCE_DIR}/source/main.cpp
+# Main application sources
+set(APP_SOURCES
+    source/main.cpp
+    source/identity/identity_service.cpp
 )
 
 # -------------------------
 # libraries
 # -------------------------
 add_library(runtime_engine STATIC ${RUNTIME_SOURCES})
+target_compile_features(runtime_engine PUBLIC cxx_std_23)
+target_include_directories(runtime_engine PUBLIC include ${SODIUM_INCLUDE_DIRS})
 target_link_libraries(runtime_engine PUBLIC pthread)
+target_compile_options(runtime_engine PRIVATE -Wall -Wextra -Wpedantic)
 
 # -------------------------
 # executable

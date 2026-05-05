@@ -2,40 +2,88 @@
 #define APPCONTROLLER_H
 
 #include <QObject>
-#include "backend/NetworkService.h"
-#include "models/NetworkModel.h"
+#include <QString>
+#include <QStringList>
+#include <QList>
+#include <QTimer>
+#include <QDebug>
+
+struct Node {
+    QString id;
+    double trustScore;
+    bool certificateIssued;
+    QString status;
+};
+
+struct Packet {
+    QString source;
+    QString destination;
+    QString currentNode;
+    int hopIndex;
+    QString stage;
+};
+
+struct Block {
+    int index;
+    QString hash;
+    QString prevHash;
+    QString timestamp;
+};
+
+struct ChatMessage {
+    QString from;
+    QString to;
+    QString text;
+    QString status; // "Sent", "Forwarding", "Delivered"
+};
 
 class AppController : public QObject {
     Q_OBJECT
-    Q_PROPERTY(NetworkModel* networkModel READ networkModel CONSTANT)
-    Q_PROPERTY(bool isOnline READ isOnline NOTIFY isOnlineChanged)
-    Q_PROPERTY(int totalPeers READ totalPeers NOTIFY totalPeersChanged)
+    Q_PROPERTY(int executionStep READ executionStep NOTIFY executionStepChanged)
+    Q_PROPERTY(bool autoRun READ autoRun WRITE setAutoRun NOTIFY autoRunChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
 
-    NetworkModel* networkModel() const { return m_networkModel; }
-    bool isOnline() const { return m_isOnline; }
-    int totalPeers() const { return m_totalPeers; }
+    int executionStep() const { return m_executionStep; }
+    bool autoRun() const { return m_autoRun; }
+    void setAutoRun(bool autoRun);
 
-    Q_INVOKABLE void refreshNetworks();
-    Q_INVOKABLE void createNetwork(const QString &name, const QString &type, const QString &description);
+    Q_INVOKABLE void startEngine();
+    Q_INVOKABLE void nextStep();
+    Q_INVOKABLE void resetEngine();
+    Q_INVOKABLE void mineBlock();
+    Q_INVOKABLE void sendMessage(const QString &from, const QString &to, const QString &text);
 
 signals:
-    void isOnlineChanged();
-    void totalPeersChanged();
-    void errorOccurred(const QString &message);
+    void nodeJoined(QString nodeId);
+    void certificateIssued(QString nodeId, QString certId);
+    void trustUpdated(QString nodeId, double score);
+    void routeSelected(QStringList path);
+    void packetEntered(QString source, QString destination);
+    void packetHop(QString from, QString to, QString stage);
+    void packetDelivered(QString nodeId);
+    void logEvent(QString tag, QString message);
 
-private slots:
-    void onNetworksChanged(const std::vector<Network> &networks);
-    void onConnectionStatusChanged(bool connected);
-    void onError(const QString &message);
+    void blockMined(int index, QString hash, QString prevHash);
+    void messageSent(QString from, QString to, QString text);
+    void messageStatusUpdated(QString text, QString status);
+
+    void executionStepChanged();
+    void autoRunChanged();
 
 private:
-    NetworkService *m_networkService;
-    NetworkModel *m_networkModel;
-    bool m_isOnline = false;
-    int m_totalPeers = 0;
+    void executeCurrentStep();
+
+    QList<Node> m_nodes;
+    QStringList m_route;
+    Packet m_activePacket;
+    QList<Block> m_blocks;
+    int m_executionStep = 0;
+    bool m_autoRun = false;
+    QTimer *m_timer;
+
+    const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };
 
 #endif

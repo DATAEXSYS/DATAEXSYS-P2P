@@ -6,92 +6,150 @@ import "./theme"
 import "./components"
 
 Window {
-    width: 1100
-    height: 750
+    id: window
+    width: 1400
+    height: 950
     visible: true
-    title: "DATAEXSYS | Decentralized Transfer & Access Exchange"
+    title: "DATAEXSYS | Distributed Systems Educational Dashboard"
     color: theme.background
 
     Colors { id: theme }
 
-    // --- BACKGROUND EFFECTS ---
-    Rectangle {
-        anchors.fill: parent
-        color: theme.background
+    property string currentTab: "TOPOLOGY"
 
-        Rectangle {
-            anchors.fill: parent
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#0D4DA3FF" }
-                GradientStop { position: 1.0; color: "transparent" }
-            }
-        }
-    }
-
-    RowLayout {
+    ColumnLayout {
         anchors.fill: parent
         spacing: 0
 
-        // --- SIDEBAR ---
-        Sidebar {
-            Layout.fillHeight: true
-            Layout.preferredWidth: 240
-            onPageChanged: (page) => navStack.replace(page)
-        }
-
-        // --- CONTENT AREA ---
-        ColumnLayout {
+        // --- TOP NAVIGATION ---
+        Rectangle {
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 0
+            Layout.preferredHeight: 70
+            color: theme.panel
+            border.color: theme.border
+            border.width: 1
 
-            // Top Bar
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 60
-                color: "transparent"
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: 30
+                anchors.rightMargin: 30
+                spacing: 40
+
+                Text {
+                    text: "DATAEXSYS"
+                    color: theme.primary
+                    font.pixelSize: 20
+                    font.weight: Font.Black
+                    font.letterSpacing: 2
+                }
 
                 RowLayout {
-                    anchors.fill: parent
-                    anchors.leftMargin: 20
-                    anchors.rightMargin: 20
-
-                    Text {
-                        text: "DASHBOARD"
-                        color: theme.text
-                        font.pixelSize: 18
-                        font.weight: Font.Bold
-                        font.letterSpacing: 1.5
-                    }
-
-                    Item { Layout.fillWidth: true }
-
-                    StatusBadge {
-                        statusText: appController.isOnline ? "ONLINE" : "OFFLINE"
-                        statusColor: appController.isOnline ? theme.success : theme.danger
+                    spacing: 20
+                    Repeater {
+                        model: ["TOPOLOGY", "BLOCKCHAIN", "P2P CHAT"]
+                        Button {
+                            text: modelData
+                            flat: true
+                            onClicked: currentTab = modelData
+                            contentItem: Text {
+                                text: parent.text
+                                color: currentTab === modelData ? theme.success : theme.muted
+                                font.weight: Font.Bold
+                                font.pixelSize: 12
+                                font.letterSpacing: 1
+                            }
+                            Rectangle {
+                                anchors.bottom: parent.bottom
+                                width: parent.width
+                                height: 2
+                                color: theme.success
+                                visible: currentTab === modelData
+                            }
+                        }
                     }
                 }
 
-                Rectangle {
-                    anchors.bottom: parent.bottom
-                    width: parent.width
-                    height: 1
-                    color: theme.border
-                    opacity: 0.3
+                Item { Layout.fillWidth: true }
+
+                RowLayout {
+                    spacing: 15
+                    Button {
+                        text: "RESET"
+                        onClicked: appController.resetEngine()
+                        background: Rectangle { color: "transparent"; border.color: theme.border; radius: 4 }
+                        contentItem: Text { text: parent.text; color: theme.text; font.pixelSize: 11 }
+                    }
+                    Button {
+                        text: "NEXT STEP"
+                        onClicked: appController.nextStep()
+                        background: Rectangle { color: theme.primary; radius: 4 }
+                        contentItem: Text { text: parent.text; color: "white"; font.weight: Font.Bold; font.pixelSize: 11 }
+                    }
+                    Switch {
+                        checked: appController.autoRun
+                        onToggled: appController.autoRun = checked
+                    }
+                    Text { text: "AUTO-RUN"; color: theme.muted; font.pixelSize: 10 }
                 }
             }
+        }
 
-            StackView {
-                id: navStack
-                Layout.fillWidth: true
+        // --- MAIN CONTENT AREA ---
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 1
+
+            // Left Sidebar: Trust & Stats
+            TrustDiary {
                 Layout.fillHeight: true
-                initialItem: "pages/Home.qml"
-                
-                pushEnter: Transition {
-                    PropertyAnimation { property: "opacity"; from: 0; to: 1; duration: 250 }
+                Layout.preferredWidth: 320
+            }
+
+            // Central View: Tab Content
+            StackLayout {
+                currentIndex: {
+                    if (currentTab === "TOPOLOGY") return 0
+                    if (currentTab === "BLOCKCHAIN") return 1
+                    return 2
                 }
-                pushExit: Transition {
-                    PropertyAnimation { property: "opacity"; from: 1; to: 0; duration: 250 }
+                
+                // TOPOLOGY
+                Rectangle {
+                    color: theme.panel
+                    NetworkGraph { anchors.fill: parent }
+                    CertificateFlow { anchors.fill: parent }
+                    PacketVisualizer { anchors.fill: parent }
+                }
+
+                // BLOCKCHAIN
+                BlockchainView {}
+
+                // CHAT
+                ChatDashboard {}
+            }
+
+            // Right Sidebar: Console
+            SecurityConsole {
+                Layout.fillHeight: true
+                Layout.preferredWidth: 400
+            }
+        }
+        
+        // Bottom Status Bar
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 30
+            color: theme.panel
+            border.color: theme.border
+            
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: 20
+                Text { 
+                    text: "SYSTEM STATUS: ACTIVE | STEP: " + appController.executionStep + " / 9"
+                    color: theme.muted
+                    font.pixelSize: 10
                 }
             }
         }
