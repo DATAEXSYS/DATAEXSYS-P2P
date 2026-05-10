@@ -1,0 +1,9 @@
+[submodule "peer/PKCertChain"]
+	path = peer/PKCertChain
+	url = https://github.com/salmanamir95/PKCertChain.git
+[submodule "peer/RollingSignatures"]
+	path = peer/RollingSignatures
+	url = https://github.com/salmanamir95/RollingSignatures.git
+[submodule "peer/LocalTrustDiaries"]
+	path = peer/LocalTrustDiaries
+	url = https://github.com/salmanamir95/LocalTrustDiaries.git
