@@ -51,30 +51,22 @@ option(PEER_BUILD_TESTS     "Build all module unit-test suites"  OFF)
 option(PEER_BUILD_EXAMPLES  "Build backend example targets"      OFF)
 
 # ---------------------------------------------------------------------------
-# Submodule auto-init guard
-#   If a required submodule directory is missing or empty, attempt to
-#   initialize it automatically via git.  This prevents cryptic
-#   "No SOURCES given" errors when cloning without --recurse-submodules.
+# Source directory presence check
+#   Confirms the three backend library directories exist before trying
+#   to glob their sources.  Catches missing checkouts early with a clear
+#   message instead of a cryptic "No SOURCES" cmake error.
 # ---------------------------------------------------------------------------
-set(_REQUIRED_SUBMODULES
-    peer/PKCertChain
-    peer/RollingSignatures
-    peer/LocalTrustDiaries
+set(_REQUIRED_BACKEND_DIRS
+    peer/backend/PKCertChain
+    peer/backend/RollingSignatures
+    peer/backend/LocalTrustDiaries
 )
-foreach(_sm ${_REQUIRED_SUBMODULES})
-    set(_sm_path ${CMAKE_SOURCE_DIR}/${_sm})
-    if(NOT EXISTS "${_sm_path}/CMakeLists.txt" AND NOT EXISTS "${_sm_path}/src")
-        message(STATUS "[peer] Submodule '${_sm}' not populated — running git submodule update --init")
-        execute_process(
-            COMMAND git submodule update --init --recursive -- ${_sm}
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            RESULT_VARIABLE _sm_result
-        )
-        if(NOT _sm_result EQUAL 0)
-            message(WARNING
-                "Could not auto-init submodule '${_sm}'. "
-                "Run: git submodule update --init --recursive")
-        endif()
+foreach(_dir ${_REQUIRED_BACKEND_DIRS})
+    if(NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/${_dir}")
+        message(FATAL_ERROR
+            "Required backend directory '${_dir}' not found.\n"
+            "If using git submodules, run:\n"
+            "  git submodule update --init --recursive")
     endif()
 endforeach()
 

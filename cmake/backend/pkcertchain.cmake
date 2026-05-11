@@ -2,7 +2,7 @@
 # cmake/backend/pkcertchain.cmake
 #
 # Defines the PKCertChain STATIC library target.
-# Source lives in the git submodule at:  peer/PKCertChain/
+# Source lives in the git submodule at:  peer/backend/PKCertChain/
 #
 # Exports:
 #   PEER::PKCertChain   — link target for consumers
@@ -18,11 +18,11 @@ include(${CMAKE_SOURCE_DIR}/cmake/backend/main.cmake)
 # Source collection
 # ---------------------------------------------------------------------------
 file(GLOB_RECURSE _PKC_SOURCES CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/peer/PKCertChain/src/*.c"
+    "${CMAKE_SOURCE_DIR}/peer/backend/PKCertChain/src/*.c"
 )
 if(NOT _PKC_SOURCES)
     message(FATAL_ERROR
-        "PKCertChain: no source files found in peer/PKCertChain/src/\n"
+        "PKCertChain: no source files found in peer/backend/PKCertChain/src/\n"
         "Submodule may not be checked out. Run:\n"
         "  git submodule update --init --recursive")
 endif()
@@ -35,7 +35,7 @@ add_library(PEER::PKCertChain ALIAS PKCertChain)
 
 target_include_directories(PKCertChain
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/peer/PKCertChain/include>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/peer/backend/PKCertChain/include>
         $<INSTALL_INTERFACE:include>
 )
 
@@ -59,13 +59,13 @@ message(STATUS "[backend] PKCertChain — STATIC library configured")
 if(PEER_BUILD_TESTS)
     enable_testing()
     file(GLOB_RECURSE _PKC_TEST_SOURCES CONFIGURE_DEPENDS
-        "${CMAKE_SOURCE_DIR}/peer/PKCertChain/tests/*.c"
+        "${CMAKE_SOURCE_DIR}/peer/backend/PKCertChain/tests/*.c"
     )
     foreach(_src ${_PKC_TEST_SOURCES})
         get_filename_component(_name ${_src} NAME_WE)
         add_executable(pkc_${_name} ${_src})
         target_include_directories(pkc_${_name} PRIVATE
-            ${CMAKE_SOURCE_DIR}/peer/PKCertChain/include
+            ${CMAKE_SOURCE_DIR}/peer/backend/PKCertChain/include
         )
         target_compile_definitions(pkc_${_name} PRIVATE _DEFAULT_SOURCE)
         target_link_libraries(pkc_${_name} PRIVATE OpenSSL::Crypto)
