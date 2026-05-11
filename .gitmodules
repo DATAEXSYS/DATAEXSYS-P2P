@@ -1,9 +1,57 @@
-[submodule "peer/PKCertChain"]
-	path = peer/PKCertChain
-	url = https://github.com/salmanamir95/PKCertChain.git
-[submodule "peer/RollingSignatures"]
-	path = peer/RollingSignatures
-	url = https://github.com/salmanamir95/RollingSignatures.git
-[submodule "peer/LocalTrustDiaries"]
-	path = peer/LocalTrustDiaries
-	url = https://github.com/salmanamir95/LocalTrustDiaries.git
+# =============================================================================
+# .gitmodules — DATAEXSYS-P2P Submodule Registry
+#
+# All submodules live under  peer/  and are backend cryptographic libraries.
+# After cloning run:
+#   git submodule update --init --recursive
+# To sync all remotes to registered commits:
+#   git submodule update --remote --merge
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# PKCertChain
+# Purpose : Public-key certificate chain — X.509-style certificate issuance,
+#           storage, and verification for peer identity management.
+# Language: C (C11)
+# Deps    : OpenSSL (libcrypto)
+# Role    : Provides PEER::PKCertChain STATIC library
+# ---------------------------------------------------------------------------
+[submodule "peer/backend/PKCertChain"]
+	path   = peer/backend/PKCertChain
+	url    = https://github.com/salmanamir95/PKCertChain.git
+	branch = main
+	update = checkout
+	fetchRecurseSubmodules = false
+	ignore = dirty
+
+# ---------------------------------------------------------------------------
+# RollingSignatures
+# Purpose : HMAC-based rolling signature scheme for packet-level
+#           authentication and replay-attack prevention across peer routes.
+# Language: C (C11)
+# Deps    : OpenSSL (libssl + libcrypto)
+# Role    : Provides PEER::RollingSignatures STATIC library
+# ---------------------------------------------------------------------------
+[submodule "peer/backend/RollingSignatures"]
+	path   = peer/backend/RollingSignatures
+	url    = https://github.com/salmanamir95/RollingSignatures.git
+	branch = main
+	update = checkout
+	fetchRecurseSubmodules = false
+	ignore = dirty
+
+# ---------------------------------------------------------------------------
+# LocalTrustDiaries
+# Purpose : Peer trust ledger — records, scores, and queries per-node
+#           trust relationships built from observed interaction history.
+# Language: C++23  (header-only)
+# Deps    : none
+# Role    : Provides PEER::LocalTrustDiaries INTERFACE library
+# ---------------------------------------------------------------------------
+[submodule "peer/backend/LocalTrustDiaries"]
+	path   = peer/backend/LocalTrustDiaries
+	url    = https://github.com/salmanamir95/LocalTrustDiaries.git
+	branch = main
+	update = checkout
+	fetchRecurseSubmodules = false
+	ignore = dirty

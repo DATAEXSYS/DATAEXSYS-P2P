@@ -1,5 +1,5 @@
 #include "classes/ipv6_pack/ipv6_pack.h"
-
+#include <stdexcept>
 
 
 // ============================================================

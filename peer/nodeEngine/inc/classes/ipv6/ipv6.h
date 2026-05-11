@@ -17,6 +17,7 @@ struct ipv6
     bool is_loopback() const;
     bool is_multicast() const;
     bool is_link_local() const;
+    bool is_global() const;
 
     std::string to_string() const;
 };
