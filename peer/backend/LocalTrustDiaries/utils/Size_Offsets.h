@@ -10,7 +10,7 @@
 
 //STRUCTS SIZES
 
-#define TRUST_NODE_SIZE
+#define TRUST_NODE_SIZE 224
 
 
 #endif // SIZE_OFFSETS_H
