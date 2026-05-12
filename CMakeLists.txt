@@ -49,7 +49,7 @@ target_compile_options(peer_compile_flags INTERFACE
 option(PEER_BUILD_FRONTEND  "Build the Qt GUI frontend"          OFF)
 option(PEER_BUILD_TESTS     "Build all module unit-test suites"  OFF)
 option(PEER_BUILD_EXAMPLES  "Build backend example targets"      OFF)
-option(PEER_BUILD_ADAPTERS  "Build the adapter layer"            ON)
+option(PEER_BUILD_ADAPTERS  "Build the adapter layer"            OFF)
 
 # ---------------------------------------------------------------------------
 # Source directory presence check
@@ -76,20 +76,14 @@ endforeach()
 # ---------------------------------------------------------------------------
 include(cmake/backend.cmake)
 
-# ---------------------------------------------------------------------------
-# 2. Adapter layer  (C ↔ C++ ABI bridges — always built by default)
-# ---------------------------------------------------------------------------
-if(PEER_BUILD_ADAPTERS)
-    include(cmake/adapters.cmake)
-endif()
 
 # ---------------------------------------------------------------------------
-# 3. Core executable  (nodeEngine)
+# 2. Core executable  (nodeEngine)
 # ---------------------------------------------------------------------------
 include(cmake/nodeEngine.cmake)
 
 # ---------------------------------------------------------------------------
-# 4. Qt GUI Frontend  (opt-in)
+# 3. Qt GUI Frontend  (opt-in)
 # ---------------------------------------------------------------------------
 if(PEER_BUILD_FRONTEND)
     include(cmake/frontend.cmake)
