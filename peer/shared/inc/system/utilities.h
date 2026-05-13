@@ -2,8 +2,8 @@
 #define UTILITIES_H
 
 // Backward-compatible umbrella header.
-#include "util/SignUtils.h"
-#include "util/EncUtils.h"
-#include "util/LinuxUtils.h"
+#include "crypto/SignUtils.h"
+#include "crypto/EncUtils.h"
+#include "system/LinuxUtils.h"
 
 #endif // UTILITIES_H

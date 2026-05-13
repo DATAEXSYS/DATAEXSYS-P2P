@@ -11,13 +11,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "enums/OpStatus.h"
-#include "datatype/uint256_t.h"
-#include "util/EncUtils.h"
-#include "util/WalletSetup.h"
-#include "util/SignUtils.h"
-#include "util/NetworkSerialization.h"
-#include "Global_Size_Offsets.h"
+#include "core/enums/OpStatus.h"
+#include "core/datatypes/uint256_t.h"
+#include "crypto/EncUtils.h"
+#include "crypto/WalletSetup.h"
+#include "crypto/SignUtils.h"
+#include "net/NetworkSerialization.h"
+#include "core/Global_Size_Offsets.h"
 
 #ifndef UTIL_INLINE
 #define UTIL_INLINE static inline __attribute__((always_inline))

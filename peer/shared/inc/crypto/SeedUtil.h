@@ -3,7 +3,7 @@
 
 #include "pkcertchain_config.h"
 #include "blockchain/certificate.h"
-#include "util/utilities.h"
+#include "system/utilities.h"
 #include <string.h>
 #include <openssl/rand.h>
 #include <openssl/evp.h>

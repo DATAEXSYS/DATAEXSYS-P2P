@@ -12,10 +12,10 @@
 #include <openssl/rand.h>
 #include <openssl/sha.h>
 
-#include "datatype/uint256_t.h"
-#include "enums/OpStatus.h"
-#include "Global_Size_Offsets.h"
-#include "util/WalletSetup.h"
+#include "core/datatypes/uint256_t.h"
+#include "core/enums/OpStatus.h"
+#include "core/Global_Size_Offsets.h"
+#include "crypto/WalletSetup.h"
 
 #ifndef UTIL_INLINE
 #define UTIL_INLINE static inline __attribute__((always_inline))

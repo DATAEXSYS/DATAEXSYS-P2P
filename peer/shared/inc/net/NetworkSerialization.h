@@ -110,21 +110,21 @@ static inline void deserialize_def(const uint8_t *in, void *value, size_t size)
 /* --- CUSTOM STRUCT SERIALIZATION --- */
 
 
-#include "enums/OpStatus.h"
-#include "enums/Tier.h"
-#include "enums/AckType.h"
-#include "Global_Size_Offsets.h"
+#include "core/enums/OpStatus.h"
+#include "core/enums/Tier.h"
+#include "core/enums/AckType.h"
+#include "core/Global_Size_Offsets.h"
 
 // Forward or explicit includes for structures
-#include "datatypes/ipv6.h"
-#include "PKCertChain/certificate.h"
-#include "PKCertChain/block.h"
-#include "PKCertChain/MiniPowResult.h"
-#include "PKCertChain/TierPowResult.h"
-#include "PKCertChain/tier_pow_challenge_t.h"
-#include "PKCertChain/tier_pow_solve_t.h"
-#include "LocalTrustDiaries/TrustNode.h"
-#include "RollingSignatures/RoutingPacket.h"
+#include "core/datatypes/ipv6.h"
+#include "protocol/blockchain/certificate.h"
+#include "protocol/blockchain/block.h"
+#include "protocol/proofs/mini_pow/MiniPowResult.h"
+#include "protocol/proofs/tier_pow/TierPowResult.h"
+#include "protocol/proofs/tier_pow/tier_pow_challenge_t.h"
+#include "protocol/proofs/tier_pow/tier_pow_solve_t.h"
+#include "protocol/trust/TrustNode.h"
+#include "protocol/routing/RoutingPacket.h"
 
 // Macros needed by extracted functions
 #ifndef CERT_INLINE

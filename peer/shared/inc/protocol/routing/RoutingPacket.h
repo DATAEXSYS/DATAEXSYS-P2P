@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include "datatypes/ipv6.h"
+#include "core/datatypes/ipv6.h"
 #include <stdbool.h>
 // Add necessary includes
 

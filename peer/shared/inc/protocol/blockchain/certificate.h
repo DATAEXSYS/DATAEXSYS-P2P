@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
-#include "datatype/uint256_t.h"
-#include "datatypes/ipv6.h"
+#include "core/datatypes/uint256_t.h"
+#include "core/datatypes/ipv6.h"
 
 typedef struct __attribute__((aligned(4))) {
     uint256 pubSignKey;      // 32 bytes
