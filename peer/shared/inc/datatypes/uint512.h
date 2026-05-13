@@ -84,24 +84,10 @@ U512_INLINE void uint512_from_two_uint256(uint512 *out, const uint256 *high, con
     memcpy(out->w + 4, low->w, sizeof(uint256));      // w[4..7] = low
 }
 
-U512_INLINE OpStatus_t uint512_serialize_be(const uint512 *u, uint8_t *out, size_t out_size)
-{
-    if (!u || !out) return OP_NULL_PTR;
-    if (out_size < UINT512_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 8; ++i) {
-        serialize_u64_be(u->w[i], out + (i * 8));
-    }
-    return OP_SUCCESS;
-}
+/* Moved to NetworkSerialization.h */
 
-U512_INLINE OpStatus_t uint512_deserialize_be(const uint8_t *in, size_t in_size, uint512 *u)
-{
-    if (!u || !in) return OP_NULL_PTR;
-    if (in_size < UINT512_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 8; ++i) {
-        deserialize_u64_be(in + (i * 8), &u->w[i], sizeof(uint64_t));
-    }
-    return OP_SUCCESS;
-}
+
+/* Moved to NetworkSerialization.h */
+
 
 #endif

@@ -1,11 +1,12 @@
 #pragma once
 
 #include <stdint.h>
+#include "datatypes/ipv6.h"
 #include <stdbool.h>
 // Add necessary includes
 
 typedef struct __attribute__((aligned(32))) {
-    uint8_t nodeid;
+    ipv6_t nodeid;
     uint32_t trust;
     uint32_t acks;
     uint32_t nacks;

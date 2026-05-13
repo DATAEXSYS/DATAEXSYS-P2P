@@ -44,32 +44,16 @@ IPV6_INLINE void ipv6_zero(ipv6_t *ip)
    - 16 bytes raw copy
 --------------------------*/
 
-IPV6_INLINE int ipv6_serialize(const ipv6_t *ip,
-                               uint8_t *out,
-                               size_t out_size)
-{
-    if (!ip || !out) return -1;
-    if (out_size < IPV6_SIZE) return -2;
+/* Moved to NetworkSerialization.h */
 
-    memcpy(out, ip->address, IPV6_SIZE);
-    return 0;
-}
 
 /* -------------------------
    Deserialization
    - reconstruct from network bytes
 --------------------------*/
 
-IPV6_INLINE int ipv6_deserialize(const uint8_t *in,
-                                 size_t in_size,
-                                 ipv6_t *ip)
-{
-    if (!ip || !in) return -1;
-    if (in_size < IPV6_SIZE) return -2;
+/* Moved to NetworkSerialization.h */
 
-    memcpy(ip->address, in, IPV6_SIZE);
-    return 0;
-}
 
 /* -------------------------
    Classification helpers

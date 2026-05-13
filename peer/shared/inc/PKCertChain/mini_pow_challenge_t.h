@@ -4,10 +4,6 @@
 #include <stdbool.h>
 // Add necessary includes
 
-structure
- * Contains the specific row of Matrix A and column of Matrix B that the miner must multiply,
- * along with identifiers.
- */
 typedef struct __attribute__((aligned(4))) {
     uint32_t challenge_id;
     uint32_t session_id;

@@ -4,8 +4,8 @@
 #include <stdbool.h>
 // Add necessary includes
 
-struct and tracks if the slot is occupied.
- */
+
+ 
 typedef struct __attribute__((aligned(4))) {
     bool used;
     mini_pow_challenge_t challenge;
