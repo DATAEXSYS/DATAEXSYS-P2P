@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "protocol/proofs/mini_pow/mini_pow_Matrix.h"
 #include <stdbool.h>
 // Add necessary includes
 

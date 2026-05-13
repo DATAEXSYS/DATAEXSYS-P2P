@@ -1,7 +1,7 @@
 #ifndef SEED_UTIL_H
 #define SEED_UTIL_H
 
-#include "pkcertchain_config.h"
+
 #include "blockchain/certificate.h"
 #include "system/utilities.h"
 #include <string.h>

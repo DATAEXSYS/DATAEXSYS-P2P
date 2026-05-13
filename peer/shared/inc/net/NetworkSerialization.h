@@ -1,7 +1,7 @@
 #ifndef UTIL_NETWORK_SERIALIZATION_H
 #define UTIL_NETWORK_SERIALIZATION_H
 
-#include "pkcertchain_config.h"
+
 
 #include <endian.h>
 #include <stdint.h>
@@ -104,9 +104,6 @@ static inline void deserialize_def(const uint8_t *in, void *value, size_t size)
     memcpy(value, in, size);
 }
 
-#endif // UTIL_NETWORK_SERIALIZATION_H
-
-
 /* --- CUSTOM STRUCT SERIALIZATION --- */
 
 
@@ -119,7 +116,7 @@ static inline void deserialize_def(const uint8_t *in, void *value, size_t size)
 #include "core/datatypes/ipv6.h"
 #include "protocol/blockchain/certificate.h"
 #include "protocol/blockchain/block.h"
-#include "protocol/proofs/mini_pow/MiniPowResult.h"
+#include "protocol/proofs/mini_pow/mini_pow_result.h"
 #include "protocol/proofs/tier_pow/TierPowResult.h"
 #include "protocol/proofs/tier_pow/tier_pow_challenge_t.h"
 #include "protocol/proofs/tier_pow/tier_pow_solve_t.h"
@@ -317,78 +314,12 @@ IPV6_INLINE int ipv6_deserialize(const uint8_t *in,
     return 0;
 }
 
-U512_INLINE OpStatus_t uint512_serialize_be(const uint512 *u, uint8_t *out, size_t out_size)
-{
-    if (!u || !out) return OP_NULL_PTR;
-    if (out_size < UINT512_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 8; ++i) {
-        serialize_u64_be(u->w[i], out + (i * 8));
-    }
-    return OP_SUCCESS;
-}
 
-U512_INLINE OpStatus_t uint512_deserialize_be(const uint8_t *in, size_t in_size, uint512 *u)
-{
-    if (!u || !in) return OP_NULL_PTR;
-    if (in_size < UINT512_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 8; ++i) {
-        deserialize_u64_be(in + (i * 8), &u->w[i], sizeof(uint64_t));
-    }
-    return OP_SUCCESS;
-}
 
-U256_INLINE OpStatus_t uint256_serialize_be(const uint256 *u, uint8_t *out, size_t out_size)
-{
-    if (!u || !out) return OP_NULL_PTR;
-    if (out_size < UINT256_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 4; ++i) {
-        serialize_u64_be(u->w[i], out + (i * 8));
-    }
-    return OP_SUCCESS;
-}
-
-U256_INLINE OpStatus_t uint256_deserialize_be(const uint8_t *in, size_t in_size, uint256 *u)
-{
-    if (!u || !in) return OP_NULL_PTR;
-    if (in_size < UINT256_SIZE) return OP_BUF_TOO_SMALL;
-    for (int i = 0; i < 4; ++i) {
-        deserialize_u64_be(in + (i * 8), &u->w[i], sizeof(uint64_t));
-    }
-    return OP_SUCCESS;
-}
-
-U256_INLINE OpStatus_t uint256_serialize_two_be(const uint256 *a, const uint256 *b, uint8_t *out, size_t out_size)
-{
-    if (!a || !b || !out) return OP_NULL_PTR;
-    if (out_size < (UINT256_SIZE * 2)) return OP_BUF_TOO_SMALL;
-    if (uint256_serialize_be(a, out, UINT256_SIZE) != OP_SUCCESS) return OP_INVALID_INPUT;
-    if (uint256_serialize_be(b, out + UINT256_SIZE, UINT256_SIZE) != OP_SUCCESS) return OP_INVALID_INPUT;
-    return OP_SUCCESS;
-}
-
-CERT_INLINE OpStatus_t cert_serialize(const certificate *cert, uint8_t *out, size_t out_size)
-{
-    if (!cert || !out) return OP_NULL_PTR;
-    if (out_size < CERT_SIZE) return OP_BUF_TOO_SMALL;
-
-    if (uint256_serialize_be(&cert->pubSignKey, out, UINT256_SIZE) != OP_SUCCESS) return OP_INVALID_INPUT;
-    if (uint256_serialize_be(&cert->pubEncKey, out + UINT256_SIZE, UINT256_SIZE) != OP_SUCCESS) return OP_INVALID_INPUT;
-    serialize_u8(cert->id, out + (UINT256_SIZE * 2));
-    memcpy(out + (UINT256_SIZE * 2) + 1, cert->reserved, sizeof(cert->reserved));
-    return OP_SUCCESS;
-}
-
-CERT_INLINE OpStatus_t cert_deserialize(const uint8_t *in, size_t in_size, certificate *cert)
-{
-    if (!cert || !in) return OP_NULL_PTR;
-    if (in_size < CERT_SIZE) return OP_BUF_TOO_SMALL;
-
-    if (uint256_deserialize_be(in, UINT256_SIZE, &cert->pubSignKey) != OP_SUCCESS) return OP_INVALID_INPUT;
-    if (uint256_deserialize_be(in + UINT256_SIZE, UINT256_SIZE, &cert->pubEncKey) != OP_SUCCESS) return OP_INVALID_INPUT;
-    deserialize_u8_def(in + (UINT256_SIZE * 2), &cert->id, sizeof(uint8_t));
-    memcpy(cert->reserved, in + (UINT256_SIZE * 2) + 1, sizeof(cert->reserved));
-    return OP_SUCCESS;
-}
+static inline __attribute__((always_inline)) OpStatus_t minipowresult_serialize(const MiniPowResult *res, uint8_t *out, size_t out_size);
+static inline __attribute__((always_inline)) OpStatus_t minipowresult_deserialize(const uint8_t *in, size_t in_size, MiniPowResult *res);
+static inline OpStatus_t tierpowresult_serialize(const TierPowResult *res, uint8_t *out, size_t out_size);
+static inline OpStatus_t tierpowresult_deserialize(const uint8_t *in, size_t in_size, TierPowResult *res);
 
 BLOCK_INLINE OpStatus_t block_serialize(const block *blk, uint8_t *out, size_t out_size)
 {
@@ -557,7 +488,7 @@ static inline OpStatus_t tierpowresult_deserialize(const uint8_t *in, size_t in_
     return OP_SUCCESS;
 }
 
-TIER_POW_VERIFY_INLINE OpStatus_t tier_pow_verify_serialize_inputs(const tier_pow_challenge_t *pow,
+static inline OpStatus_t tier_pow_verify_serialize_inputs(const tier_pow_challenge_t *pow,
                                                                    const tier_pow_solve_t *solve,
                                                                    uint8_t *out,
                                                                    size_t out_size)
@@ -570,7 +501,7 @@ TIER_POW_VERIFY_INLINE OpStatus_t tier_pow_verify_serialize_inputs(const tier_po
     return OP_SUCCESS;
 }
 
-TIER_POW_VERIFY_INLINE OpStatus_t tier_pow_verify_deserialize_inputs(const uint8_t *in,
+static inline OpStatus_t tier_pow_verify_deserialize_inputs(const uint8_t *in,
                                                                      size_t in_size,
                                                                      tier_pow_challenge_t *pow,
                                                                      tier_pow_solve_t *solve)
@@ -613,3 +544,4 @@ static inline __attribute__((always_inline)) OpStatus_t minipowresult_deserializ
     return OP_SUCCESS;
 }
 
+#endif // UTIL_NETWORK_SERIALIZATION_H

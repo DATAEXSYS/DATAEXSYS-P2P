@@ -26,5 +26,6 @@ endif()
 
 # Route to root cmake modules (works whether called from root or standalone)
 set(_PEER_ROOT ${CMAKE_CURRENT_LIST_DIR}/..)
+include(${_PEER_ROOT}/cmake/shared.cmake)
 include(${_PEER_ROOT}/cmake/backend.cmake)
 include(${_PEER_ROOT}/cmake/nodeEngine.cmake)

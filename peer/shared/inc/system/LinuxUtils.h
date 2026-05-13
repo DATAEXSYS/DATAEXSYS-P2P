@@ -1,13 +1,14 @@
 #ifndef LINUXUTILS_H
 #define LINUXUTILS_H
 
-#include "pkcertchain_config.h"
+
 
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
+#include "net/NetworkSerialization.h"
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -16,7 +17,7 @@
 #include "crypto/EncUtils.h"
 #include "crypto/WalletSetup.h"
 #include "crypto/SignUtils.h"
-#include "net/NetworkSerialization.h"
+
 #include "core/Global_Size_Offsets.h"
 
 #ifndef UTIL_INLINE

@@ -1,7 +1,7 @@
 #ifndef TIER_H
 #define TIER_H
 
-#include "pkcertchain_config.h"
+
 
 #include <stdint.h>
 

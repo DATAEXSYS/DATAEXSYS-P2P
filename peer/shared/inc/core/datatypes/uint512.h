@@ -1,7 +1,7 @@
 #ifndef UINT512_H
 #define UINT512_H
 
-#include "pkcertchain_config.h"
+
 
 
 #include <stdint.h>
@@ -10,8 +10,8 @@
 #include <stddef.h>
 #include "core/datatypes/uint256_t.h"
 #include "core/Global_Size_Offsets.h"
-#include "net/NetworkSerialization.h"
-#include "net/NetworkSerialization.h"
+
+
 #include "core/enums/OpStatus.h"
 
 

@@ -1,7 +1,7 @@
 #ifndef WALLETSETUP_H
 #define WALLETSETUP_H
 
-#include "pkcertchain_config.h"
+
 
 #include <stdbool.h>
 #include <stdlib.h>

@@ -10,8 +10,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
-#include "shared/util/Size_Offsets.h"
-#include "shared/datatype/OpStatus.h"
+#include "core/Global_Size_Offsets.h"
+#include "core/enums/OpStatus.h"
 
 #define IPV6_INLINE inline __attribute__((always_inline))
 

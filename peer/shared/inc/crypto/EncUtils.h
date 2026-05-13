@@ -1,7 +1,7 @@
 #ifndef ENCUTILS_H
 #define ENCUTILS_H
 
-#include "pkcertchain_config.h"
+
 
 #include <stddef.h>
 #include <stdint.h>

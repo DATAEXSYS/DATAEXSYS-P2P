@@ -1,7 +1,7 @@
 #ifndef SIGNUTILS_H
 #define SIGNUTILS_H
 
-#include "pkcertchain_config.h"
+
 
 #include <stddef.h>
 #include <stdint.h>
@@ -12,6 +12,7 @@
 
 #include "core/datatypes/uint256_t.h"
 #include "core/datatypes/uint512.h"
+#include "net/NetworkSerialization.h"
 #include "core/enums/OpStatus.h"
 #include "core/Global_Size_Offsets.h"
 #include "crypto/WalletSetup.h"

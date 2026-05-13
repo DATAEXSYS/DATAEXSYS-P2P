@@ -1,6 +1,10 @@
 #pragma once
 
 #include <stdint.h>
+#include "core/datatypes/uint256_t.h"
+#include "core/datatypes/uint512.h"
+#include "protocol/proofs/mini_pow/mini_pow_result.h"
+#include "protocol/proofs/tier_pow/TierPowResult.h"
 #include <stdbool.h>
 // Add necessary includes
 
