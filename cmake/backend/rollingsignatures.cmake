@@ -44,7 +44,7 @@ target_compile_options(RollingSignatures PRIVATE -O2 -Wall -Wextra)
 target_link_libraries(RollingSignatures
     PUBLIC
         OpenSSL::SSL
-        OpenSSL::Crypto
+        OpenSSL::Crypto PEER::Shared
 )
 
 set_target_properties(RollingSignatures PROPERTIES
@@ -67,7 +67,7 @@ if(PEER_BUILD_TESTS)
             ${CMAKE_SOURCE_DIR}/peer/backend/RollingSignatures/inc
         )
         target_link_libraries(rs_test_hmac_routing PRIVATE
-            OpenSSL::SSL OpenSSL::Crypto
+            OpenSSL::SSL OpenSSL::Crypto PEER::Shared
         )
         add_test(NAME RollingSignatures::test_hmac_routing
                  COMMAND rs_test_hmac_routing)

@@ -72,7 +72,12 @@ foreach(_dir ${_REQUIRED_BACKEND_DIRS})
 endforeach()
 
 # ---------------------------------------------------------------------------
-# 1. Backend libraries  (PKCertChain · RollingSignatures · LocalTrustDiaries)
+# 1. Shared Data Structures and Utilities
+# ---------------------------------------------------------------------------
+include(cmake/shared.cmake)
+
+# ---------------------------------------------------------------------------
+# 2. Backend libraries  (PKCertChain · RollingSignatures · LocalTrustDiaries)
 # ---------------------------------------------------------------------------
 include(cmake/backend.cmake)
 

@@ -41,3 +41,5 @@ target_include_directories(LocalTrustDiaries
 target_compile_features(LocalTrustDiaries INTERFACE cxx_std_23)
 
 message(STATUS "[backend] LocalTrustDiaries — INTERFACE (header-only) configured")
+
+target_link_libraries(LocalTrustDiaries INTERFACE PEER::Shared)

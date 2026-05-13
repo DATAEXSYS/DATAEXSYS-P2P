@@ -43,7 +43,7 @@ target_compile_definitions(PKCertChain PRIVATE _DEFAULT_SOURCE)
 target_compile_options(PKCertChain     PRIVATE -O2 -Wall -Wextra)
 
 target_link_libraries(PKCertChain
-    PUBLIC OpenSSL::Crypto
+    PUBLIC OpenSSL::Crypto PEER::Shared
 )
 
 set_target_properties(PKCertChain PROPERTIES
@@ -68,7 +68,7 @@ if(PEER_BUILD_TESTS)
             ${CMAKE_SOURCE_DIR}/peer/backend/PKCertChain/include
         )
         target_compile_definitions(pkc_${_name} PRIVATE _DEFAULT_SOURCE)
-        target_link_libraries(pkc_${_name} PRIVATE OpenSSL::Crypto)
+        target_link_libraries(pkc_${_name} PRIVATE OpenSSL::Crypto PEER::Shared)
         add_test(NAME PKCertChain::${_name} COMMAND pkc_${_name})
     endforeach()
 endif()
