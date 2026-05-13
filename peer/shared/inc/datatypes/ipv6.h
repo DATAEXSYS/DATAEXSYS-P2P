@@ -10,30 +10,65 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
+#include "shared/util/Size_Offsets.h"
+#include "shared/datatype/OpStatus.h"
 
 #define IPV6_INLINE inline __attribute__((always_inline))
 
+
+
 /*
     Pure IPv6 = 128 bits exactly
-    No reserved space
-    32-bit aligned (4 × uint32_t = natural fit)
+    32-bit aligned for SIMD/cache friendliness
 */
 typedef struct __attribute__((aligned(32))) {
     uint8_t address[16];
 } ipv6_t;
 
 /* -------------------------
-   Initialization
+   Init
 --------------------------*/
 
 IPV6_INLINE void ipv6_init(ipv6_t *ip, const uint8_t addr[16])
 {
-    memcpy(ip->address, addr, 16);
+    memcpy(ip->address, addr, IPV6_SIZE);
 }
 
 IPV6_INLINE void ipv6_zero(ipv6_t *ip)
 {
-    memset(ip->address, 0, 16);
+    memset(ip->address, 0, IPV6_SIZE);
+}
+
+/* -------------------------
+   Serialization (NETWORK FORMAT)
+   - 16 bytes raw copy
+--------------------------*/
+
+IPV6_INLINE int ipv6_serialize(const ipv6_t *ip,
+                               uint8_t *out,
+                               size_t out_size)
+{
+    if (!ip || !out) return -1;
+    if (out_size < IPV6_SIZE) return -2;
+
+    memcpy(out, ip->address, IPV6_SIZE);
+    return 0;
+}
+
+/* -------------------------
+   Deserialization
+   - reconstruct from network bytes
+--------------------------*/
+
+IPV6_INLINE int ipv6_deserialize(const uint8_t *in,
+                                 size_t in_size,
+                                 ipv6_t *ip)
+{
+    if (!ip || !in) return -1;
+    if (in_size < IPV6_SIZE) return -2;
+
+    memcpy(ip->address, in, IPV6_SIZE);
+    return 0;
 }
 
 /* -------------------------
@@ -64,7 +99,7 @@ IPV6_INLINE bool ipv6_is_global(const ipv6_t *ip)
 }
 
 /* -------------------------
-   Accessors
+   Accessor
 --------------------------*/
 
 IPV6_INLINE const uint8_t *ipv6_get_address(const ipv6_t *ip)
