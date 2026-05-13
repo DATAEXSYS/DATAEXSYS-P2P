@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "datatype/OpStatus.h"
+#include "enums/OpStatus.h"
 
 #ifndef UTIL_INLINE
 #define UTIL_INLINE static inline __attribute__((always_inline))

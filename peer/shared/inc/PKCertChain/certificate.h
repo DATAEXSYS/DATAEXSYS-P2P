@@ -10,9 +10,9 @@
 #include "datatype/uint256_t.h"
 #include "datatype/uint512.h"
 
-#include "util/Size_Offsets.h"
-#include "util/To_BO_BE_Pimitives.h"
-#include "util/To_BO_Def_Primitives.h"
+#include "Global_Size_Offsets.h"
+#include "util/NetworkSerialization.h"
+#include "util/NetworkSerialization.h"
 #include "util/SignUtils.h"
 
 #include "datatypes/OpStatus.h"

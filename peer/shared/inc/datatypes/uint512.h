@@ -9,10 +9,10 @@
 #include <string.h>
 #include <stddef.h>
 #include "datatype/uint256_t.h"
-#include "util/Size_Offsets.h"
-#include "util/To_BO_BE_Pimitives.h"
-#include "util/To_BO_Def_Primitives.h"
-#include "datatype/OpStatus.h"
+#include "Global_Size_Offsets.h"
+#include "util/NetworkSerialization.h"
+#include "util/NetworkSerialization.h"
+#include "enums/OpStatus.h"
 
 
 /* Force aggressive inlining */

@@ -12,8 +12,8 @@
 
 #include "datatype/uint256_t.h"
 #include "datatype/uint512.h"
-#include "datatype/OpStatus.h"
-#include "util/Size_Offsets.h"
+#include "enums/OpStatus.h"
+#include "Global_Size_Offsets.h"
 #include "util/WalletSetup.h"
 
 #ifndef UTIL_INLINE

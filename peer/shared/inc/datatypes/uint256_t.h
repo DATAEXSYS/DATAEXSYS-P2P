@@ -8,9 +8,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stddef.h>
-#include "util/To_BO_BE_Pimitives.h"
-#include "util/To_BO_Def_Primitives.h"
-#include "datatype/OpStatus.h"
+#include "util/NetworkSerialization.h"
+#include "util/NetworkSerialization.h"
+#include "enums/OpStatus.h"
 /* Force aggressive inlining */
 #define U256_INLINE static inline __attribute__((always_inline))
 
