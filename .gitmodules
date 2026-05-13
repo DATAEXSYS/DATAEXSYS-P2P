@@ -17,8 +17,8 @@
 # Role    : Provides PEER::PKCertChain STATIC library
 # ---------------------------------------------------------------------------
 [submodule "peer/backend/PKCertChain"]
-	path   = peer/backend/PKCertChain
-	url    = https://github.com/salmanamir95/PKCertChain.git
+	path = peer/backend/PKCertChain
+	url = https://github.com/salmanamir95/PKCertChain.git
 	branch = main
 	update = checkout
 	fetchRecurseSubmodules = false
@@ -33,8 +33,8 @@
 # Role    : Provides PEER::RollingSignatures STATIC library
 # ---------------------------------------------------------------------------
 [submodule "peer/backend/RollingSignatures"]
-	path   = peer/backend/RollingSignatures
-	url    = https://github.com/salmanamir95/RollingSignatures.git
+	path = peer/backend/RollingSignatures
+	url = https://github.com/salmanamir95/RollingSignatures.git
 	branch = main
 	update = checkout
 	fetchRecurseSubmodules = false
@@ -49,8 +49,8 @@
 # Role    : Provides PEER::LocalTrustDiaries INTERFACE library
 # ---------------------------------------------------------------------------
 [submodule "peer/backend/LocalTrustDiaries"]
-	path   = peer/backend/LocalTrustDiaries
-	url    = https://github.com/salmanamir95/LocalTrustDiaries.git
+	path = peer/backend/LocalTrustDiaries
+	url = https://github.com/salmanamir95/LocalTrustDiaries.git
 	branch = main
 	update = checkout
 	fetchRecurseSubmodules = false
