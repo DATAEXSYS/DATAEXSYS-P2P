@@ -1,4 +1,7 @@
 #ifndef HMAC_ROUTING_H
+
+#include "RollingSignatures/RoutingPacket.h"
+
 #define HMAC_ROUTING_H
 
 #include <stdint.h>
@@ -12,14 +15,7 @@
 #define ROUTING_HMAC_SIZE 32
 #define MAX_PATH_HOPS 16
 
-typedef struct {
-    uint8_t payload[256];
-    size_t payload_len;
-    uint8_t path_vector[MAX_PATH_HOPS]; // Array of NodeIDs representing the route
-    size_t path_len;
-    uint8_t hmac[ROUTING_HMAC_SIZE];
-    uint32_t nonce;
-} RoutingPacket;
+
 
 /**
  * @brief Derives a per-hop key: K_i = H(K_{i-1} || NodeID_i)

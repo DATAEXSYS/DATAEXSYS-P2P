@@ -1,4 +1,7 @@
 #ifndef POW_MANAGER_H
+
+#include "PKCertChain/PowManager.h"
+
 #define POW_MANAGER_H
 
 #include "pkcertchain_config.h"
@@ -16,14 +19,7 @@
 #include "Proofs/TierPoW/tierPoWResult.h"
 #include "datatype/OpStatus.h"
 
-typedef struct {
-    PKCertChain *chain;
-    uint8_t tier;
-    MiniPowResult *miniResult;
-    tier_pow_challenge_t challenge;
-    tier_pow_solve_t solve;
-    double solve_time_seconds;
-} PowManager;
+
 
 static inline uint8_t bayesian_update(uint8_t current_complexity, double solve_time_seconds) {
     const double target_time = 600.0;

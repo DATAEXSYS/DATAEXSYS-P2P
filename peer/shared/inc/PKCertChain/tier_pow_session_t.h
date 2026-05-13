@@ -1,10 +1,8 @@
-#ifndef TIER_POW_SESSION_H
-#define TIER_POW_SESSION_H
-
-#include "pkcertchain_config.h"
+#pragma once
 
 #include <stdint.h>
-#include "Proofs/TierPoW/tierPoWChallenge.h"
+#include <stdbool.h>
+// Add necessary includes
 
 typedef struct __attribute__((aligned(4))) {
     tier_pow_challenge_t challenge;
@@ -12,5 +10,3 @@ typedef struct __attribute__((aligned(4))) {
     uint64_t received_time_seconds;
     uint32_t target_index;
 } tier_pow_session_t;
-
-#endif // TIER_POW_SESSION_H

@@ -1,4 +1,7 @@
 #ifndef MINI_POW_CHALLENGE_QUEUE_ENTRY_H
+
+#include "PKCertChain/mini_pow_challenge_queue_entry_t.h"
+
 #define MINI_POW_CHALLENGE_QUEUE_ENTRY_H
 
 #include "pkcertchain_config.h"
@@ -8,11 +11,6 @@
 
 /*
  * MiniPoW Challenge Queue Entry
- * Holds a challenge struct and tracks if the slot is occupied.
- */
-typedef struct __attribute__((aligned(4))) {
-    bool used;
-    mini_pow_challenge_t challenge;
-} mini_pow_challenge_queue_entry_t;
+ * Holds a challenge 
 
 #endif // MINI_POW_CHALLENGE_QUEUE_ENTRY_H

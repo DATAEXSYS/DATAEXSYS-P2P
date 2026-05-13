@@ -1,4 +1,7 @@
 #ifndef TIER_POW_SOLVE_H
+
+#include "PKCertChain/tier_pow_solve_t.h"
+
 #define TIER_POW_SOLVE_H
 
 #include "pkcertchain_config.h"
@@ -17,13 +20,7 @@
 
 #define TIER_POW_SOLVE_SERIALIZED_SIZE TIER_POW_SOLVE_SIZE
 
-typedef struct __attribute__((aligned(4)))
-{
-    uint64_t nonce;     // 8 bytes
-    uint8_t complexity; // 1 byte
-    uint64_t challenge_id; // 8 bytes
-    uint8_t reserved[3];
-} tier_pow_solve_t;
+
 
 TIER_POW_SOLVE_INLINE void tier_pow_solve_init(tier_pow_solve_t *pow)
 {

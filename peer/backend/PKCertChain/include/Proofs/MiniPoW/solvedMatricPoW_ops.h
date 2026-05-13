@@ -1,4 +1,7 @@
 #ifndef SOLVED_MATRIC_POW_H
+
+#include "PKCertChain/SolvedMatricPoW.h"
+
 #define SOLVED_MATRIC_POW_H
 
 #include "pkcertchain_config.h"
@@ -15,11 +18,7 @@
  * Final solved matrix returned by the miner along with the puzzle identifiers.
  * Using uint32_t to safely store the sum of the outer products.
  */
-typedef struct __attribute__((aligned(4))) {
-    uint32_t challenge_id;
-    uint32_t session_id;
-    uint32_t Matrix[MINI_POW_MATRIX_N][MINI_POW_MATRIX_N];
-} SolvedMatricPoW;
+
 
 SOLVED_MATRIC_POW_INLINE void solved_matric_pow_init(SolvedMatricPoW *solved)
 {

@@ -1,4 +1,7 @@
 #ifndef MINI_POW_SOLVE_H
+
+#include "PKCertChain/mini_pow_solve_t.h"
+
 #define MINI_POW_SOLVE_H
 
 #include "pkcertchain_config.h"
@@ -16,13 +19,7 @@
 #endif
 
 /*
- * MiniPoW Solve structure
- * Holds the resulting matrix C (1000 x 1000) where C = A * B.
- * Each entry is a uint32_t to avoid overflow from multiplying two uint16_t's.
- */
-typedef struct __attribute__((aligned(4))) {
-    uint32_t resultMatrix[MINI_POW_MATRIX_N][MINI_POW_MATRIX_N];
-} mini_pow_solve_t;
+ * MiniPoW Solve 
 
 /*
  * Initializes the solve state with a zero matrix.

@@ -1,4 +1,7 @@
 #ifndef MINI_POW_RESULT_H
+
+#include "PKCertChain/mini_pow_result.h"
+
 #define MINI_POW_RESULT_H
 
 #include <stdint.h>
@@ -8,14 +11,7 @@
 #include "blockchain/Tier.h"
 
 // The final result returned by the manager
-typedef struct {
-    uint32_t challengeid;
-    uint32_t sessionid;
-    const mini_pow_Matrix *minipowmatrix;
-    const SolvedMatricPoW *solvedmatrix;
-    Tier_t tier;
-    bool isValid;
-} mini_pow_result;
+
 
 #define MINI_POW_RESULT_SERIALIZED_SIZE 12
 

@@ -1,4 +1,8 @@
 #ifndef TIER_POW_QUEUE_H
+
+#include "PKCertChain/tier_pow_queue_entry_t.h"
+#include "PKCertChain/tier_pow_queue_t.h"
+
 #define TIER_POW_QUEUE_H
 
 #include "pkcertchain_config.h"
@@ -16,16 +20,9 @@
 #define TIER_POW_QUEUE_MAX 128
 #endif
 
-typedef struct __attribute__((aligned(4))) {
-    bool used;
-    tier_pow_session_t session;
-    block candidate;
-} tier_pow_queue_entry_t;
 
-typedef struct __attribute__((aligned(4))) {
-    tier_pow_queue_entry_t entries[TIER_POW_QUEUE_MAX];
-    size_t count;
-} tier_pow_queue_t;
+
+
 
 static inline void tier_pow_queue_init(tier_pow_queue_t *q)
 {

@@ -1,4 +1,7 @@
 #ifndef MINI_POW_TRACKER_H
+
+#include "PKCertChain/MiniPowTracker.h"
+
 #define MINI_POW_TRACKER_H
 
 #include "pkcertchain_config.h"
@@ -15,13 +18,7 @@
  * Tracks start time, receive time, and cumulative duration for challenges
  * using Linux monotonic time (microseconds).
  */
-typedef struct __attribute__((aligned(4))) {
-    uint32_t challenge_id;
-    uint32_t session_id;
-    uint64_t recent_start_time;
-    uint64_t recent_receive_time;
-    uint64_t cumulative_duration;
-} MiniPowTracker;
+
 
 MINI_POW_TRACKER_INLINE void mini_pow_tracker_init(MiniPowTracker *tracker)
 {

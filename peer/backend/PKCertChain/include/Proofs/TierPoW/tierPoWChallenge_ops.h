@@ -1,4 +1,7 @@
 #ifndef TIER_POW_CHALLENGE_H
+
+#include "PKCertChain/tier_pow_challenge_t.h"
+
 #define TIER_POW_CHALLENGE_H
 
 #include "pkcertchain_config.h"
@@ -24,12 +27,7 @@
  *  - complexity 0-255 bits
  *  - padding to keep size a 32-bit multiple
  */
-typedef struct __attribute__((aligned(4))) {
-    uint256 challenge;   // 32 bytes
-    uint8_t complexity;  // 1 byte
-    uint64_t challenge_id; // 8 bytes
-    uint8_t reserved[3]; // padding to make 32-bit multiple
-} tier_pow_challenge_t;
+
 
 TIER_POW_CHALLENGE_INLINE void tier_pow_challenge_init(tier_pow_challenge_t *pow)
 {

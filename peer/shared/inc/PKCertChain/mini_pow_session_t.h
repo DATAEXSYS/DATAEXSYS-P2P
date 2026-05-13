@@ -1,9 +1,8 @@
-#ifndef MINI_POW_SESSION_H
-#define MINI_POW_SESSION_H
+#pragma once
 
-#include "pkcertchain_config.h"
 #include <stdint.h>
-#include "Proofs/MiniPoW/miniPoWChallenge.h"
+#include <stdbool.h>
+// Add necessary includes
 
 typedef struct __attribute__((aligned(4))) {
     mini_pow_challenge_t challenge;
@@ -11,5 +10,3 @@ typedef struct __attribute__((aligned(4))) {
     uint64_t received_time_seconds;
     uint32_t target_index;
 } mini_pow_session_t;
-
-#endif // MINI_POW_SESSION_H

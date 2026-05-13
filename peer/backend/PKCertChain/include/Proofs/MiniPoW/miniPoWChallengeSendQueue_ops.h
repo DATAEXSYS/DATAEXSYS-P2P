@@ -1,4 +1,7 @@
 #ifndef MINI_POW_CHALLENGE_SEND_QUEUE_H
+
+#include "PKCertChain/mini_pow_challenge_queue_t.h"
+
 #define MINI_POW_CHALLENGE_SEND_QUEUE_H
 
 #include "pkcertchain_config.h"
@@ -16,10 +19,7 @@
 #define MINI_POW_CHALLENGE_QUEUE_MAX 128
 #endif
 
-typedef struct __attribute__((aligned(4))) {
-    mini_pow_challenge_queue_entry_t entries[MINI_POW_CHALLENGE_QUEUE_MAX];
-    size_t count;
-} mini_pow_challenge_queue_t;
+
 
 static inline void mini_pow_challenge_queue_init(mini_pow_challenge_queue_t *q)
 {

@@ -1,4 +1,7 @@
 #ifndef MINI_POW_MATRIX_H
+
+#include "PKCertChain/mini_pow_Matrix.h"
+
 #define MINI_POW_MATRIX_H
 
 #include "pkcertchain_config.h"
@@ -22,11 +25,7 @@
  * Contains the deterministic seed assigned to the miner,
  * and the two 1000x1000 matrices A and B populated securely via CSPRNG.
  */
-typedef struct __attribute__((aligned(4))) {
-    uint256 seed;
-    uint16_t A[MINI_POW_MATRIX_N][MINI_POW_MATRIX_N];
-    uint16_t B[MINI_POW_MATRIX_N][MINI_POW_MATRIX_N];
-} mini_pow_Matrix;
+
 
 /*
  * Construct the MiniPoW matrices (Seed + A + B)
