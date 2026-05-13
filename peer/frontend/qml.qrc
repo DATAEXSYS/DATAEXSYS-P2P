@@ -7,6 +7,7 @@
         <file>qml/pages/Settings.qml</file>
         <file>qml/pages/TrustDashboard.qml</file>
         <file>qml/pages/PacketRoutingDashboard.qml</file>
+        <file>qml/pages/MiningDashboard.qml</file>
         <file>qml/components/Sidebar.qml</file>
         <file>qml/components/NetworkCard.qml</file>
         <file>qml/components/StatusBadge.qml</file>

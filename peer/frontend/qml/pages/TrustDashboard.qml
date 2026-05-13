@@ -1,753 +1,804 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Window
 
 Rectangle {
-    id: trustRoot
-    color: "#0a0e27"
-    
-    /**
-     * LocalTrustDiaries Standalone Test Dashboard
-     * 
-     ┌─────────────────────────────────────────────────────┐
-     │ HEADER: Backend Status & Test Controls              │
-     ├─────────────────────────────────────────────────────┤
-     │ LEFT PANEL: Input Controls                           │
-     │ CENTER PANEL: Real-time Data Display                 │
-     │ RIGHT PANEL: Event Log & Diagnostics                │
-     └─────────────────────────────────────────────────────┘
-     */
+    id: root
+    color: "#0b1020"
 
-    // =====================================================================
-    // THEME COLORS
-    // =====================================================================
-    readonly property color panelBg: "#1a1f3a"
-    readonly property color borderColor: "#2a3f5f"
-    readonly property color textPrimary: "#e0e0e0"
-    readonly property color textMuted: "#8a94a6"
-    readonly property color accentGreen: "#00d084"
-    readonly property color accentRed: "#ff6b6b"
-    readonly property color accentYellow: "#ffd93d"
-    readonly property color accentBlue: "#4ecdc4"
+    readonly property color panelBg: "#111827"
+    readonly property color panelAlt: "#0f172a"
+    readonly property color borderColor: "#25324a"
+    readonly property color textColor: "#e5e7eb"
+    readonly property color mutedText: "#94a3b8"
+    readonly property color accent: "#38bdf8"
+    readonly property color good: "#22c55e"
+    readonly property color warn: "#f59e0b"
+    readonly property color bad: "#ef4444"
 
-    // =====================================================================
-    // SIGNALS FROM ADAPTER (Connected in AppController)
-    // =====================================================================
-    signal trustScoreChanged(string peerId, real score);
-    signal interactionRecorded(string peerId, string type, bool success);
-    signal errorOccurred(string message);
-    signal peerAdded(string peerId);
-    signal connectionTestResult(string resultJson);
+    property var adapter: (typeof appController !== "undefined" && appController.trustAdapter) ? appController.trustAdapter : null
+    property string systemStateText: adapter ? adapter.systemState : "Standalone simulation lab"
+    property bool backendAvailable: adapter !== null
+    property var localPeers: []
+    property var localTimeline: []
+    property string localSnapshotJson: ""
+    property alias peerIdInput: peerAInput
 
-    // =====================================================================
-    // EVENT LOG MANAGEMENT
-    // =====================================================================
-    ListModel {
-        id: eventLogModel
-    }
+    ListModel { id: peerModel }
+    ListModel { id: timelineModel }
+    ListModel { id: eventModel }
 
-    function addEventLog(tag, message, level) {
-        const timestamp = new Date().toLocaleTimeString();
-        const levelColor = level === "error" ? accentRed : 
-                          level === "warn" ? accentYellow :
-                          level === "success" ? accentGreen : accentBlue;
-        
-        eventLogModel.insert(0, {
-            "timestamp": timestamp,
+    function logEvent(tag, message, level) {
+        const color = level === "error" ? bad : (level === "warn" ? warn : accent)
+        eventModel.insert(0, {
+            "time": new Date().toLocaleTimeString(),
             "tag": tag,
             "message": message,
-            "level": level,
-            "color": levelColor
-        });
-        
-        // Keep only last 100 events
-        while (eventLogModel.count > 100) {
-            eventLogModel.remove(eventLogModel.count - 1);
+            "color": color
+        })
+        while (eventModel.count > 140)
+            eventModel.remove(eventModel.count - 1)
+    }
+
+    function clampTrust(value) {
+        return Math.max(0.0, Math.min(1.0, value))
+    }
+
+    function trendFor(value) {
+        if (value >= 0.7)
+            return "Rising"
+        if (value <= 0.3)
+            return "Declining"
+        return "Stable"
+    }
+
+    function normalizeType(type) {
+        const key = type.trim().toLowerCase()
+        return key === "" ? "generic" : key
+    }
+
+    function baseDeltaFor(type) {
+        switch (normalizeType(type)) {
+        case "send": return 0.03
+        case "receive": return 0.02
+        case "validate": return 0.05
+        case "forward": return 0.015
+        case "store": return 0.01
+        default: return 0.025
         }
     }
 
-    // =====================================================================
-    // PEER DATA MODEL
-    // =====================================================================
-    ListModel {
-        id: peerListModel
+    function seededHash(text) {
+        let hash = 2166136261
+        for (let i = 0; i < text.length; ++i) {
+            hash ^= text.charCodeAt(i)
+            hash = Math.imul(hash, 16777619)
+        }
+        return hash >>> 0
     }
 
-    function updatePeerList(peersJson) {
+    function deterministicOutcome(peerA, peerB, type, sequence) {
+        const seed = seededHash(peerA + "|" + peerB + "|" + type + "|" + sequence)
+        const score = seed % 100
+        const a = getLocalPeer(peerA)
+        const b = getLocalPeer(peerB)
+        const trustScore = Math.round(((a.trust + b.trust) / 2.0) * 100)
+        return score <= trustScore
+    }
+
+    function getLocalPeer(peerId) {
+        for (let i = 0; i < localPeers.length; ++i) {
+            if (localPeers[i].peerId === peerId)
+                return localPeers[i]
+        }
+        return null
+    }
+
+    function updateLocalPeer(peerId, updater) {
+        for (let i = 0; i < localPeers.length; ++i) {
+            if (localPeers[i].peerId === peerId) {
+                updater(localPeers[i])
+                localPeers[i].trend = trendFor(localPeers[i].trust)
+                return localPeers[i]
+            }
+        }
+        return null
+    }
+
+    function rebuildPeerModel(peers) {
+        peerModel.clear()
+        for (let i = 0; i < peers.length; ++i) {
+            const peer = peers[i]
+            peerModel.append({
+                "peerId": peer.peerId,
+                "trust": peer.trust,
+                "interactions": peer.interactions,
+                "positive": peer.positive,
+                "negative": peer.negative,
+                "trend": peer.trend,
+                "trustPercent": Math.round(peer.trust * 100)
+            })
+        }
+    }
+
+    function rebuildTimelineModel(timeline) {
+        timelineModel.clear()
+        for (let i = 0; i < timeline.length; ++i) {
+            const item = timeline[i]
+            timelineModel.append({
+                "index": item.index,
+                "peerA": item.peerA,
+                "peerB": item.peerB,
+                "type": item.type,
+                "success": item.success,
+                "deltaA": item.deltaA,
+                "deltaB": item.deltaB,
+                "resultingState": item.resultingState,
+                "timestamp": item.timestamp
+            })
+        }
+    }
+
+    function syncViewFromLocal() {
+        rebuildPeerModel(localPeers)
+        rebuildTimelineModel(localTimeline)
+        systemStateText = "Standalone simulation lab | " + localPeers.length + " peers | " + localTimeline.length + " interactions"
+    }
+
+    function syncViewFromStateJson(stateJson) {
         try {
-            const peers = JSON.parse(peersJson);
-            peerListModel.clear();
-            
-            for (let peer of peers) {
-                peerListModel.append({
-                    "peerId": peer.peerId,
-                    "score": peer.score,
-                    "scorePercent": (peer.score * 100).toFixed(1),
-                    "trend": peer.trendString,
-                    "successCount": peer.successCount,
-                    "failureCount": peer.failureCount,
-                    "total": peer.successCount + peer.failureCount
-                });
-            }
-            
-            addEventLog("DATA", `Loaded ${peers.length} peers`, "info");
+            const state = JSON.parse(stateJson)
+            const peers = state.peers || []
+            const timeline = state.timeline || []
+            localPeers = peers.map(function(peer) {
+                return {
+                    peerId: peer.peerId,
+                    trust: peer.trust,
+                    interactions: peer.interactions,
+                    positive: peer.positive,
+                    negative: peer.negative,
+                    trend: peer.trend
+                }
+            })
+            localTimeline = timeline.map(function(item) {
+                return {
+                    index: item.index,
+                    peerA: item.peerA,
+                    peerB: item.peerB,
+                    type: item.type,
+                    success: item.success,
+                    deltaA: item.deltaA,
+                    deltaB: item.deltaB,
+                    resultingState: item.resultingState,
+                    timestamp: item.timestamp
+                }
+            })
+            rebuildPeerModel(localPeers)
+            rebuildTimelineModel(localTimeline)
+            systemStateText = state.systemState || (backendAvailable ? "Adapter connected" : "Standalone simulation lab")
         } catch (e) {
-            addEventLog("ERROR", `Failed to parse peers: ${e}`, "error");
+            logEvent("ERROR", "Failed to parse state snapshot", "error")
         }
     }
 
-    // =====================================================================
-    // TOP HEADER: Status & Test Controls
-    // =====================================================================
-    Rectangle {
-        id: header
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 70
-        color: panelBg
-        border.color: borderColor
-        border.width: 1
+    function localSnapshot() {
+        return JSON.stringify({
+            systemState: systemStateText,
+            peers: localPeers,
+            timeline: localTimeline,
+            timestamp: new Date().toISOString()
+        })
+    }
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: 15
-            spacing: 15
-
-            // Status indicator
-            Rectangle {
-                width: 12
-                height: 12
-                radius: 6
-                color: accentGreen
-                ToolTip.text: "Backend Connected"
-                MouseArea { anchors.fill: parent; hoverEnabled: true }
-            }
-
-            Text {
-                text: "LocalTrustDiaries Test Dashboard"
-                color: textPrimary
-                font.pixelSize: 14
-                font.bold: true
-            }
-
-            Item { Layout.fillWidth: true }
-
-            // Status string
-            Text {
-                id: statusText
-                text: "Ready"
-                color: textMuted
-                font.pixelSize: 11
-            }
-
-            Button {
-                text: "Test Connection"
-                onClicked: {
-                    // Call adapter test function
-                    addEventLog("TEST", "Running backend connection test...", "warn");
-                    if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                        appController.trustAdapter.testBackendConnection();
-                    }
-                }
-                background: Rectangle {
-                    color: accentBlue
-                    radius: 4
-                }
-                contentItem: Text {
-                    text: parent.text
-                    color: "white"
-                    font.pixelSize: 11
-                    horizontalAlignment: Text.AlignHCenter
-                }
-            }
-
-            Button {
-                text: "Clear All"
-                onClicked: {
-                    if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                        appController.trustAdapter.clearAllData();
-                        peerListModel.clear();
-                        eventLogModel.clear();
-                        addEventLog("SYSTEM", "All data cleared", "warn");
-                    }
-                }
-                background: Rectangle {
-                    color: accentRed
-                    radius: 4
-                }
-                contentItem: Text {
-                    text: parent.text
-                    color: "white"
-                    font.pixelSize: 11
-                }
-            }
+    function restoreLocalSnapshot(snapshotJson) {
+        try {
+            const state = JSON.parse(snapshotJson)
+            localPeers = state.peers || []
+            localTimeline = state.timeline || []
+            rebuildPeerModel(localPeers)
+            rebuildTimelineModel(localTimeline)
+            systemStateText = state.systemState || systemStateText
+        } catch (e) {
+            logEvent("ERROR", "Unable to restore snapshot", "error")
         }
     }
 
-    // =====================================================================
-    // MAIN CONTENT: 3-COLUMN LAYOUT
-    // =====================================================================
-    RowLayout {
-        anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+    function createPeerAction() {
+        const peerId = peerIdInput.text.trim()
+        if (peerId === "") {
+            logEvent("WARN", "Peer ID is required", "warn")
+            return
+        }
+
+        if (backendAvailable) {
+            adapter.createPeer(peerId)
+            return
+        }
+
+        if (getLocalPeer(peerId)) {
+            logEvent("WARN", "Peer already exists: " + peerId, "warn")
+            return
+        }
+
+        localPeers.push({ peerId: peerId, trust: 0.5, interactions: 0, positive: 0, negative: 0, trend: "Neutral" })
+        localSnapshotJson = localSnapshot()
+        systemStateText = "Peer created: " + peerId
+        logEvent("PEER", "Created peer " + peerId, "info")
+        syncViewFromLocal()
+    }
+
+    function deletePeerAction() {
+        const peerId = peerIdInput.text.trim()
+        if (peerId === "") {
+            logEvent("WARN", "Peer ID is required", "warn")
+            return
+        }
+
+        if (backendAvailable) {
+            adapter.deletePeer(peerId)
+            return
+        }
+
+        const before = localPeers.length
+        localPeers = localPeers.filter(function(peer) { return peer.peerId !== peerId })
+        if (localPeers.length === before) {
+            logEvent("ERROR", "Peer not found: " + peerId, "error")
+            return
+        }
+
+        localSnapshotJson = localSnapshot()
+        systemStateText = "Peer removed: " + peerId
+        logEvent("PEER", "Removed peer " + peerId, "warn")
+        syncViewFromLocal()
+    }
+
+    function setTrustAction() {
+        const peerId = peerIdInput.text.trim()
+        const trustValue = parseFloat(trustInput.text)
+        if (peerId === "" || isNaN(trustValue)) {
+            logEvent("WARN", "Peer ID and valid trust value are required", "warn")
+            return
+        }
+
+        const value = clampTrust(trustValue)
+        if (backendAvailable) {
+            adapter.setTrust(peerId, value)
+            return
+        }
+
+        const peer = updateLocalPeer(peerId, function(record) {
+            record.trust = value
+        })
+        if (!peer) {
+            logEvent("ERROR", "Peer not found: " + peerId, "error")
+            return
+        }
+
+        localSnapshotJson = localSnapshot()
+        systemStateText = "Trust updated: " + peerId
+        logEvent("TRUST", "Set trust for " + peerId + " to " + value.toFixed(2), "info")
+        syncViewFromLocal()
+    }
+
+    function simulateInteractionAction(countOverride) {
+        const peerA = peerAInput.text.trim()
+        const peerB = peerBInput.text.trim()
+        const type = interactionTypeCombo.currentText
+        const count = countOverride ? countOverride : 1
+
+        if (peerA === "" || peerB === "") {
+            logEvent("WARN", "Both peer IDs are required", "warn")
+            return
+        }
+
+        if (backendAvailable && count === 1) {
+            adapter.simulateInteraction(peerA, peerB, type)
+            return
+        }
+
+        for (let i = 0; i < count; ++i) {
+            const left = getLocalPeer(peerA)
+            const right = getLocalPeer(peerB)
+            if (!left || !right) {
+                logEvent("ERROR", "Both peers must exist before simulation", "error")
+                return
+            }
+
+            const sequence = localTimeline.length
+            const normalizedType = normalizeType(type)
+            const success = deterministicOutcome(peerA, peerB, normalizedType, sequence)
+            const baseDelta = baseDeltaFor(normalizedType)
+            const deltaA = success ? baseDelta : -baseDelta * 1.5
+            const deltaB = success ? baseDelta * 0.6 : -baseDelta * 0.9
+
+            left.interactions += 1
+            right.interactions += 1
+            if (success) {
+                left.positive += 1
+                right.positive += 1
+            } else {
+                left.negative += 1
+                right.negative += 1
+            }
+
+            left.trust = clampTrust(left.trust + deltaA)
+            right.trust = clampTrust(right.trust + deltaB)
+            left.trend = trendFor(left.trust)
+            right.trend = trendFor(right.trust)
+
+            localTimeline.push({
+                index: sequence,
+                peerA: peerA,
+                peerB: peerB,
+                type: normalizedType,
+                success: success,
+                deltaA: deltaA,
+                deltaB: deltaB,
+                resultingState: peerA + "=" + left.trust.toFixed(2) + " | " + peerB + "=" + right.trust.toFixed(2),
+                timestamp: new Date().toISOString()
+            })
+
+            logEvent("INTERACTION", peerA + " / " + peerB + " / " + normalizedType + " => " + (success ? "SUCCESS" : "FAILURE"), success ? "info" : "warn")
+        }
+
+        localSnapshotJson = localSnapshot()
+        systemStateText = "Interaction logged: " + peerA + " -> " + peerB
+        syncViewFromLocal()
+    }
+
+    function resetSystemAction() {
+        if (backendAvailable) {
+            adapter.resetSystem()
+            return
+        }
+
+        localSnapshotJson = localSnapshot()
+        localPeers = []
+        localTimeline = []
+        systemStateText = "System reset"
+        logEvent("SYSTEM", "System reset", "warn")
+        syncViewFromLocal()
+    }
+
+    function replayLastStateAction() {
+        if (backendAvailable) {
+            adapter.replayLastState()
+            return
+        }
+
+        if (localSnapshotJson === "") {
+            logEvent("WARN", "No snapshot available to replay", "warn")
+            return
+        }
+
+        restoreLocalSnapshot(localSnapshotJson)
+        logEvent("SYSTEM", "Replayed last local snapshot", "info")
+    }
+
+    function simulateHundredInteractionsAction() {
+        logEvent("TEST", "Running 100 interaction stress test", "warn")
+        if (backendAvailable) {
+            for (let i = 0; i < 100; ++i) {
+                adapter.simulateInteraction(peerAInput.text.trim(), peerBInput.text.trim(), interactionTypeCombo.currentText)
+            }
+            return
+        }
+        simulateInteractionAction(100)
+    }
+
+    function stressTrustUpdatesAction() {
+        const peerId = peerIdInput.text.trim()
+        if (peerId === "") {
+            logEvent("WARN", "Peer ID is required", "warn")
+            return
+        }
+
+        logEvent("TEST", "Running stress trust update sequence", "warn")
+        if (backendAvailable) {
+            for (let i = 0; i < 25; ++i) {
+                const nextValue = clampTrust((i % 2 === 0 ? 0.2 : 0.8) + (i * 0.01))
+                adapter.setTrust(peerId, nextValue)
+            }
+            return
+        }
+
+        if (!getLocalPeer(peerId)) {
+            logEvent("ERROR", "Peer not found: " + peerId, "error")
+            return
+        }
+
+        for (let i = 0; i < 25; ++i) {
+            updateLocalPeer(peerId, function(record) {
+                record.trust = clampTrust((i % 2 === 0 ? 0.2 : 0.8) + (i * 0.01))
+            })
+        }
+
+        localSnapshotJson = localSnapshot()
+        systemStateText = "Stress trust updates executed"
+        syncViewFromLocal()
+    }
+
+    function refreshFromAdapter(peersJson, timelineJson, stateJson) {
+        try {
+            const peers = JSON.parse(peersJson)
+            const timeline = JSON.parse(timelineJson)
+            const state = JSON.parse(stateJson)
+            localPeers = peers.map(function(peer) {
+                return {
+                    peerId: peer.peerId,
+                    trust: peer.trust,
+                    interactions: peer.interactions,
+                    positive: peer.positive,
+                    negative: peer.negative,
+                    trend: peer.trend
+                }
+            })
+            localTimeline = timeline.map(function(item) {
+                return {
+                    index: item.index,
+                    peerA: item.peerA,
+                    peerB: item.peerB,
+                    type: item.type,
+                    success: item.success,
+                    deltaA: item.deltaA,
+                    deltaB: item.deltaB,
+                    resultingState: item.resultingState,
+                    timestamp: item.timestamp
+                }
+            })
+            rebuildPeerModel(localPeers)
+            rebuildTimelineModel(localTimeline)
+            systemStateText = state.systemState || "Adapter connected"
+        } catch (e) {
+            logEvent("ERROR", "Failed to refresh adapter state", "error")
+        }
+    }
+
+    ColumnLayout {
+        anchors.fill: parent
         anchors.margins: 10
         spacing: 10
 
-        // ────────────────────────────────────────────────────────────────
-        // LEFT PANEL: INPUT CONTROLS
-        // ────────────────────────────────────────────────────────────────
-        Rectangle {
-            Layout.fillHeight: true
-            Layout.preferredWidth: 300
-            color: panelBg
-            border.color: borderColor
-            border.width: 1
-            radius: 4
-
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 15
-                spacing: 12
-
-                Text {
-                    text: "CONTROLS"
-                    color: accentGreen
-                    font.pixelSize: 12
-                    font.bold: true
-                }
-
-                // Peer ID Input
-                ColumnLayout {
-                    spacing: 5
-                    Text {
-                        text: "Peer ID"
-                        color: textMuted
-                        font.pixelSize: 10
-                    }
-                    TextField {
-                        id: peerIdInput
-                        placeholderText: "Enter peer ID"
-                        Layout.fillWidth: true
-                        background: Rectangle {
-                            color: "#0a0e27"
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
-                        }
-                        color: textPrimary
-                    }
-                }
-
-                // Trust Score Input
-                ColumnLayout {
-                    spacing: 5
-                    Text {
-                        text: "Trust Delta (-1.0 to 1.0)"
-                        color: textMuted
-                        font.pixelSize: 10
-                    }
-                    TextField {
-                        id: trustDeltaInput
-                        placeholderText: "0.1"
-                        text: "0.1"
-                        Layout.fillWidth: true
-                        background: Rectangle {
-                            color: "#0a0e27"
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
-                        }
-                        color: textPrimary
-                    }
-                }
-
-                // Interaction Type
-                ColumnLayout {
-                    spacing: 5
-                    Text {
-                        text: "Interaction Type"
-                        color: textMuted
-                        font.pixelSize: 10
-                    }
-                    ComboBox {
-                        id: interactionTypeCombo
-                        model: ["send", "receive", "validate", "forward", "store"]
-                        Layout.fillWidth: true
-                        background: Rectangle {
-                            color: panelBg
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
-                        }
-                        contentItem: Text {
-                            text: parent.currentText
-                            color: textPrimary
-                            leftPadding: 8
-                        }
-                    }
-                }
-
-                // Success/Failure Toggle
-                Text {
-                    text: "Interaction Result"
-                    color: textMuted
-                    font.pixelSize: 10
-                }
-                RowLayout {
-                    Button {
-                        id: successBtn
-                        text: "SUCCESS"
-                        Layout.fillWidth: true
-                        checked: true
-                        checkable: true
-                        onClicked: { successBtn.checked = true; failureBtn.checked = false }
-                        background: Rectangle {
-                            color: successBtn.checked ? accentGreen : panelBg
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
-                        }
-                        contentItem: Text { text: parent.text; color: "white"; horizontalAlignment: Text.AlignHCenter }
-                    }
-                    Button {
-                        id: failureBtn
-                        text: "FAILURE"
-                        Layout.fillWidth: true
-                        checkable: true
-                        onClicked: { failureBtn.checked = true; successBtn.checked = false }
-                        background: Rectangle {
-                            color: failureBtn.checked ? accentRed : panelBg
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
-                        }
-                        contentItem: Text { text: parent.text; color: "white"; horizontalAlignment: Text.AlignHCenter }
-                    }
-                }
-
-                Separator { Layout.fillWidth: true }
-
-                // ACTION BUTTONS
-                Button {
-                    text: "✓ Add Peer"
-                    Layout.fillWidth: true
-                    onClicked: {
-                        const peerId = peerIdInput.text.trim();
-                        if (!peerId) {
-                            addEventLog("WARN", "Peer ID is empty", "warn");
-                            return;
-                        }
-                        if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                            appController.trustAdapter.addPeer(peerId);
-                        }
-                    }
-                    background: Rectangle { color: accentGreen; radius: 3 }
-                    contentItem: Text { text: parent.text; color: "#0a0e27"; font.bold: true; horizontalAlignment: Text.AlignHCenter }
-                }
-
-                Button {
-                    text: "↑ Update Trust"
-                    Layout.fillWidth: true
-                    onClicked: {
-                        const peerId = peerIdInput.text.trim();
-                        const delta = parseFloat(trustDeltaInput.text);
-                        
-                        if (!peerId || isNaN(delta)) {
-                            addEventLog("WARN", "Invalid input", "warn");
-                            return;
-                        }
-                        if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                            appController.trustAdapter.updateTrustScore(peerId, delta);
-                        }
-                    }
-                    background: Rectangle { color: accentBlue; radius: 3 }
-                    contentItem: Text { text: parent.text; color: "white"; font.bold: true; horizontalAlignment: Text.AlignHCenter }
-                }
-
-                Button {
-                    text: "📝 Record Interaction"
-                    Layout.fillWidth: true
-                    onClicked: {
-                        const peerId = peerIdInput.text.trim();
-                        const type = interactionTypeCombo.currentText;
-                        const success = successBtn.checked;
-                        
-                        if (!peerId) {
-                            addEventLog("WARN", "Peer ID is empty", "warn");
-                            return;
-                        }
-                        if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                            appController.trustAdapter.recordInteraction(peerId, type, success);
-                        }
-                    }
-                    background: Rectangle { color: accentYellow; radius: 3 }
-                    contentItem: Text { text: parent.text; color: "#0a0e27"; font.bold: true; horizontalAlignment: Text.AlignHCenter }
-                }
-
-                Button {
-                    text: "✕ Remove Peer"
-                    Layout.fillWidth: true
-                    onClicked: {
-                        const peerId = peerIdInput.text.trim();
-                        if (!peerId) {
-                            addEventLog("WARN", "Peer ID is empty", "warn");
-                            return;
-                        }
-                        if (typeof appController !== 'undefined' && appController.trustAdapter) {
-                            appController.trustAdapter.removePeer(peerId);
-                        }
-                    }
-                    background: Rectangle { color: accentRed; radius: 3 }
-                    contentItem: Text { text: parent.text; color: "white"; font.bold: true; horizontalAlignment: Text.AlignHCenter }
-                }
-
-                Separator { Layout.fillWidth: true }
-                
-                Text {
-                    text: "SAMPLE DATA"
-                    color: accentGreen
-                    font.pixelSize: 12
-                    font.bold: true
-                }
-
-                Button {
-                    text: "Load Demo Data"
-                    Layout.fillWidth: true
-                    onClicked: {
-                        const demoData = [
-                            { id: "peer_alice", interactions: 5 },
-                            { id: "peer_bob", interactions: 3 },
-                            { id: "peer_charlie", interactions: 8 },
-                        ];
-                        
-                        for (let peer of demoData) {
-                            peerIdInput.text = peer.id;
-                            appController.trustAdapter.addPeer(peer.id);
-                            trustDeltaInput.text = "0.2";
-                            
-                            // Simulate some interactions
-                            for (let i = 0; i < peer.interactions; ++i) {
-                                const interactionTypes = ["send", "receive", "validate"];
-                                const type = interactionTypes[i % interactionTypes.length];
-                                const success = Math.random() > 0.2;
-                                appController.trustAdapter.recordInteraction(peer.id, type, success);
-                            }
-                        }
-                        
-                        addEventLog("DEMO", "Loaded sample data", "success");
-                    }
-                    background: Rectangle { color: panelBg; border.color: borderColor; border.width: 1; radius: 3 }
-                    contentItem: Text { text: parent.text; color: accentBlue; horizontalAlignment: Text.AlignHCenter }
-                }
-
-                Item { Layout.fillHeight: true }
-            }
-        }
-
-        // ────────────────────────────────────────────────────────────────
-        // CENTER PANEL: PEER LEADERBOARD
-        // ────────────────────────────────────────────────────────────────
         Rectangle {
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: 58
             color: panelBg
             border.color: borderColor
-            border.width: 1
-            radius: 4
+            radius: 6
 
-            ColumnLayout {
+            RowLayout {
                 anchors.fill: parent
-                anchors.margins: 15
+                anchors.margins: 12
                 spacing: 10
 
                 Text {
-                    text: "PEER LEADERBOARD (Real-Time Data)"
-                    color: accentGreen
-                    font.pixelSize: 12
+                    text: "LocalTrustDiaries Simulation Lab"
+                    color: textColor
+                    font.pixelSize: 15
                     font.bold: true
                 }
 
-                // Header row
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 10
+                Item { Layout.fillWidth: true }
 
-                    Text { text: "Peer ID"; color: textMuted; font.pixelSize: 10; Layout.preferredWidth: 120 }
-                    Text { text: "Trust"; color: textMuted; font.pixelSize: 10; Layout.preferredWidth: 80 }
-                    Text { text: "Success"; color: textMuted; font.pixelSize: 10; Layout.preferredWidth: 60 }
-                    Text { text: "Fail"; color: textMuted; font.pixelSize: 10; Layout.preferredWidth: 40 }
-                    Text { text: "Trend"; color: textMuted; font.pixelSize: 10; Layout.preferredWidth: 40 }
-                    Item { Layout.fillWidth: true }
+                Rectangle {
+                    width: 12
+                    height: 12
+                    radius: 6
+                    color: backendAvailable ? good : warn
                 }
 
-                Separator { Layout.fillWidth: true }
+                Text {
+                    text: backendAvailable ? "Adapter Connected" : "Standalone Mode"
+                    color: backendAvailable ? good : warn
+                    font.pixelSize: 11
+                    font.bold: true
+                }
 
-                // Peer list with scrolling
-                ScrollView {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    clip: true
+                Text {
+                    text: systemStateText
+                    color: mutedText
+                    font.pixelSize: 10
+                }
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 10
+
+            Rectangle {
+                Layout.preferredWidth: 360
+                Layout.fillHeight: true
+                color: panelBg
+                border.color: borderColor
+                radius: 6
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 8
+
+                    Text { text: "CONTROL PANEL"; color: accent; font.pixelSize: 12; font.bold: true }
+
+                    Text { text: "Peer A / Peer ID"; color: mutedText; font.pixelSize: 10 }
+                    TextField { id: peerAInput; placeholderText: "peer_alpha"; Layout.fillWidth: true }
+
+                    Text { text: "Partner Peer ID"; color: mutedText; font.pixelSize: 10 }
+                    TextField { id: peerBInput; placeholderText: "peer_beta"; Layout.fillWidth: true }
+
+                    Text { text: "Trust Value: " + trustSlider.value.toFixed(2); color: mutedText; font.pixelSize: 10 }
+                    Slider {
+                        id: trustSlider
+                        from: 0.0
+                        to: 1.0
+                        value: 0.5
+                        stepSize: 0.01
+                        Layout.fillWidth: true
+                        onMoved: trustInput.text = value.toFixed(2)
+                    }
+                    TextField {
+                        id: trustInput
+                        text: "0.50"
+                        Layout.fillWidth: true
+                        onEditingFinished: {
+                            const parsed = parseFloat(text)
+                            if (!isNaN(parsed))
+                                trustSlider.value = clampTrust(parsed)
+                        }
+                    }
+
+                    Text { text: "Interaction Type"; color: mutedText; font.pixelSize: 10 }
+                    ComboBox {
+                        id: interactionTypeCombo
+                        model: ["send", "receive", "validate", "forward", "store", "audit"]
+                        Layout.fillWidth: true
+                    }
+
+                    Button {
+                        text: "Create Peer"
+                        Layout.fillWidth: true
+                        onClicked: createPeerAction()
+                    }
+                    Button {
+                        text: "Delete Peer"
+                        Layout.fillWidth: true
+                        onClicked: deletePeerAction()
+                    }
+                    Button {
+                        text: "Set Trust"
+                        Layout.fillWidth: true
+                        onClicked: setTrustAction()
+                    }
+                    Button {
+                        text: "Simulate Interaction"
+                        Layout.fillWidth: true
+                        onClicked: simulateInteractionAction(1)
+                    }
+                    Button {
+                        text: "Reset System"
+                        Layout.fillWidth: true
+                        onClicked: resetSystemAction()
+                    }
+                    Button {
+                        text: "Replay Last State"
+                        Layout.fillWidth: true
+                        onClicked: replayLastStateAction()
+                    }
+                    Button {
+                        text: "Simulate 100 Interactions"
+                        Layout.fillWidth: true
+                        onClicked: simulateHundredInteractionsAction()
+                    }
+                    Button {
+                        text: "Stress Trust Updates"
+                        Layout.fillWidth: true
+                        onClicked: stressTrustUpdatesAction()
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 74
+                        color: panelAlt
+                        border.color: borderColor
+                        radius: 4
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            Text { text: "System Indicator"; color: mutedText; font.pixelSize: 9 }
+                            Text { text: systemStateText; color: textColor; font.pixelSize: 11; wrapMode: Text.WordWrap }
+                        }
+                    }
+
+                    Item { Layout.fillHeight: true }
+                }
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: panelBg
+                border.color: borderColor
+                radius: 6
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 8
+
+                    Text { text: "PEER STATE"; color: accent; font.pixelSize: 12; font.bold: true }
 
                     ListView {
-                        id: peerListView
-                        model: peerListModel
-                        spacing: 5
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 190
+                        model: peerModel
+                        clip: true
+                        spacing: 6
 
                         delegate: Rectangle {
-                            width: peerListView.width - 10
-                            height: 40
-                            color: index % 2 === 0 ? "#0a0e27" : "#141829"
-                            border.color: borderColor
-                            border.width: 1
-                            radius: 3
+                            width: parent.width - 8
+                            height: 54
+                            color: index % 2 === 0 ? panelAlt : "#0b1324"
+                            border.color: trust >= 0.7 ? good : (trust <= 0.3 ? bad : borderColor)
+                            radius: 4
 
                             RowLayout {
                                 anchors.fill: parent
                                 anchors.margins: 8
-                                spacing: 10
+                                spacing: 8
 
-                                Text { 
-                                    text: model.peerId; 
-                                    color: textPrimary; 
-                                    font.pixelSize: 11;
-                                    Layout.preferredWidth: 120
-                                    elide: Text.ElideRight
+                                ColumnLayout {
+                                    Layout.preferredWidth: 130
+                                    Text { text: peerId; color: textColor; font.pixelSize: 11; font.bold: true }
+                                    Text { text: trend; color: mutedText; font.pixelSize: 9 }
                                 }
 
                                 Rectangle {
-                                    Layout.preferredWidth: 80
-                                    height: 20
-                                    color: "#0a0e27"
-                                    border.color: accentBlue
-                                    border.width: 1
-                                    radius: 3
+                                    Layout.fillWidth: true
+                                    Layout.preferredHeight: 18
+                                    radius: 9
+                                    color: "#1f2937"
 
-                                    Row {
-                                        anchors.fill: parent
-                                        anchors.margins: 2
-
-                                        Rectangle {
-                                            width: (parent.width - 4) * (model.score)
-                                            height: parent.height
-                                            color: model.score > 0.7 ? accentGreen : 
-                                                   model.score > 0.4 ? accentYellow : accentRed
-                                            radius: 2
-                                        }
+                                    Rectangle {
+                                        width: parent.width * trust
+                                        height: parent.height
+                                        radius: 9
+                                        color: trust >= 0.7 ? good : (trust <= 0.3 ? bad : warn)
                                     }
 
-                                    Text { 
+                                    Text {
                                         anchors.centerIn: parent
-                                        text: model.scorePercent + "%";
-                                        color: textPrimary;
+                                        text: (trust * 100).toFixed(0) + "%"
+                                        color: "white"
                                         font.pixelSize: 9
                                     }
                                 }
 
-                                Text { 
-                                    text: model.successCount; 
-                                    color: accentGreen; 
-                                    font.pixelSize: 11;
-                                    Layout.preferredWidth: 60
-                                }
+                                Text { text: interactions; color: textColor; font.pixelSize: 10; Layout.preferredWidth: 40 }
+                                Text { text: positive; color: good; font.pixelSize: 10; Layout.preferredWidth: 40 }
+                                Text { text: negative; color: bad; font.pixelSize: 10; Layout.preferredWidth: 40 }
+                            }
+                        }
+                    }
 
-                                Text { 
-                                    text: model.failureCount; 
-                                    color: accentRed; 
-                                    font.pixelSize: 11;
-                                    Layout.preferredWidth: 40
-                                }
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 140
+                        color: panelAlt
+                        border.color: borderColor
+                        radius: 4
 
-                                Text { 
-                                    text: model.trend; 
-                                    color: model.trend === "↑" ? accentGreen : 
-                                           model.trend === "↓" ? accentRed : textMuted;
-                                    font.pixelSize: 14;
-                                    bold: true;
-                                    Layout.preferredWidth: 40
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            Text { text: "INTERACTION TIMELINE"; color: accent; font.pixelSize: 11; font.bold: true }
+                            ListView {
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                model: timelineModel
+                                clip: true
+                                delegate: Text {
+                                    width: parent.width
+                                    text: "#" + index + " " + timestamp + " | " + peerA + " -> " + peerB + " | " + type + " | " + (success ? "SUCCESS" : "FAILURE") + " | " + resultingState
+                                    color: success ? good : warn
+                                    font.pixelSize: 9
+                                    wrapMode: Text.WordWrap
                                 }
-
-                                Button {
-                                    text: "Details"
-                                    Layout.fillWidth: true
-                                    background: Rectangle { color: panelBg; border.width: 1; border.color: borderColor; radius: 2 }
-                                    contentItem: Text { text: parent.text; color: accentBlue; font.pixelSize: 9 }
-                                    onClicked: {
-                                        addEventLog("DETAILS", `Querying history for ${model.peerId}...`, "info");
-                                    }
-                                }
-
-                                Item { Layout.fillWidth: true }
                             }
                         }
                     }
                 }
-
-                Text {
-                    text: `Total Peers: ${peerListModel.count}`
-                    color: textMuted
-                    font.pixelSize: 10
-                }
             }
-        }
 
-        // ────────────────────────────────────────────────────────────────
-        // RIGHT PANEL: EVENT LOG & STATUS
-        // ────────────────────────────────────────────────────────────────
-        Rectangle {
-            Layout.fillHeight: true
-            Layout.preferredWidth: 280
-            color: panelBg
-            border.color: borderColor
-            border.width: 1
-            radius: 4
+            Rectangle {
+                Layout.preferredWidth: 310
+                Layout.fillHeight: true
+                color: panelBg
+                border.color: borderColor
+                radius: 6
 
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 15
-                spacing: 10
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 8
 
-                Text {
-                    text: "EVENT LOG"
-                    color: accentGreen
-                    font.pixelSize: 12
-                    font.bold: true
-                }
+                    Text { text: "EVENT LOG"; color: accent; font.pixelSize: 12; font.bold: true }
 
-                ScrollView {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    clip: true
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 70
+                        color: panelAlt
+                        border.color: borderColor
+                        radius: 4
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            Text { text: "Backend State"; color: mutedText; font.pixelSize: 9 }
+                            Text { text: backendAvailable ? "Adapter connected" : "No backend needed"; color: backendAvailable ? good : warn; font.pixelSize: 11; font.bold: true }
+                            Text { text: "Peers: " + peerModel.count + " | Timeline: " + timelineModel.count; color: mutedText; font.pixelSize: 10 }
+                        }
+                    }
 
                     ListView {
-                        model: eventLogModel
-                        spacing: 3
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        model: eventModel
+                        clip: true
+                        spacing: 4
 
                         delegate: Rectangle {
-                            width: parent.width - 10
-                            height: contentHeight + 8
-                            color: "#0a0e27"
-                            border.color: model.color
-                            border.width: 0.5
-                            radius: 2
+                            width: parent.width - 6
+                            height: 42
+                            color: "#0b1324"
+                            border.color: color
+                            border.width: 1
+                            radius: 4
 
                             ColumnLayout {
                                 anchors.fill: parent
-                                anchors.margins: 5
-                                spacing: 2
-
-                                RowLayout {
-                                    spacing: 5
-
-                                    Text { 
-                                        text: model.timestamp; 
-                                        color: textMuted;
-                                        font.pixelSize: 8
-                                    }
-
-                                    Text { 
-                                        text: "[" + model.tag + "]"; 
-                                        color: model.color;
-                                        font.pixelSize: 9;
-                                        font.bold: true
-                                    }
-
-                                    Item { Layout.fillWidth: true }
-                                }
-
-                                Text { 
-                                    text: model.message; 
-                                    color: textPrimary;
-                                    font.pixelSize: 9;
-                                    wrapMode: Text.WordWrap;
-                                    Layout.fillWidth: true
-                                }
+                                anchors.margins: 6
+                                Text { text: time + " [" + tag + "]"; color: color; font.pixelSize: 8 }
+                                Text { text: message; color: textColor; font.pixelSize: 9; wrapMode: Text.WordWrap }
                             }
                         }
                     }
-                }
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 1
-                    color: borderColor
-                }
-
-                Text {
-                    text: "BACKEND INFO"
-                    color: accentGreen
-                    font.pixelSize: 11
-                    font.bold: true
-                }
-
-                Text {
-                    id: backendInfoText
-                    text: "Connecting..."
-                    color: textMuted
-                    font.pixelSize: 9
-                    font.family: "Courier"
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
                 }
             }
         }
     }
 
-    // =====================================================================
-    // CONNECTIONS
-    // =====================================================================
     Component.onCompleted: {
-        addEventLog("SYSTEM", "Trust Dashboard loaded", "success");
-        
-        if (typeof appController !== 'undefined') {
-            // Listen for adapter signals
-            if (appController.trustAdapter) {
-                appController.trustAdapter.trustScoreChanged.connect(function(peerId, score) {
-                    addEventLog("UPDATE", `${peerId} trust → ${score.toFixed(2)}`, "success");
-                });
-                
-                appController.trustAdapter.interactionRecorded.connect(function(peerId, type, success) {
-                    const result = success ? "✓" : "✗";
-                    addEventLog("INTERACTION", `${result} ${peerId} / ${type}`, success ? "success" : "warn");
-                });
-                
-                appController.trustAdapter.errorOccurred.connect(function(message) {
-                    addEventLog("ERROR", message, "error");
-                });
-                
-                appController.trustAdapter.peerAdded.connect(function(peerId) {
-                    addEventLog("PEER", `Added: ${peerId}`, "success");
-                });
-                
-                appController.trustAdapter.stateUpdated.connect(function(dataJson) {
-                    updatePeerList(dataJson);
-                });
-                
-                appController.trustAdapter.connectionTestResult.connect(function(resultJson) {
-                    try {
-                        const result = JSON.parse(resultJson);
-                        if (result.status === "success") {
-                            addEventLog("TEST", "✓ Backend test PASSED", "success");
-                        } else {
-                            addEventLog("TEST", "✗ " + result.error, "error");
-                        }
-                    } catch (e) {
-                        addEventLog("ERROR", "Failed to parse test result", "error");
-                    }
-                });
-                
-                // Update backend info periodically
-                const infoUpdateTimer = setInterval(function() {
-                    backendInfoText.text = appController.trustAdapter.getStatusString();
-                }, 1000);
-                
-                addEventLog("SYSTEM", "Adapter connected", "success");
-            }
+        if (backendAvailable) {
+            logEvent("SYSTEM", "Trust adapter connected", "info")
+            adapter.stateUpdated.connect(function(peersJson, timelineJson, stateJson) {
+                refreshFromAdapter(peersJson, timelineJson, stateJson)
+            })
+            adapter.peerAdded.connect(function(peerId) {
+                logEvent("PEER", "Created peer " + peerId, "info")
+            })
+            adapter.peerRemoved.connect(function(peerId) {
+                logEvent("PEER", "Removed peer " + peerId, "warn")
+            })
+            adapter.trustUpdated.connect(function(peerId, value) {
+                logEvent("TRUST", peerId + " -> " + value.toFixed(2), "info")
+            })
+            adapter.interactionLogged.connect(function(peerA, peerB, type) {
+                logEvent("INTERACTION", peerA + " / " + peerB + " / " + type, "info")
+            })
+            adapter.systemReset.connect(function() {
+                logEvent("SYSTEM", "System reset", "warn")
+            })
+            adapter.errorOccurred.connect(function(message) {
+                logEvent("ERROR", message, "error")
+            })
+            adapter.debugLog.connect(function(tag, message) {
+                logEvent(tag, message, tag === "SYSTEM" ? "info" : "warn")
+            })
+            syncViewFromStateJson(adapter.stateSnapshotJson())
         } else {
-            addEventLog("ERROR", "AppController not available", "error");
+            logEvent("SYSTEM", "Running in standalone fallback mode", "warn")
+            syncViewFromLocal()
         }
     }
 }

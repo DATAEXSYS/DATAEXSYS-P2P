@@ -4,6 +4,7 @@
 #include "NHSO4IKFBR/moc_DiffEngine.cpp"
 #include "NHSO4IKFBR/moc_LocalTrustDiariesAdapter.cpp"
 #include "NHSO4IKFBR/moc_NetworkService.cpp"
+#include "NHSO4IKFBR/moc_PKCertChainAdapter.cpp"
 #include "NHSO4IKFBR/moc_PollingManager.cpp"
 #include "NHSO4IKFBR/moc_RollingSignaturesAdapter.cpp"
 #include "NHSO4IKFBR/moc_StateStore.cpp"

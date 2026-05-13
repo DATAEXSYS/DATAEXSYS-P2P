@@ -7,12 +7,40 @@ AppController::AppController(QObject *parent) : QObject(parent) {
     m_timer->setInterval(2000); // 2 seconds between steps in auto-run
     connect(m_timer, &QTimer::timeout, this, &AppController::nextStep);
 
+    m_trustAdapter = std::make_unique<LocalTrustDiariesAdapter>(this);
+    connect(m_trustAdapter.get(),
+            &LocalTrustDiariesAdapter::debugLog,
+            this,
+            [this](const QString &tag, const QString &message) {
+                emit logEvent(tag, message);
+            });
+    connect(m_trustAdapter.get(),
+            &LocalTrustDiariesAdapter::errorOccurred,
+            this,
+            [this](const QString &message) {
+                emit logEvent("TRUST", message);
+            });
+
     m_rollingSignaturesAdapter = std::make_unique<RollingSignaturesAdapter>(this);
     connect(m_rollingSignaturesAdapter.get(),
             &RollingSignaturesAdapter::eventStream,
             this,
             [this](const QString &tag, const QString &message) {
                 emit logEvent(tag, message);
+            });
+
+    m_pkCertChainAdapter = std::make_unique<PKCertChainAdapter>(this);
+    connect(m_pkCertChainAdapter.get(),
+            &PKCertChainAdapter::chainUpdated,
+            this,
+            [this](const QString &chainState) {
+                emit logEvent("PKCERT", QString("Chain updated: %1").arg(chainState.left(96)));
+            });
+    connect(m_pkCertChainAdapter.get(),
+            &PKCertChainAdapter::errorOccurred,
+            this,
+            [this](const QString &message) {
+                emit logEvent("PKCERT", message);
             });
 }
 

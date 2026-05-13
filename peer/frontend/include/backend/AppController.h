@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <memory>
 
+#include "backend/LocalTrustDiariesAdapter.h"
+#include "backend/PKCertChainAdapter.h"
 #include "backend/RollingSignaturesAdapter.h"
 
 struct Node {
@@ -44,14 +46,18 @@ class AppController : public QObject {
     Q_OBJECT
     Q_PROPERTY(int executionStep READ executionStep NOTIFY executionStepChanged)
     Q_PROPERTY(bool autoRun READ autoRun WRITE setAutoRun NOTIFY autoRunChanged)
+    Q_PROPERTY(QObject* trustAdapter READ trustAdapter CONSTANT)
     Q_PROPERTY(QObject* rollingSignaturesAdapter READ rollingSignaturesAdapter CONSTANT)
+    Q_PROPERTY(QObject* pkCertChainAdapter READ pkCertChainAdapter CONSTANT)
 
 public:
     explicit AppController(QObject *parent = nullptr);
 
     int executionStep() const { return m_executionStep; }
     bool autoRun() const { return m_autoRun; }
+    QObject* trustAdapter() const { return m_trustAdapter.get(); }
     QObject* rollingSignaturesAdapter() const { return m_rollingSignaturesAdapter.get(); }
+    QObject* pkCertChainAdapter() const { return m_pkCertChainAdapter.get(); }
     void setAutoRun(bool autoRun);
 
     Q_INVOKABLE void startEngine();
@@ -87,7 +93,9 @@ private:
     int m_executionStep = 0;
     bool m_autoRun = false;
     QTimer *m_timer;
+    std::unique_ptr<LocalTrustDiariesAdapter> m_trustAdapter;
     std::unique_ptr<RollingSignaturesAdapter> m_rollingSignaturesAdapter;
+    std::unique_ptr<PKCertChainAdapter> m_pkCertChainAdapter;
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };

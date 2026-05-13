@@ -1,390 +1,513 @@
 #include "backend/LocalTrustDiariesAdapter.h"
-#include <QDebug>
+
+#include <QCryptographicHash>
 #include <QDateTime>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QMutexLocker>
-#include <cmath>
-#include <QThread>
-#include <QString>
-#include <QDateTime>
-// =====================================================================
-// TrustDatabase Implementation
-// =====================================================================
 
-LocalTrustDiariesAdapter::TrustDatabase::TrustDatabase()
+namespace {
+static QString jsonCompact(const QJsonObject &object)
 {
-    qDebug() << "[LocalTrustDiaries] Database initialized";
+    return QString::fromUtf8(QJsonDocument(object).toJson(QJsonDocument::Compact));
 }
 
-void LocalTrustDiariesAdapter::TrustDatabase::addPeer(const QString &peerId)
+static QString jsonCompact(const QJsonArray &array)
 {
-    if (m_peers.contains(peerId)) {
-        qWarning() << "[LocalTrustDiaries] Peer already exists:" << peerId;
-        return;
-    }
-    
-    PeerData data;
-    data.peerId = peerId;
-    data.trustScore = 0.5;  // Start neutral
-    m_peers[peerId] = data;
-    
-    qDebug() << "[LocalTrustDiaries] Added peer:" << peerId << "with initial score 0.5";
+    return QString::fromUtf8(QJsonDocument(array).toJson(QJsonDocument::Compact));
 }
-
-void LocalTrustDiariesAdapter::TrustDatabase::removePeer(const QString &peerId)
-{
-    if (!m_peers.contains(peerId)) {
-        qWarning() << "[LocalTrustDiaries] Peer not found for removal:" << peerId;
-        return;
-    }
-    
-    m_peers.remove(peerId);
-    qDebug() << "[LocalTrustDiaries] Removed peer:" << peerId;
 }
-
-void LocalTrustDiariesAdapter::TrustDatabase::updateScore(const QString &peerId, double delta)
-{
-    if (!m_peers.contains(peerId)) {
-        qWarning() << "[LocalTrustDiaries] Cannot update unknown peer:" << peerId;
-        return;
-    }
-    
-    PeerData &data = m_peers[peerId];
-    double newScore = data.trustScore + delta;
-    
-    // Clamp to [0, 1]
-    newScore = std::max(0.0, std::min(1.0, newScore));
-    
-    qDebug() << "[LocalTrustDiaries] Updated" << peerId 
-             << "score:" << data.trustScore << "->" << newScore 
-             << "(delta:" << delta << ")";
-    
-    data.trustScore = newScore;
-}
-
-double LocalTrustDiariesAdapter::TrustDatabase::getScore(const QString &peerId) const
-{
-    if (!m_peers.contains(peerId)) {
-        return -1.0;
-    }
-    return m_peers[peerId].trustScore;
-}
-
-void LocalTrustDiariesAdapter::TrustDatabase::recordInteraction(
-    const QString &peerId, 
-    const QString &type, 
-    bool success)
-{
-    if (!m_peers.contains(peerId)) {
-        qWarning() << "[LocalTrustDiaries] Cannot record interaction for unknown peer:" << peerId;
-        return;
-    }
-    
-    PeerData &data = m_peers[peerId];
-    
-    if (success) {
-        data.successCount++;
-    } else {
-        data.failureCount++;
-    }
-    
-    data.interactions.append({type, success});
-    
-    // Auto-adjust trust based on result
-    double adjustment = success ? 0.05 : -0.1;
-    updateScore(peerId, adjustment);
-    
-    qDebug() << "[LocalTrustDiaries] Recorded interaction for" << peerId 
-             << "type:" << type << "result:" << (success ? "SUCCESS" : "FAILURE");
-}
-
-json LocalTrustDiariesAdapter::TrustDatabase::getAllPeersJson() const
-{
-    json arr = json::array();
-    
-    for (const auto &data : m_peers) {
-        double trend = 0.0;
-        if (data.successCount + data.failureCount > 0) {
-            trend = static_cast<double>(data.successCount) / 
-                   (data.successCount + data.failureCount);
-        }
-        
-        json peer = {
-            {"peerId", data.peerId.toStdString()},
-            {"score", data.trustScore},
-            {"successCount", data.successCount},
-            {"failureCount", data.failureCount},
-            {"trend", trend},
-            {"trendString", trend > 0.6 ? "↑" : trend < 0.4 ? "↓" : "→"}
-        };
-        arr.push_back(peer);
-    }
-    
-    // Sort by score descending
-    std::sort(arr.begin(), arr.end(), 
-        [](const json &a, const json &b) {
-            return a["score"] > b["score"];
-        });
-    
-    return arr;
-}
-
-json LocalTrustDiariesAdapter::TrustDatabase::getInteractionHistoryJson(const QString &peerId) const
-{
-    json arr = json::array();
-    
-    if (!m_peers.contains(peerId)) {
-        return arr;
-    }
-    
-    const auto &data = m_peers[peerId];
-    
-    for (int i = 0; i < data.interactions.size(); ++i) {
-        const auto &interaction = data.interactions[i];
-        json entry = {
-            {"index", i},
-            {"type", interaction.first.toStdString()},
-            {"success", interaction.second},
-            {"timestamp", QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()}
-        };
-        arr.push_back(entry);
-    }
-    
-    return arr;
-}
-
-json LocalTrustDiariesAdapter::TrustDatabase::getFullStateJson() const
-{
-    json state = {
-        {"peers", getAllPeersJson()},
-        {"totalPeers", static_cast<int>(m_peers.size())},
-        {"timestamp", QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()}
-    };
-    return state;
-}
-
-void LocalTrustDiariesAdapter::TrustDatabase::clear()
-{
-    m_peers.clear();
-    qDebug() << "[LocalTrustDiaries] Database cleared";
-}
-
-// =====================================================================
-// LocalTrustDiariesAdapter Implementation
-// =====================================================================
 
 LocalTrustDiariesAdapter::LocalTrustDiariesAdapter(QObject *parent)
-    : QObject(parent),
-      m_database(std::make_unique<TrustDatabase>())
+    : QObject(parent)
 {
-    qDebug() << "[LocalTrustDiariesAdapter] Initialized (thread-safe wrapper)";
+    m_systemState = QStringLiteral("Simulation lab ready");
+    emit debugLog(QStringLiteral("SYSTEM"), QStringLiteral("LocalTrustDiaries simulation engine initialized"));
+    emitStateLocked();
 }
 
-void LocalTrustDiariesAdapter::addPeer(const QString &peerId)
+void LocalTrustDiariesAdapter::createPeer(const QString &peerId)
 {
-    if (peerId.isEmpty()) {
-        emitError("Peer ID cannot be empty");
+    const QString id = peerId.trimmed();
+    if (id.isEmpty()) {
+        emit errorOccurred(QStringLiteral("Peer ID cannot be empty"));
         return;
     }
-    
-    QMutexLocker lock(&m_mutex);
-    nullptr == m_database || !m_database ? emitError("Database not initialized") : 
-        (m_database->addPeer(peerId), emit peerAdded(peerId));
+
+    QMutexLocker locker(&m_mutex);
+    if (m_peers.contains(id)) {
+        emit errorOccurred(QStringLiteral("Peer already exists: %1").arg(id));
+        return;
+    }
+
+    PeerState state;
+    state.peerId = id;
+    state.trust = 0.5;
+    state.trend = QStringLiteral("Neutral");
+    m_peers.insert(id, state);
+    m_systemState = QStringLiteral("Peer created: %1").arg(id);
+
+    pushDebugLocked(QStringLiteral("PEER"), QStringLiteral("Created peer %1 at trust 0.50").arg(id));
+    emit peerAdded(id);
+    emitStateLocked();
 }
 
-void LocalTrustDiariesAdapter::removePeer(const QString &peerId)
+void LocalTrustDiariesAdapter::deletePeer(const QString &peerId)
 {
-    if (peerId.isEmpty()) {
-        emitError("Peer ID cannot be empty");
+    const QString id = peerId.trimmed();
+    if (id.isEmpty()) {
+        emit errorOccurred(QStringLiteral("Peer ID cannot be empty"));
         return;
     }
-    
-    QMutexLocker lock(&m_mutex);
-    if (m_database) {
-        m_database->removePeer(peerId);
-        emit peerRemoved(peerId);
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_peers.contains(id)) {
+        emit errorOccurred(QStringLiteral("Peer not found: %1").arg(id));
+        return;
+    }
+
+    m_peers.remove(id);
+    m_systemState = QStringLiteral("Peer removed: %1").arg(id);
+    pushDebugLocked(QStringLiteral("PEER"), QStringLiteral("Removed peer %1").arg(id));
+    emit peerRemoved(id);
+    emitStateLocked();
+}
+
+void LocalTrustDiariesAdapter::setTrust(const QString &peerId, double value)
+{
+    const QString id = peerId.trimmed();
+    if (id.isEmpty()) {
+        emit errorOccurred(QStringLiteral("Peer ID cannot be empty"));
+        return;
+    }
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_peers.contains(id)) {
+        emit errorOccurred(QStringLiteral("Peer not found: %1").arg(id));
+        return;
+    }
+
+    const double clamped = clampTrust(value);
+    applyPeerTrustLocked(id, clamped);
+    m_systemState = QStringLiteral("Trust updated: %1").arg(id);
+    pushDebugLocked(QStringLiteral("TRUST"), QStringLiteral("Set trust for %1 to %2").arg(id).arg(clamped, 0, 'f', 2));
+    emit trustUpdated(id, clamped);
+    emitStateLocked();
+}
+
+void LocalTrustDiariesAdapter::simulateInteraction(const QString &peerA, const QString &peerB, const QString &type)
+{
+    const QString left = peerA.trimmed();
+    const QString right = peerB.trimmed();
+    const QString interactionType = interactionTypeKey(type);
+
+    if (left.isEmpty() || right.isEmpty()) {
+        emit errorOccurred(QStringLiteral("Both peer IDs are required"));
+        return;
+    }
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_peers.contains(left)) {
+        emit errorOccurred(QStringLiteral("Peer not found: %1").arg(left));
+        return;
+    }
+    if (!m_peers.contains(right)) {
+        emit errorOccurred(QStringLiteral("Peer not found: %1").arg(right));
+        return;
+    }
+
+    const int sequence = m_timeline.size();
+    const bool success = deterministicOutcome(left, right, interactionType, sequence);
+    const double baseDelta = baseDeltaFor(interactionType);
+    const double deltaA = success ? baseDelta : -baseDelta * 1.5;
+    const double deltaB = success ? baseDelta * 0.6 : -baseDelta * 0.9;
+
+    PeerState leftState = m_peers.value(left);
+    PeerState rightState = m_peers.value(right);
+
+    leftState.interactions += 1;
+    rightState.interactions += 1;
+    if (success) {
+        leftState.positive += 1;
+        rightState.positive += 1;
     } else {
-        emitError("Database not initialized");
+        leftState.negative += 1;
+        rightState.negative += 1;
     }
+
+    applyPeerTrustLocked(left, clampTrust(leftState.trust + deltaA));
+    applyPeerTrustLocked(right, clampTrust(rightState.trust + deltaB));
+
+    InteractionState interaction;
+    interaction.index = sequence;
+    interaction.peerA = left;
+    interaction.peerB = right;
+    interaction.type = interactionType;
+    interaction.success = success;
+    interaction.deltaA = deltaA;
+    interaction.deltaB = deltaB;
+    interaction.resultingState = QStringLiteral("%1=%2 | %3=%4")
+                                    .arg(left)
+                                    .arg(m_peers.value(left).trust, 0, 'f', 2)
+                                    .arg(right)
+                                    .arg(m_peers.value(right).trust, 0, 'f', 2);
+    interaction.timestamp = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+    m_timeline.append(interaction);
+    m_systemState = QStringLiteral("Interaction logged: %1 -> %2 (%3)").arg(left, right, interactionType);
+
+    pushDebugLocked(QStringLiteral("INTERACTION"),
+                    QStringLiteral("%1 / %2 / %3 => %4")
+                        .arg(left, right, interactionType, success ? QStringLiteral("SUCCESS") : QStringLiteral("FAILURE")));
+
+    emit trustUpdated(left, m_peers.value(left).trust);
+    emit trustUpdated(right, m_peers.value(right).trust);
+    emit interactionLogged(left, right, interactionType);
+    emitStateLocked();
 }
 
-void LocalTrustDiariesAdapter::updateTrustScore(const QString &peerId, double delta)
+void LocalTrustDiariesAdapter::resetSystem()
 {
-    if (peerId.isEmpty()) {
-        emitError("Peer ID cannot be empty");
-        return;
-    }
-    
-    if (delta < -1.0 || delta > 1.0) {
-        emitError("Delta must be between -1.0 and 1.0");
-        return;
-    }
-    
-    QMutexLocker lock(&m_mutex);
-    if (!m_database) {
-        emitError("Database not initialized");
-        return;
-    }
-    
-    m_database->updateScore(peerId, delta);
-    double newScore = m_database->getScore(peerId);
-    
-    emit trustScoreChanged(peerId, newScore);
-    emit stateUpdated(QString::fromStdString(m_database->getFullStateJson().dump()));
+    QMutexLocker locker(&m_mutex);
+    storeSnapshotLocked();
+    m_peers.clear();
+    m_timeline.clear();
+    m_systemState = QStringLiteral("System reset");
+
+    pushDebugLocked(QStringLiteral("SYSTEM"), QStringLiteral("System reset requested"));
+    emit systemReset();
+    emitStateLocked();
 }
 
-void LocalTrustDiariesAdapter::recordInteraction(const QString &peerId, 
-                                               const QString &interactionType, 
-                                               bool success)
+void LocalTrustDiariesAdapter::replayLastState()
 {
-    if (peerId.isEmpty()) {
-        emitError("Peer ID cannot be empty");
+    QMutexLocker locker(&m_mutex);
+    if (m_lastSnapshotJson.isEmpty()) {
+        emit errorOccurred(QStringLiteral("No snapshot available to replay"));
         return;
     }
-    
-    if (interactionType.isEmpty()) {
-        emitError("Interaction type cannot be empty");
-        return;
-    }
-    
-    QMutexLocker lock(&m_mutex);
-    if (!m_database) {
-        emitError("Database not initialized");
-        return;
-    }
-    
-    m_database->recordInteraction(peerId, interactionType, success);
-    emit interactionRecorded(peerId, interactionType, success);
-    emit stateUpdated(QString::fromStdString(m_database->getFullStateJson().dump()));
+
+    restoreSnapshotLocked(m_lastSnapshotJson);
+    m_systemState = QStringLiteral("Snapshot replayed");
+    pushDebugLocked(QStringLiteral("SYSTEM"), QStringLiteral("Replayed last saved state"));
+    emitStateLocked();
 }
 
-double LocalTrustDiariesAdapter::getTrustScore(const QString &peerId) const
+QString LocalTrustDiariesAdapter::peersJson() const
 {
-    QMutexLocker lock(&m_mutex);
-    if (!m_database) {
-        return -1.0;
-    }
-    return m_database->getScore(peerId);
+    QMutexLocker locker(&m_mutex);
+    return buildPeersJsonLocked();
 }
 
-QString LocalTrustDiariesAdapter::getAllPeersAsJson() const
+QString LocalTrustDiariesAdapter::timelineJson() const
 {
-    QMutexLocker lock(&m_mutex);
-    if (!m_database) {
-        return "[]";
+    QMutexLocker locker(&m_mutex);
+    return buildTimelineJsonLocked();
+}
+
+QString LocalTrustDiariesAdapter::stateSnapshotJson() const
+{
+    QMutexLocker locker(&m_mutex);
+    return buildStateJsonLocked();
+}
+
+QString LocalTrustDiariesAdapter::systemState() const
+{
+    QMutexLocker locker(&m_mutex);
+    return m_systemState;
+}
+
+int LocalTrustDiariesAdapter::peerCount() const
+{
+    QMutexLocker locker(&m_mutex);
+    return m_peers.size();
+}
+
+void LocalTrustDiariesAdapter::recordInteraction(const QString &peerA, const QString &interactionType, bool success)
+{
+    const QString id = peerA.trimmed();
+    if (id.isEmpty()) {
+        emit errorOccurred(QStringLiteral("Peer ID cannot be empty"));
+        return;
     }
-    return QString::fromStdString(m_database->getAllPeersJson().dump());
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_peers.contains(id)) {
+        emit errorOccurred(QStringLiteral("Peer not found: %1").arg(id));
+        return;
+    }
+
+    const QString normalizedType = interactionTypeKey(interactionType);
+    PeerState state = m_peers.value(id);
+    state.interactions += 1;
+    if (success) {
+        state.positive += 1;
+    } else {
+        state.negative += 1;
+    }
+
+    const double delta = success ? baseDeltaFor(normalizedType) : -baseDeltaFor(normalizedType) * 1.5;
+    applyPeerTrustLocked(id, clampTrust(state.trust + delta));
+
+    InteractionState interaction;
+    interaction.index = m_timeline.size();
+    interaction.peerA = id;
+    interaction.peerB = id;
+    interaction.type = normalizedType;
+    interaction.success = success;
+    interaction.deltaA = delta;
+    interaction.deltaB = 0.0;
+    interaction.resultingState = QStringLiteral("%1=%2")
+                                     .arg(id)
+                                     .arg(m_peers.value(id).trust, 0, 'f', 2);
+    interaction.timestamp = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+    m_timeline.append(interaction);
+    m_systemState = QStringLiteral("Interaction recorded: %1").arg(id);
+
+    pushDebugLocked(QStringLiteral("INTERACTION"),
+                    QStringLiteral("%1 / %2 => %3")
+                        .arg(id, normalizedType, success ? QStringLiteral("SUCCESS") : QStringLiteral("FAILURE")));
+
+    emit trustUpdated(id, m_peers.value(id).trust);
+    emit interactionLogged(id, id, normalizedType);
+    emitStateLocked();
 }
 
 QString LocalTrustDiariesAdapter::getInteractionHistoryAsJson(const QString &peerId) const
 {
-    QMutexLocker lock(&m_mutex);
-    if (!m_database) {
-        return "[]";
-    }
-    return QString::fromStdString(m_database->getInteractionHistoryJson(peerId).dump());
-}
-
-void LocalTrustDiariesAdapter::clearAllData()
-{
-    QMutexLocker lock(&m_mutex);
-    if (m_database) {
-        m_database->clear();
-        emit stateReset();
-        qDebug() << "[LocalTrustDiariesAdapter] All data cleared";
-    }
+    QMutexLocker locker(&m_mutex);
+    return buildInteractionHistoryJsonLocked(peerId.trimmed());
 }
 
 QString LocalTrustDiariesAdapter::getStatusString() const
 {
-    QMutexLocker lock(&m_mutex);
-    
-    if (!m_database) {
-        return "ERROR: Database not initialized";
-    }
-    
-    int peerCount = m_database->getPeerCount();
-    return QString("✓ Backend ready | %1 peers | Thread: %2")
-        .arg(peerCount)
-        .arg(reinterpret_cast<quintptr>(QThread::currentThreadId()), 0, 16);
+    QMutexLocker locker(&m_mutex);
+    return buildStatusStringLocked();
 }
 
 void LocalTrustDiariesAdapter::testBackendConnection()
 {
-    qDebug() << "[LocalTrustDiariesAdapter] Running backend connection test...";
-    
-    json result = {
-        {"status", "testing"},
-        {"timestamp", QDateTime::currentDateTime().toString(Qt::ISODate).toStdString()}
-    };
-    
-    try {
-        // Test 1: Database exists
-        {
-            QMutexLocker lock(&m_mutex);
-            if (!m_database) {
-                result["error"] = "Database not initialized";
-                emit connectionTestResult(QString::fromStdString(result.dump()));
-                return;
-            }
-        }
-        
-        // Test 2: Add test peer
-        const QString testPeerId = "TEST_PEER_" + QString::number(QDateTime::currentSecsSinceEpoch());
-        {
-            QMutexLocker lock(&m_mutex);
-            m_database->addPeer(testPeerId);
-        }
-        
-        // Test 3: Update trust
-        {
-            QMutexLocker lock(&m_mutex);
-            m_database->updateScore(testPeerId, 0.1);
-        }
-        
-        // Test 4: Record interaction
-        {
-            QMutexLocker lock(&m_mutex);
-            m_database->recordInteraction(testPeerId, "test", true);
-        }
-        
-        // Test 5: Query data
-        double score = getTrustScore(testPeerId);
-        
-        // Test 6: Cleanup
-        removePeer(testPeerId);
-        
-        // Success
-        result["status"] = "success";
-        result["testPeerId"] = testPeerId.toStdString();
-        result["retrievedScore"] = score;
-        result["message"] = "All backend tests passed";
-        
-        qDebug() << "[LocalTrustDiariesAdapter] ✓ Connection test PASSED";
-        
-    } catch (const std::exception &e) {
-        result["status"] = "error";
-        result["error"] = e.what();
-        qWarning() << "[LocalTrustDiariesAdapter] ✗ Connection test FAILED:" << e.what();
+    QMutexLocker locker(&m_mutex);
+    pushDebugLocked(QStringLiteral("TEST"), QStringLiteral("Simulation mode active - no backend required"));
+    emit debugLog(QStringLiteral("TEST"), QStringLiteral("Simulation mode active - no backend required"));
+    emitStateLocked();
+}
+
+double LocalTrustDiariesAdapter::clampTrust(double value) const
+{
+    if (value < 0.0) {
+        return 0.0;
     }
-    
-    emit connectionTestResult(QString::fromStdString(result.dump()));
+    if (value > 1.0) {
+        return 1.0;
+    }
+    return value;
 }
 
-void LocalTrustDiariesAdapter::emitTrustScoreChanged(const QString &peerId, double newScore)
+QString LocalTrustDiariesAdapter::trendFor(double trust) const
 {
-    emit trustScoreChanged(peerId, newScore);
+    if (trust >= 0.7) {
+        return QStringLiteral("Rising");
+    }
+    if (trust <= 0.3) {
+        return QStringLiteral("Declining");
+    }
+    return QStringLiteral("Stable");
 }
 
-void LocalTrustDiariesAdapter::emitInteractionRecorded(const QString &peerId, 
-                                                      const QString &type, 
-                                                      bool success)
+QString LocalTrustDiariesAdapter::interactionTypeKey(const QString &type) const
 {
-    emit interactionRecorded(peerId, type, success);
+    const QString key = type.trimmed().toLower();
+    if (key.isEmpty()) {
+        return QStringLiteral("generic");
+    }
+    return key;
 }
 
-void LocalTrustDiariesAdapter::emitError(const QString &message, int code)
+double LocalTrustDiariesAdapter::baseDeltaFor(const QString &type) const
 {
-    m_lastError = message;
-    qWarning() << "[LocalTrustDiariesAdapter] ERROR:" << message;
-    emit errorOccurred(message, code);
+    if (type == QStringLiteral("send")) return 0.03;
+    if (type == QStringLiteral("receive")) return 0.02;
+    if (type == QStringLiteral("validate")) return 0.05;
+    if (type == QStringLiteral("forward")) return 0.015;
+    if (type == QStringLiteral("store")) return 0.01;
+    return 0.025;
+}
+
+quint32 LocalTrustDiariesAdapter::deterministicSeed(const QString &material) const
+{
+    const QByteArray digest = QCryptographicHash::hash(material.toUtf8(), QCryptographicHash::Sha256);
+    quint32 seed = 0;
+    for (int i = 0; i < 4 && i < digest.size(); ++i) {
+        seed = (seed << 8) | static_cast<quint8>(digest.at(i));
+    }
+    return seed;
+}
+
+bool LocalTrustDiariesAdapter::deterministicOutcome(const QString &peerA,
+                                                    const QString &peerB,
+                                                    const QString &type,
+                                                    int sequence) const
+{
+    const quint32 seed = deterministicSeed(peerA + QStringLiteral("|") + peerB + QStringLiteral("|") + type + QStringLiteral("|") + QString::number(sequence));
+    const int score = static_cast<int>(seed % 100);
+
+    const PeerState left = m_peers.value(peerA);
+    const PeerState right = m_peers.value(peerB);
+    const int trustScore = qRound(((left.trust + right.trust) / 2.0) * 100.0);
+
+    return score <= trustScore;
+}
+
+void LocalTrustDiariesAdapter::applyPeerTrustLocked(const QString &peerId,
+                                                    double newTrust,
+                                                    const QString &trendOverride)
+{
+    if (!m_peers.contains(peerId)) {
+        return;
+    }
+
+    PeerState state = m_peers.value(peerId);
+    state.trust = clampTrust(newTrust);
+    state.trend = trendOverride.isEmpty() ? trendFor(state.trust) : trendOverride;
+    m_peers.insert(peerId, state);
+}
+
+void LocalTrustDiariesAdapter::pushDebugLocked(const QString &tag, const QString &message)
+{
+    emit debugLog(tag, message);
+}
+
+void LocalTrustDiariesAdapter::emitStateLocked()
+{
+    const QString peers = buildPeersJsonLocked();
+    const QString timeline = buildTimelineJsonLocked();
+    const QString state = buildStateJsonLocked();
+    m_lastSnapshotJson = state;
+    emit stateChanged();
+    emit stateUpdated(peers, timeline, state);
+}
+
+QString LocalTrustDiariesAdapter::buildPeersJsonLocked() const
+{
+    QJsonArray peers;
+    for (const auto &peer : m_peers) {
+        QJsonObject object;
+        object[QStringLiteral("peerId")] = peer.peerId;
+        object[QStringLiteral("trust")] = peer.trust;
+        object[QStringLiteral("interactions")] = peer.interactions;
+        object[QStringLiteral("positive")] = peer.positive;
+        object[QStringLiteral("negative")] = peer.negative;
+        object[QStringLiteral("trend")] = peer.trend;
+        peers.append(object);
+    }
+    return jsonCompact(peers);
+}
+
+QString LocalTrustDiariesAdapter::buildTimelineJsonLocked() const
+{
+    QJsonArray timeline;
+    for (const auto &interaction : m_timeline) {
+        QJsonObject object;
+        object[QStringLiteral("index")] = interaction.index;
+        object[QStringLiteral("peerA")] = interaction.peerA;
+        object[QStringLiteral("peerB")] = interaction.peerB;
+        object[QStringLiteral("type")] = interaction.type;
+        object[QStringLiteral("success")] = interaction.success;
+        object[QStringLiteral("deltaA")] = interaction.deltaA;
+        object[QStringLiteral("deltaB")] = interaction.deltaB;
+        object[QStringLiteral("resultingState")] = interaction.resultingState;
+        object[QStringLiteral("timestamp")] = interaction.timestamp;
+        timeline.append(object);
+    }
+    return jsonCompact(timeline);
+}
+
+QString LocalTrustDiariesAdapter::buildStateJsonLocked() const
+{
+    QJsonObject state;
+    state[QStringLiteral("systemState")] = m_systemState;
+    state[QStringLiteral("peerCount")] = static_cast<int>(m_peers.size());
+    state[QStringLiteral("peers")] = QJsonDocument::fromJson(buildPeersJsonLocked().toUtf8()).array();
+    state[QStringLiteral("timeline")] = QJsonDocument::fromJson(buildTimelineJsonLocked().toUtf8()).array();
+    state[QStringLiteral("timestamp")] = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+    return jsonCompact(state);
+}
+
+QString LocalTrustDiariesAdapter::buildInteractionHistoryJsonLocked(const QString &peerId) const
+{
+    QJsonArray history;
+    for (const auto &interaction : m_timeline) {
+        if (interaction.peerA != peerId && interaction.peerB != peerId) {
+            continue;
+        }
+
+        QJsonObject object;
+        object[QStringLiteral("index")] = interaction.index;
+        object[QStringLiteral("peerA")] = interaction.peerA;
+        object[QStringLiteral("peerB")] = interaction.peerB;
+        object[QStringLiteral("type")] = interaction.type;
+        object[QStringLiteral("success")] = interaction.success;
+        object[QStringLiteral("timestamp")] = interaction.timestamp;
+        history.append(object);
+    }
+    return jsonCompact(history);
+}
+
+QString LocalTrustDiariesAdapter::buildStatusStringLocked() const
+{
+    return QStringLiteral("Simulation ready | %1 peers | %2 interactions | %3")
+        .arg(m_peers.size())
+        .arg(m_timeline.size())
+        .arg(m_systemState);
+}
+
+void LocalTrustDiariesAdapter::storeSnapshotLocked()
+{
+    m_lastSnapshotJson = buildStateJsonLocked();
+}
+
+void LocalTrustDiariesAdapter::restoreSnapshotLocked(const QString &snapshotJson)
+{
+    const QJsonDocument document = QJsonDocument::fromJson(snapshotJson.toUtf8());
+    if (!document.isObject()) {
+        return;
+    }
+
+    const QJsonObject state = document.object();
+    m_peers.clear();
+    m_timeline.clear();
+
+    m_systemState = state.value(QStringLiteral("systemState")).toString(QStringLiteral("Simulation lab ready"));
+
+    const QJsonArray peers = state.value(QStringLiteral("peers")).toArray();
+    for (const auto &value : peers) {
+        const QJsonObject object = value.toObject();
+        PeerState peer;
+        peer.peerId = object.value(QStringLiteral("peerId")).toString();
+        peer.trust = object.value(QStringLiteral("trust")).toDouble(0.5);
+        peer.interactions = object.value(QStringLiteral("interactions")).toInt(0);
+        peer.positive = object.value(QStringLiteral("positive")).toInt(0);
+        peer.negative = object.value(QStringLiteral("negative")).toInt(0);
+        peer.trend = object.value(QStringLiteral("trend")).toString(QStringLiteral("Neutral"));
+        if (!peer.peerId.isEmpty()) {
+            m_peers.insert(peer.peerId, peer);
+        }
+    }
+
+    const QJsonArray timeline = state.value(QStringLiteral("timeline")).toArray();
+    for (const auto &value : timeline) {
+        const QJsonObject object = value.toObject();
+        InteractionState interaction;
+        interaction.index = object.value(QStringLiteral("index")).toInt(0);
+        interaction.peerA = object.value(QStringLiteral("peerA")).toString();
+        interaction.peerB = object.value(QStringLiteral("peerB")).toString();
+        interaction.type = object.value(QStringLiteral("type")).toString();
+        interaction.success = object.value(QStringLiteral("success")).toBool(false);
+        interaction.deltaA = object.value(QStringLiteral("deltaA")).toDouble(0.0);
+        interaction.deltaB = object.value(QStringLiteral("deltaB")).toDouble(0.0);
+        interaction.resultingState = object.value(QStringLiteral("resultingState")).toString();
+        interaction.timestamp = object.value(QStringLiteral("timestamp")).toString();
+        m_timeline.append(interaction);
+    }
 }

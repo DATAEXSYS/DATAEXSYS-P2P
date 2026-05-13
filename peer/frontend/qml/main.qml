@@ -104,6 +104,21 @@ Window {
                         }
                     }
                     Button {
+                        text: "MINING DASHBOARD"
+                        onClicked: currentTab = "MINING"
+                        background: Rectangle {
+                            color: currentTab === "MINING" ? theme.success : "transparent"
+                            border.color: theme.border
+                            radius: 4
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: currentTab === "MINING" ? "white" : theme.text
+                            font.pixelSize: 11
+                            font.weight: Font.Bold
+                        }
+                    }
+                    Button {
                         text: "RESET"
                         onClicked: appController.resetEngine()
                         background: Rectangle { color: "transparent"; border.color: theme.border; radius: 4 }
@@ -143,6 +158,7 @@ Window {
                     if (currentTab === "BLOCKCHAIN") return 1
                     if (currentTab === "ROLLING") return 4
                     if (currentTab === "TRUST") return 3
+                    if (currentTab === "MINING") return 5
                     return 2
                 }
                 
@@ -168,6 +184,11 @@ Window {
                 // ROLLING SIGNATURES DASHBOARD
                 Loader {
                     source: "pages/PacketRoutingDashboard.qml"
+                }
+
+                // PKCertChain MINING DASHBOARD
+                Loader {
+                    source: "pages/MiningDashboard.qml"
                 }
             }
 
