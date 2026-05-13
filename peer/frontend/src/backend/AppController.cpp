@@ -6,6 +6,14 @@ AppController::AppController(QObject *parent) : QObject(parent) {
     m_timer = new QTimer(this);
     m_timer->setInterval(2000); // 2 seconds between steps in auto-run
     connect(m_timer, &QTimer::timeout, this, &AppController::nextStep);
+
+    m_rollingSignaturesAdapter = std::make_unique<RollingSignaturesAdapter>(this);
+    connect(m_rollingSignaturesAdapter.get(),
+            &RollingSignaturesAdapter::eventStream,
+            this,
+            [this](const QString &tag, const QString &message) {
+                emit logEvent(tag, message);
+            });
 }
 
 void AppController::setAutoRun(bool autoRun) {

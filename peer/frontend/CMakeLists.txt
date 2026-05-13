@@ -7,12 +7,6 @@ project(P2PFrontend VERSION 0.1.0 LANGUAGES CXX)
 # ---------------------------------------------------------------------------
 # Standards & Qt automation
 # ---------------------------------------------------------------------------
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    CXX_STANDARD          17
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS        OFF
-) 2>/dev/null || true  # target not yet defined; set globally below
-
 set(CMAKE_CXX_STANDARD          17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)

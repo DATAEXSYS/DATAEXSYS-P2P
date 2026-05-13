@@ -7,6 +7,9 @@
 #include <QList>
 #include <QTimer>
 #include <QDebug>
+#include <memory>
+
+#include "backend/RollingSignaturesAdapter.h"
 
 struct Node {
     QString id;
@@ -41,12 +44,14 @@ class AppController : public QObject {
     Q_OBJECT
     Q_PROPERTY(int executionStep READ executionStep NOTIFY executionStepChanged)
     Q_PROPERTY(bool autoRun READ autoRun WRITE setAutoRun NOTIFY autoRunChanged)
+    Q_PROPERTY(QObject* rollingSignaturesAdapter READ rollingSignaturesAdapter CONSTANT)
 
 public:
     explicit AppController(QObject *parent = nullptr);
 
     int executionStep() const { return m_executionStep; }
     bool autoRun() const { return m_autoRun; }
+    QObject* rollingSignaturesAdapter() const { return m_rollingSignaturesAdapter.get(); }
     void setAutoRun(bool autoRun);
 
     Q_INVOKABLE void startEngine();
@@ -82,6 +87,7 @@ private:
     int m_executionStep = 0;
     bool m_autoRun = false;
     QTimer *m_timer;
+    std::unique_ptr<RollingSignaturesAdapter> m_rollingSignaturesAdapter;
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };

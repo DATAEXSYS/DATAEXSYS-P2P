@@ -74,6 +74,36 @@ Window {
                 RowLayout {
                     spacing: 15
                     Button {
+                        text: "PACKET ROUTING"
+                        onClicked: currentTab = "ROLLING"
+                        background: Rectangle {
+                            color: currentTab === "ROLLING" ? theme.success : "transparent"
+                            border.color: theme.border
+                            radius: 4
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: currentTab === "ROLLING" ? "white" : theme.text
+                            font.pixelSize: 11
+                            font.weight: Font.Bold
+                        }
+                    }
+                    Button {
+                        text: "TRUST DASHBOARD"
+                        onClicked: currentTab = "TRUST"
+                        background: Rectangle {
+                            color: currentTab === "TRUST" ? theme.success : "transparent"
+                            border.color: theme.border
+                            radius: 4
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: currentTab === "TRUST" ? "white" : theme.text
+                            font.pixelSize: 11
+                            font.weight: Font.Bold
+                        }
+                    }
+                    Button {
                         text: "RESET"
                         onClicked: appController.resetEngine()
                         background: Rectangle { color: "transparent"; border.color: theme.border; radius: 4 }
@@ -111,6 +141,8 @@ Window {
                 currentIndex: {
                     if (currentTab === "TOPOLOGY") return 0
                     if (currentTab === "BLOCKCHAIN") return 1
+                    if (currentTab === "ROLLING") return 4
+                    if (currentTab === "TRUST") return 3
                     return 2
                 }
                 
@@ -127,6 +159,16 @@ Window {
 
                 // CHAT
                 ChatDashboard {}
+
+                // TRUST DASHBOARD
+                Loader {
+                    source: "pages/TrustDashboard.qml"
+                }
+
+                // ROLLING SIGNATURES DASHBOARD
+                Loader {
+                    source: "pages/PacketRoutingDashboard.qml"
+                }
             }
 
             // Right Sidebar: Console
