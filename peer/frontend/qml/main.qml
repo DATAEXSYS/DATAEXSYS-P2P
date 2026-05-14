@@ -15,7 +15,7 @@ Window {
 
     Colors { id: theme }
 
-    property string currentTab: "TOPOLOGY"
+    property string currentTab: "P2P CHAT"
 
     ColumnLayout {
         anchors.fill: parent

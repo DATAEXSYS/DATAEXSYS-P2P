@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend
+CMAKE_SOURCE_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build
+CMAKE_BINARY_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build
 
 # Utility rule file for P2PFrontend_autogen.
 
@@ -68,12 +68,12 @@ include CMakeFiles/P2PFrontend_autogen.dir/progress.make
 
 CMakeFiles/P2PFrontend_autogen: P2PFrontend_autogen/timestamp
 
-P2PFrontend_autogen/timestamp: /usr/lib/qt5/bin/moc
-P2PFrontend_autogen/timestamp: /usr/lib/qt5/bin/uic
+P2PFrontend_autogen/timestamp: /usr/lib/qt6/libexec/moc
+P2PFrontend_autogen/timestamp: /usr/lib/qt6/libexec/uic
 P2PFrontend_autogen/timestamp: CMakeFiles/P2PFrontend_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target P2PFrontend"
-	/usr/bin/cmake -E cmake_autogen /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target P2PFrontend"
+	/usr/bin/cmake -E cmake_autogen /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/timestamp
 
 P2PFrontend_autogen: CMakeFiles/P2PFrontend_autogen
 P2PFrontend_autogen: P2PFrontend_autogen/timestamp
@@ -89,6 +89,6 @@ CMakeFiles/P2PFrontend_autogen.dir/clean:
 .PHONY : CMakeFiles/P2PFrontend_autogen.dir/clean
 
 CMakeFiles/P2PFrontend_autogen.dir/depend:
-	cd /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/P2PFrontend_autogen.dir/depend
 

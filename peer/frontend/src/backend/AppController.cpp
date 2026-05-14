@@ -1,6 +1,8 @@
 #include "backend/AppController.h"
 #include <QRandomGenerator>
 #include <QDateTime>
+#include "../../network/sender.h"
+#include "../../network/receiver.h"
 
 AppController::AppController(QObject *parent) : QObject(parent) {
     m_timer = new QTimer(this);
@@ -42,6 +44,23 @@ AppController::AppController(QObject *parent) : QObject(parent) {
             [this](const QString &message) {
                 emit logEvent("PKCERT", message);
             });
+
+    m_receiverRunning = true;
+    m_receiverThread = std::thread([this]() {
+        network::start_receiver([this](const std::string& ip, const std::string& msg) {
+            QMetaObject::invokeMethod(this, [this, ip, msg]() {
+                emit realMessageReceived(QString::fromStdString(ip), QString::fromStdString(msg));
+                emit logEvent("CHAT_RECV", QString("Received from %1: %2").arg(QString::fromStdString(ip), QString::fromStdString(msg)));
+            }, Qt::QueuedConnection);
+        }, m_receiverRunning);
+    });
+}
+
+AppController::~AppController() {
+    m_receiverRunning = false;
+    if (m_receiverThread.joinable()) {
+        m_receiverThread.join();
+    }
 }
 
 void AppController::setAutoRun(bool autoRun) {
@@ -103,6 +122,15 @@ void AppController::sendMessage(const QString &from, const QString &to, const QS
         emit messageStatusUpdated(text, "Delivered");
         emit logEvent("CHAT", "Message delivered to destination.");
     });
+}
+
+void AppController::sendRealMessage(const QString &destIp, const QString &text) {
+    if (network::send_message(destIp.toStdString(), text.toStdString())) {
+        emit logEvent("CHAT_SEND", QString("Sent to %1: %2").arg(destIp, text));
+        emit messageSent("Me", destIp, text);
+    } else {
+        emit logEvent("CHAT_ERR", QString("Failed to send to %1").arg(destIp));
+    }
 }
 
 void AppController::executeCurrentStep() {

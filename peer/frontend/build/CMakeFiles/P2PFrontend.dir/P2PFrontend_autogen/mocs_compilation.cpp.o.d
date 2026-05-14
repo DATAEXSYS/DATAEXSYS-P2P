@@ -1,7 +1,7 @@
 CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/mocs_compilation.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_ApiClient.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_ApiClient.cpp \
  /usr/include/c++/13/memory /usr/include/c++/13/bits/memoryfwd.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -116,25 +116,52 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/13/backward/auto_ptr.h \
  /usr/include/c++/13/pstl/glue_memory_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/ApiClient.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qnamespace.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/ApiClient.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobjectdefs.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qnamespace.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qglobal.h \
  /usr/include/c++/13/cstddef /usr/include/c++/13/utility \
  /usr/include/c++/13/bits/stl_relops.h \
- /usr/include/c++/13/initializer_list /usr/include/assert.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qtcore-config.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qsystemdetection.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qprocessordetection.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qcompilerdetection.h \
- /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
- /usr/include/c++/13/bits/algorithmfwd.h \
- /usr/include/c++/13/bits/stl_heap.h \
- /usr/include/c++/13/bits/uniform_int_dist.h /usr/include/c++/13/cstdlib \
- /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/c++/13/initializer_list /usr/include/c++/13/cstdint \
+ /usr/include/assert.h /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qconfig.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcore-config.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtconfigmacros.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcoreexports.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qsystemdetection.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qprocessordetection.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcompilerdetection.h \
+ /usr/include/c++/13/version \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainerfwd.h \
+ /usr/include/c++/13/variant \
+ /usr/include/c++/13/bits/enable_special_members.h \
+ /usr/include/c++/13/bits/parse_numbers.h /usr/include/c++/13/optional \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qsysinfo.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qlogging.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qflags.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic_cxx11.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qgenericatomic.h \
+ /usr/include/c++/13/atomic \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qglobalstatic.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qnumeric.h \
+ /usr/include/c++/13/cmath /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+ /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+ /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+ /usr/include/c++/13/bits/std_abs.h /usr/include/stdlib.h \
+ /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
@@ -143,36 +170,63 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
  /usr/include/alloca.h /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /usr/include/c++/13/bits/std_abs.h \
- /usr/include/c++/13/pstl/glue_algorithm_defs.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qflags.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasicatomic.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_cxx11.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h \
- /usr/include/c++/13/atomic \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobalstatic.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qnumeric.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qversiontagging.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qobjectdefs_impl.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qchar.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qrefcount.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
- /usr/include/string.h /usr/include/strings.h \
- /usr/include/c++/13/stdlib.h /usr/include/c++/13/string \
- /usr/include/c++/13/bits/char_traits.h \
- /usr/include/c++/13/bits/localefwd.h \
+ /usr/include/c++/13/bits/specfun.h /usr/include/c++/13/limits \
+ /usr/include/c++/13/tr1/gamma.tcc \
+ /usr/include/c++/13/tr1/special_function_util.h \
+ /usr/include/c++/13/tr1/bessel_function.tcc \
+ /usr/include/c++/13/tr1/beta_function.tcc \
+ /usr/include/c++/13/tr1/ell_integral.tcc \
+ /usr/include/c++/13/tr1/exp_integral.tcc \
+ /usr/include/c++/13/tr1/hypergeometric.tcc \
+ /usr/include/c++/13/tr1/legendre_function.tcc \
+ /usr/include/c++/13/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/13/tr1/poly_hermite.tcc \
+ /usr/include/c++/13/tr1/poly_laguerre.tcc \
+ /usr/include/c++/13/tr1/riemann_zeta.tcc \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qversiontagging.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qforeach.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobjectdefs_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstring.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qchar.h \
+ /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/bits/node_handle.h \
+ /usr/include/c++/13/bits/range_access.h \
+ /usr/include/c++/13/bits/erase_if.h \
+ /usr/include/c++/13/bits/memory_resource.h \
+ /usr/include/c++/13/bits/uses_allocator_args.h \
+ /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/array \
+ /usr/include/c++/13/compare /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/c++/13/bits/algorithmfwd.h \
+ /usr/include/c++/13/bits/stl_heap.h \
+ /usr/include/c++/13/bits/uniform_int_dist.h /usr/include/c++/13/cstdlib \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringview.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qrefcount.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydata.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qpair.h /usr/include/string.h \
+ /usr/include/strings.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydatapointer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydataops.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainertools_impl.h \
+ /usr/include/c++/13/cstring /usr/include/c++/13/iterator \
+ /usr/include/c++/13/bits/stream_iterator.h \
+ /usr/include/c++/13/bits/streambuf_iterator.h \
+ /usr/include/c++/13/streambuf /usr/include/c++/13/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h \
  /usr/include/c++/13/clocale /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/13/cctype \
- /usr/include/ctype.h /usr/include/c++/13/bits/ostream_insert.h \
+ /usr/include/ctype.h /usr/include/c++/13/bits/ios_base.h \
+ /usr/include/c++/13/bits/locale_classes.h /usr/include/c++/13/string \
+ /usr/include/c++/13/bits/char_traits.h \
+ /usr/include/c++/13/bits/ostream_insert.h \
  /usr/include/c++/13/bits/cxxabi_forced.h \
- /usr/include/c++/13/bits/range_access.h \
  /usr/include/c++/13/bits/basic_string.h /usr/include/c++/13/string_view \
  /usr/include/c++/13/bits/string_view.tcc \
  /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdio \
@@ -188,42 +242,67 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/13/bits/charconv.h \
  /usr/include/c++/13/bits/basic_string.tcc \
- /usr/include/c++/13/bits/memory_resource.h \
- /usr/include/c++/13/bits/uses_allocator_args.h \
- /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /usr/include/c++/13/bits/streambuf_iterator.h \
- /usr/include/c++/13/streambuf /usr/include/c++/13/bits/ios_base.h \
- /usr/include/c++/13/bits/locale_classes.h \
  /usr/include/c++/13/bits/locale_classes.tcc \
  /usr/include/c++/13/system_error \
  /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h \
  /usr/include/c++/13/stdexcept /usr/include/c++/13/bits/streambuf.tcc \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringliteral.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringalgorithms.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringview.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qhashfunctions.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qpair.h \
+ /usr/include/c++/13/algorithm \
+ /usr/include/c++/13/pstl/glue_algorithm_defs.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayview.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringfwd.h \
+ /usr/include/c++/13/stdlib.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringliteral.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringalgorithms.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringtokenizer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qhashfunctions.h \
  /usr/include/c++/13/numeric /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
- /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
- /usr/include/c++/13/unordered_map \
- /usr/include/c++/13/bits/unordered_map.h \
- /usr/include/c++/13/bits/hashtable.h \
- /usr/include/c++/13/bits/hashtable_policy.h \
- /usr/include/c++/13/bits/enable_special_members.h \
- /usr/include/c++/13/bits/node_handle.h \
- /usr/include/c++/13/bits/erase_if.h /usr/include/c++/13/vector \
- /usr/include/c++/13/bits/stl_vector.h \
- /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/array \
- /usr/include/c++/13/compare \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontainertools_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterator.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearraylist.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringlist.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringmatcher.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qscopedpointer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmetatype.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qscopeguard.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatastream.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevicebase.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterable.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmetacontainer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainerinfo.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtaggedpointer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmath.h \
  /usr/include/c++/13/list /usr/include/c++/13/bits/stl_list.h \
- /usr/include/c++/13/bits/list.tcc \
+ /usr/include/c++/13/bits/list.tcc /usr/include/c++/13/map \
+ /usr/include/c++/13/bits/stl_tree.h /usr/include/c++/13/bits/stl_map.h \
+ /usr/include/c++/13/bits/stl_multimap.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
+ /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
+ /usr/include/c++/13/ratio /usr/include/c++/13/ctime \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QNetworkAccessManager \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qnetworkaccessmanager.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtnetworkglobal.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtnetwork-config.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtnetworkexports.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qnetworkrequest.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QSharedDataPointer \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qshareddata.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstring.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QUrl \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QVariant \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qdebug.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtextstream.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringconverter_base.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontiguouscache.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -232,103 +311,52 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearraylist.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringlist.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qregexp.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringmatcher.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qvarlengtharray.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontainerfwd.h \
- /usr/include/c++/13/map /usr/include/c++/13/bits/stl_tree.h \
- /usr/include/c++/13/bits/stl_map.h \
- /usr/include/c++/13/bits/stl_multimap.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h \
- /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
- /usr/include/c++/13/ratio /usr/include/c++/13/cstdint \
- /usr/include/c++/13/limits /usr/include/c++/13/ctime \
- /usr/include/c++/13/bits/parse_numbers.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkaccessmanager.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtnetworkglobal.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtnetwork-config.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkrequest.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QSharedDataPointer \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qhash.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
- /usr/include/c++/13/variant \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QVector \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslConfiguration \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslconfiguration.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslsocket.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtcpsocket.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qabstractsocket.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qdebug.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qsharedpointer_impl.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslerror.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslcertificate.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qcryptographichash.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qdatetime.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qssl.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QFlags \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qflags.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslPreSharedKeyAuthenticator \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslpresharedkeyauthenticator.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkReply \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkreply.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QIODevice \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkRequest \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkrequest.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qsharedpointer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qshareddata.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qsharedpointer_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmap.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qshareddata_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qset.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qhash.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QList \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QSslConfiguration \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslconfiguration.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslsocket.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtcpsocket.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qabstractsocket.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevice.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qhostaddress.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslerror.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslcertificate.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcryptographichash.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatetime.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qcalendar.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qlocale.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qssl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QFlags \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qflags.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QSslPreSharedKeyAuthenticator \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslpresharedkeyauthenticator.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QMetaType \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmetatype.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QNetworkReply \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qnetworkreply.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QIODevice \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevice.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QNetworkRequest \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qnetworkrequest.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QNetworkAccessManager \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
  /usr/include/nlohmann/json.hpp /usr/include/nlohmann/adl_serializer.hpp \
  /usr/include/nlohmann/detail/abi_macros.hpp \
  /usr/include/nlohmann/detail/conversions/from_json.hpp \
  /usr/include/c++/13/forward_list /usr/include/c++/13/bits/forward_list.h \
  /usr/include/c++/13/bits/forward_list.tcc /usr/include/c++/13/valarray \
- /usr/include/c++/13/cmath /usr/include/math.h \
- /usr/include/x86_64-linux-gnu/bits/math-vector.h \
- /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
- /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
- /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
- /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
- /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/13/bits/specfun.h /usr/include/c++/13/tr1/gamma.tcc \
- /usr/include/c++/13/tr1/special_function_util.h \
- /usr/include/c++/13/tr1/bessel_function.tcc \
- /usr/include/c++/13/tr1/beta_function.tcc \
- /usr/include/c++/13/tr1/ell_integral.tcc \
- /usr/include/c++/13/tr1/exp_integral.tcc \
- /usr/include/c++/13/tr1/hypergeometric.tcc \
- /usr/include/c++/13/tr1/legendre_function.tcc \
- /usr/include/c++/13/tr1/modified_bessel_func.tcc \
- /usr/include/c++/13/tr1/poly_hermite.tcc \
- /usr/include/c++/13/tr1/poly_laguerre.tcc \
- /usr/include/c++/13/tr1/riemann_zeta.tcc \
  /usr/include/c++/13/bits/valarray_array.h \
  /usr/include/c++/13/bits/valarray_array.tcc \
  /usr/include/c++/13/bits/valarray_before.h \
@@ -344,7 +372,7 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/nlohmann/detail/meta/detected.hpp \
  /usr/include/nlohmann/detail/meta/void_t.hpp \
  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
- /usr/include/c++/13/version /usr/include/c++/13/cassert \
+ /usr/include/c++/13/cassert \
  /usr/include/nlohmann/detail/string_escape.hpp \
  /usr/include/nlohmann/detail/input/position_t.hpp \
  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
@@ -354,7 +382,6 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
  /usr/include/nlohmann/json_fwd.hpp \
  /usr/include/nlohmann/detail/string_concat.hpp \
- /usr/include/c++/13/cstring \
  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
  /usr/include/nlohmann/detail/meta/std_fs.hpp \
  /usr/include/c++/13/filesystem /usr/include/c++/13/bits/fs_fwd.h \
@@ -402,33 +429,55 @@ CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.o: \
  /usr/include/nlohmann/ordered_map.hpp /usr/include/c++/13/any \
  /usr/include/nlohmann/detail/macro_unscope.hpp \
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_AppController.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/AppController.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QStringList \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstringlist.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QList \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QTimer \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qtimer.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasictimer.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qdebug.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_DiffEngine.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/DiffEngine.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/StateStore.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/models/Network.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QDateTime \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qdatetime.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_NetworkService.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/NetworkService.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/ApiClient.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/DiffEngine.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/include/backend/PollingManager.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_PollingManager.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/PollingManager.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_StateStore.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/StateStore.h \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EPPU6REHSQ/moc_NetworkModel.cpp \
- /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EPPU6REHSQ/../../../include/models/NetworkModel.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QAbstractListModel \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/QSslError \
+ /usr/include/x86_64-linux-gnu/qt6/QtNetwork/qsslerror.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_AppController.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/AppController.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QStringList \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringlist.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QList \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QDebug \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qdebug.h \
+ /usr/include/c++/13/thread /usr/include/c++/13/bits/std_thread.h \
+ /usr/include/c++/13/bits/this_thread_sleep.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/LocalTrustDiariesAdapter.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QMap \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmap.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QMutex \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qmutex.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtsan_impl.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QVector \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qvector.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/PKCertChainAdapter.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QAtomicInteger \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/RollingSignaturesAdapter.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QHash \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qhash.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QDateTime \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatetime.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_DiffEngine.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/DiffEngine.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/StateStore.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/models/Network.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_LocalTrustDiariesAdapter.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_NetworkService.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/NetworkService.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/ApiClient.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/DiffEngine.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/PollingManager.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_PKCertChainAdapter.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/PKCertChainAdapter.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_PollingManager.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/PollingManager.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_RollingSignaturesAdapter.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/RollingSignaturesAdapter.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/moc_StateStore.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/NHSO4IKFBR/../../../include/backend/StateStore.h \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EPPU6REHSQ/moc_NetworkModel.cpp \
+ /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/P2PFrontend_autogen/EPPU6REHSQ/../../../include/models/NetworkModel.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QAbstractListModel \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend
+CMAKE_SOURCE_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build
+CMAKE_BINARY_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -113,6 +113,7 @@ preinstall/fast:
 
 # clear depends
 depend:
+	$(CMAKE_COMMAND) -P /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
@@ -203,6 +204,54 @@ P2PFrontend_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/P2PFrontend_autogen/mocs_compilation.cpp.s
 .PHONY : P2PFrontend_autogen/mocs_compilation.cpp.s
 
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.o: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.o
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.o
+
+# target to build an object file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.o
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.o
+
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.i: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.i
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.i
+
+# target to preprocess a source file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.i
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.i
+
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.s: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.s
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.s
+
+# target to generate assembly for a file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.s
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.cpp.s
+
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.o: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.o
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.o
+
+# target to build an object file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.o
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.o
+
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.i: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.i
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.i
+
+# target to preprocess a source file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.i
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.i
+
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.s: home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.s
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.s
+
+# target to generate assembly for a file
+home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.s
+.PHONY : home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.cpp.s
+
 src/backend/ApiClient.o: src/backend/ApiClient.cpp.o
 .PHONY : src/backend/ApiClient.o
 
@@ -275,6 +324,30 @@ src/backend/DiffEngine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/DiffEngine.cpp.s
 .PHONY : src/backend/DiffEngine.cpp.s
 
+src/backend/LocalTrustDiariesAdapter.o: src/backend/LocalTrustDiariesAdapter.cpp.o
+.PHONY : src/backend/LocalTrustDiariesAdapter.o
+
+# target to build an object file
+src/backend/LocalTrustDiariesAdapter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/LocalTrustDiariesAdapter.cpp.o
+.PHONY : src/backend/LocalTrustDiariesAdapter.cpp.o
+
+src/backend/LocalTrustDiariesAdapter.i: src/backend/LocalTrustDiariesAdapter.cpp.i
+.PHONY : src/backend/LocalTrustDiariesAdapter.i
+
+# target to preprocess a source file
+src/backend/LocalTrustDiariesAdapter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/LocalTrustDiariesAdapter.cpp.i
+.PHONY : src/backend/LocalTrustDiariesAdapter.cpp.i
+
+src/backend/LocalTrustDiariesAdapter.s: src/backend/LocalTrustDiariesAdapter.cpp.s
+.PHONY : src/backend/LocalTrustDiariesAdapter.s
+
+# target to generate assembly for a file
+src/backend/LocalTrustDiariesAdapter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/LocalTrustDiariesAdapter.cpp.s
+.PHONY : src/backend/LocalTrustDiariesAdapter.cpp.s
+
 src/backend/NetworkService.o: src/backend/NetworkService.cpp.o
 .PHONY : src/backend/NetworkService.o
 
@@ -299,6 +372,30 @@ src/backend/NetworkService.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/NetworkService.cpp.s
 .PHONY : src/backend/NetworkService.cpp.s
 
+src/backend/PKCertChainAdapter.o: src/backend/PKCertChainAdapter.cpp.o
+.PHONY : src/backend/PKCertChainAdapter.o
+
+# target to build an object file
+src/backend/PKCertChainAdapter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PKCertChainAdapter.cpp.o
+.PHONY : src/backend/PKCertChainAdapter.cpp.o
+
+src/backend/PKCertChainAdapter.i: src/backend/PKCertChainAdapter.cpp.i
+.PHONY : src/backend/PKCertChainAdapter.i
+
+# target to preprocess a source file
+src/backend/PKCertChainAdapter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PKCertChainAdapter.cpp.i
+.PHONY : src/backend/PKCertChainAdapter.cpp.i
+
+src/backend/PKCertChainAdapter.s: src/backend/PKCertChainAdapter.cpp.s
+.PHONY : src/backend/PKCertChainAdapter.s
+
+# target to generate assembly for a file
+src/backend/PKCertChainAdapter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PKCertChainAdapter.cpp.s
+.PHONY : src/backend/PKCertChainAdapter.cpp.s
+
 src/backend/PollingManager.o: src/backend/PollingManager.cpp.o
 .PHONY : src/backend/PollingManager.o
 
@@ -322,6 +419,30 @@ src/backend/PollingManager.s: src/backend/PollingManager.cpp.s
 src/backend/PollingManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.s
 .PHONY : src/backend/PollingManager.cpp.s
+
+src/backend/RollingSignaturesAdapter.o: src/backend/RollingSignaturesAdapter.cpp.o
+.PHONY : src/backend/RollingSignaturesAdapter.o
+
+# target to build an object file
+src/backend/RollingSignaturesAdapter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.o
+.PHONY : src/backend/RollingSignaturesAdapter.cpp.o
+
+src/backend/RollingSignaturesAdapter.i: src/backend/RollingSignaturesAdapter.cpp.i
+.PHONY : src/backend/RollingSignaturesAdapter.i
+
+# target to preprocess a source file
+src/backend/RollingSignaturesAdapter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.i
+.PHONY : src/backend/RollingSignaturesAdapter.cpp.i
+
+src/backend/RollingSignaturesAdapter.s: src/backend/RollingSignaturesAdapter.cpp.s
+.PHONY : src/backend/RollingSignaturesAdapter.s
+
+# target to generate assembly for a file
+src/backend/RollingSignaturesAdapter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.s
+.PHONY : src/backend/RollingSignaturesAdapter.cpp.s
 
 src/backend/StateStore.o: src/backend/StateStore.cpp.o
 .PHONY : src/backend/StateStore.o
@@ -412,6 +533,12 @@ help:
 	@echo "... P2PFrontend_autogen/mocs_compilation.o"
 	@echo "... P2PFrontend_autogen/mocs_compilation.i"
 	@echo "... P2PFrontend_autogen/mocs_compilation.s"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.o"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.i"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/receiver.s"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.o"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.i"
+	@echo "... home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/network/sender.s"
 	@echo "... src/backend/ApiClient.o"
 	@echo "... src/backend/ApiClient.i"
 	@echo "... src/backend/ApiClient.s"
@@ -421,12 +548,21 @@ help:
 	@echo "... src/backend/DiffEngine.o"
 	@echo "... src/backend/DiffEngine.i"
 	@echo "... src/backend/DiffEngine.s"
+	@echo "... src/backend/LocalTrustDiariesAdapter.o"
+	@echo "... src/backend/LocalTrustDiariesAdapter.i"
+	@echo "... src/backend/LocalTrustDiariesAdapter.s"
 	@echo "... src/backend/NetworkService.o"
 	@echo "... src/backend/NetworkService.i"
 	@echo "... src/backend/NetworkService.s"
+	@echo "... src/backend/PKCertChainAdapter.o"
+	@echo "... src/backend/PKCertChainAdapter.i"
+	@echo "... src/backend/PKCertChainAdapter.s"
 	@echo "... src/backend/PollingManager.o"
 	@echo "... src/backend/PollingManager.i"
 	@echo "... src/backend/PollingManager.s"
+	@echo "... src/backend/RollingSignaturesAdapter.o"
+	@echo "... src/backend/RollingSignaturesAdapter.i"
+	@echo "... src/backend/RollingSignaturesAdapter.s"
 	@echo "... src/backend/StateStore.o"
 	@echo "... src/backend/StateStore.i"
 	@echo "... src/backend/StateStore.s"
@@ -447,6 +583,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
+	$(CMAKE_COMMAND) -P /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

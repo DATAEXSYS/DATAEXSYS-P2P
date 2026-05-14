@@ -15,7 +15,7 @@ Rectangle {
         target: appController
         function onMessageSent(from, to, text) {
             chatModel.append({
-                "from": from,
+                "from": "Me",
                 "to": to,
                 "text": text,
                 "status": "Sent",
@@ -23,13 +23,15 @@ Rectangle {
             })
             chatList.positionViewAtEnd()
         }
-        function onMessageStatusUpdated(text, status) {
-            for (let i = 0; i < chatModel.count; ++i) {
-                if (chatModel.get(i).text === text) {
-                    chatModel.setProperty(i, "status", status)
-                    break
-                }
-            }
+        function onRealMessageReceived(ip, text) {
+            chatModel.append({
+                "from": ip,
+                "to": "Me",
+                "text": text,
+                "status": "Received",
+                "timestamp": new Date().toLocaleTimeString()
+            })
+            chatList.positionViewAtEnd()
         }
     }
 
@@ -46,20 +48,24 @@ Rectangle {
             font.letterSpacing: 2
         }
 
-        Row {
+        RowLayout {
+            Layout.fillWidth: true
             spacing: 10
-            Repeater {
-                model: ["Node A", "Node B", "Node C"]
-                Button {
-                    text: modelData
-                    flat: true
-                    onClicked: activeNode = modelData
-                    contentItem: Text {
-                        text: parent.text
-                        color: activeNode === modelData ? "#4DA3FF" : "#64748B"
-                        font.weight: Font.Bold
-                    }
-                }
+            
+            Text {
+                text: "DESTINATION IP:"
+                color: "#64748B"
+                font.weight: Font.Bold
+                font.pixelSize: 11
+            }
+            
+            TextField {
+                id: destIpInput
+                Layout.fillWidth: true
+                placeholderText: "Enter IPv6 Address (e.g. ::1)"
+                color: "white"
+                text: "::1"
+                background: Rectangle { color: "#111827"; radius: 4; border.color: "#1F2937" }
             }
         }
 
@@ -99,7 +105,7 @@ Rectangle {
                             Item { Layout.fillWidth: true }
                             Text { 
                                 text: status; 
-                                color: status === "Delivered" ? "#3DFFB3" : "#FFD700"; 
+                                color: status === "Received" ? "#3DFFB3" : "#4DA3FF"; 
                                 font.pixelSize: 9; 
                                 font.italic: true 
                             }
@@ -128,8 +134,8 @@ Rectangle {
             Button {
                 text: "SEND"
                 onClicked: {
-                    if (msgInput.text !== "") {
-                        appController.sendMessage(activeNode, "Node C", msgInput.text)
+                    if (msgInput.text !== "" && destIpInput.text !== "") {
+                        appController.sendRealMessage(destIpInput.text, msgInput.text)
                         msgInput.text = ""
                     }
                 }

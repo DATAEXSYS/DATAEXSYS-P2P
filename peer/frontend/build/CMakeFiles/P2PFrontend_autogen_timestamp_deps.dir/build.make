@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend
+CMAKE_SOURCE_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build
+CMAKE_BINARY_DIR = /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build
 
 # Utility rule file for P2PFrontend_autogen_timestamp_deps.
 
@@ -66,12 +66,12 @@ include CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/progress.make
 
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt5/bin/moc
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt5/bin/uic
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Quick.so.5.15.13
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Qml.so.5.15.13
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt6/libexec/moc
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt6/libexec/uic
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Qml.so.6.4.2
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Quick.so.6.4.2
 
 P2PFrontend_autogen_timestamp_deps: CMakeFiles/P2PFrontend_autogen_timestamp_deps
 P2PFrontend_autogen_timestamp_deps: CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/build.make
@@ -86,6 +86,6 @@ CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/depend:
-	cd /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/DATAEXSYS-P2P/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/build/CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/depend
 

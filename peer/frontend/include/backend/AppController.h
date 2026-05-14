@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QDebug>
 #include <memory>
+#include <thread>
+#include <atomic>
 
 #include "backend/LocalTrustDiariesAdapter.h"
 #include "backend/PKCertChainAdapter.h"
@@ -52,6 +54,7 @@ class AppController : public QObject {
 
 public:
     explicit AppController(QObject *parent = nullptr);
+    ~AppController();
 
     int executionStep() const { return m_executionStep; }
     bool autoRun() const { return m_autoRun; }
@@ -65,6 +68,7 @@ public:
     Q_INVOKABLE void resetEngine();
     Q_INVOKABLE void mineBlock();
     Q_INVOKABLE void sendMessage(const QString &from, const QString &to, const QString &text);
+    Q_INVOKABLE void sendRealMessage(const QString &destIp, const QString &text);
 
 signals:
     void nodeJoined(QString nodeId);
@@ -79,6 +83,7 @@ signals:
     void blockMined(int index, QString hash, QString prevHash);
     void messageSent(QString from, QString to, QString text);
     void messageStatusUpdated(QString text, QString status);
+    void realMessageReceived(QString ip, QString text);
 
     void executionStepChanged();
     void autoRunChanged();
@@ -96,6 +101,9 @@ private:
     std::unique_ptr<LocalTrustDiariesAdapter> m_trustAdapter;
     std::unique_ptr<RollingSignaturesAdapter> m_rollingSignaturesAdapter;
     std::unique_ptr<PKCertChainAdapter> m_pkCertChainAdapter;
+
+    std::thread m_receiverThread;
+    std::atomic<bool> m_receiverRunning{false};
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };

@@ -45,6 +45,8 @@ add_executable(P2PFrontend
     ${FRONTEND_SOURCES}
     ${FRONTEND_HEADERS}
     qml.qrc
+    ../network/sender.cpp
+    ../network/receiver.cpp
 )
 
 target_include_directories(P2PFrontend
