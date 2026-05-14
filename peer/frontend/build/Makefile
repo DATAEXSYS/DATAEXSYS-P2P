@@ -444,6 +444,30 @@ src/backend/RollingSignaturesAdapter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.s
 .PHONY : src/backend/RollingSignaturesAdapter.cpp.s
 
+src/backend/SimulatorEngine.o: src/backend/SimulatorEngine.cpp.o
+.PHONY : src/backend/SimulatorEngine.o
+
+# target to build an object file
+src/backend/SimulatorEngine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/SimulatorEngine.cpp.o
+.PHONY : src/backend/SimulatorEngine.cpp.o
+
+src/backend/SimulatorEngine.i: src/backend/SimulatorEngine.cpp.i
+.PHONY : src/backend/SimulatorEngine.i
+
+# target to preprocess a source file
+src/backend/SimulatorEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/SimulatorEngine.cpp.i
+.PHONY : src/backend/SimulatorEngine.cpp.i
+
+src/backend/SimulatorEngine.s: src/backend/SimulatorEngine.cpp.s
+.PHONY : src/backend/SimulatorEngine.s
+
+# target to generate assembly for a file
+src/backend/SimulatorEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/P2PFrontend.dir/build.make CMakeFiles/P2PFrontend.dir/src/backend/SimulatorEngine.cpp.s
+.PHONY : src/backend/SimulatorEngine.cpp.s
+
 src/backend/StateStore.o: src/backend/StateStore.cpp.o
 .PHONY : src/backend/StateStore.o
 
@@ -563,6 +587,9 @@ help:
 	@echo "... src/backend/RollingSignaturesAdapter.o"
 	@echo "... src/backend/RollingSignaturesAdapter.i"
 	@echo "... src/backend/RollingSignaturesAdapter.s"
+	@echo "... src/backend/SimulatorEngine.o"
+	@echo "... src/backend/SimulatorEngine.i"
+	@echo "... src/backend/SimulatorEngine.s"
 	@echo "... src/backend/StateStore.o"
 	@echo "... src/backend/StateStore.i"
 	@echo "... src/backend/StateStore.s"

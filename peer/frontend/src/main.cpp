@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "backend/AppController.h"
+#include "backend/SimulatorEngine.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     AppController controller;
+    qmlRegisterType<SimulatorEngine>("Simulator", 1, 0, "SimulatorEngine");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("appController", &controller);

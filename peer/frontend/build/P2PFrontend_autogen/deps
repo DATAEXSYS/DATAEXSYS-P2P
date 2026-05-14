@@ -11,6 +11,7 @@ P2PFrontend_autogen/timestamp: \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/PKCertChainAdapter.h \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/PollingManager.h \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/RollingSignaturesAdapter.h \
+	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/SimulatorEngine.h \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/backend/StateStore.h \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/models/Network.h \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/include/models/NetworkModel.h \
@@ -23,6 +24,7 @@ P2PFrontend_autogen/timestamp: \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/backend/PKCertChainAdapter.cpp \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/backend/PollingManager.cpp \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/backend/RollingSignaturesAdapter.cpp \
+	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/backend/SimulatorEngine.cpp \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/backend/StateStore.cpp \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/main.cpp \
 	/home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/src/models/NetworkModel.cpp \
@@ -406,6 +408,8 @@ P2PFrontend_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QUrl \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QVariant \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QVariantList \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QVariantMap \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QVector \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
@@ -423,6 +427,8 @@ P2PFrontend_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearraylist.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayview.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcalendar.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborcommon.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborvalue.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qchar.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare_impl.h \
@@ -447,6 +453,8 @@ P2PFrontend_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevicebase.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qiterable.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qiterator.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonarray.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonvalue.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qlocale.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qlogging.h \
@@ -464,6 +472,7 @@ P2PFrontend_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qpair.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qprocessordetection.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qrefcount.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qregularexpression.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qscopedpointer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qscopeguard.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qset.h \
@@ -493,7 +502,9 @@ P2PFrontend_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/quuid.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvariantmap.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvector.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qversiontagging.h \

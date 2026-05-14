@@ -7,5 +7,6 @@
 #include "NHSO4IKFBR/moc_PKCertChainAdapter.cpp"
 #include "NHSO4IKFBR/moc_PollingManager.cpp"
 #include "NHSO4IKFBR/moc_RollingSignaturesAdapter.cpp"
+#include "NHSO4IKFBR/moc_SimulatorEngine.cpp"
 #include "NHSO4IKFBR/moc_StateStore.cpp"
 #include "EPPU6REHSQ/moc_NetworkModel.cpp"
