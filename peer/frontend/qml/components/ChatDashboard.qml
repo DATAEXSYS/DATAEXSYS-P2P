@@ -9,10 +9,20 @@ Rectangle {
     border.color: "#1F2937"
 
     ListModel { id: chatModel }
+    ListModel { id: logModel }
     property string activeNode: "Node A"
 
     Connections {
         target: appController
+        function onLogEvent(tag, message) {
+            logModel.append({
+                "time": new Date().toLocaleTimeString(),
+                "tag": tag,
+                "message": message
+            })
+            if (logModel.count > 100) logModel.remove(0)
+            logList.positionViewAtEnd()
+        }
         function onMessageSent(from, to, text) {
             chatModel.append({
                 "from": "Me",
@@ -187,6 +197,39 @@ Rectangle {
                             color: "#E2E8F0"
                             wrapMode: Text.WordWrap
                         }
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 120
+            color: "#111827"
+            border.color: "#1F2937"
+            radius: 4
+
+            ColumnLayout {
+                anchors.fill: parent
+                anchors.margins: 8
+                spacing: 4
+
+                Text { text: "CONSOLE LOGS"; color: "#38bdf8"; font.pixelSize: 11; font.bold: true }
+
+                ListView {
+                    id: logList
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    model: logModel
+                    clip: true
+                    spacing: 2
+                    delegate: Text {
+                        width: parent.width
+                        text: time + " [" + tag + "] " + message
+                        color: tag === "ATTACK" ? "#EF4444" : (tag === "ROUTING" ? "#F59E0B" : (tag.indexOf("ERR") !== -1 ? "#EF4444" : "#9CA3AF"))
+                        font.pixelSize: 10
+                        wrapMode: Text.WordWrap
+                        font.family: "monospace"
                     }
                 }
             }
