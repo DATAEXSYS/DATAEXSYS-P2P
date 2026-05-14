@@ -1,18 +1,16 @@
 #pragma once
 
 #include <stdint.h>
-#include "core/datatypes/ipv6.h"
 #include <stdbool.h>
-// Add necessary includes
+#include "protocol/routing/PacketHeader.h"
 
-#define MAX_PATH_HOPS 16
-#define ROUTING_HMAC_SIZE 32
+#define MAX_PACKET_PAYLOAD 256
 
-typedef struct {
-    uint8_t payload[256];
-    size_t payload_len;
-    ipv6_t path_vector[MAX_PATH_HOPS]; // Array of NodeIDs representing the route
-    size_t path_len;
-    uint8_t hmac[ROUTING_HMAC_SIZE];
-    uint32_t nonce;
+typedef struct __attribute__((aligned(4)))
+{
+    PacketHeader header;
+
+    void* payload;
+    uint16_t payload_len;
+
 } RoutingPacket;
