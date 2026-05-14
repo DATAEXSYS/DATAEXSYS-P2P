@@ -57,6 +57,13 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                     if (sep != -1) {
                         QString destIp = qMsg.mid(6, sep - 6);
                         QString realMsg = qMsg.mid(sep + 1);
+                        
+                        if (m_blackholeEnabled.load()) {
+                            emit logEvent("ATTACK", QString("BLACKHOLE ATTACK: Dropped packet from %1 destined to %2").arg(qIp, destIp));
+                            emit realMessageReceived("Blackhole", QString("Dropped packet destined to %1").arg(destIp));
+                            return; // Do not send ACK, do not forward.
+                        }
+
                         emit logEvent("ROUTING", QString("Forwarding message from %1 to %2").arg(qIp, destIp));
                         
                         // Send ACK back to the source
@@ -107,6 +114,19 @@ void AppController::setAutoRun(bool autoRun) {
         if (m_autoRun) m_timer->start();
         else m_timer->stop();
         emit autoRunChanged();
+    }
+}
+
+void AppController::setBlackholeEnabled(bool enabled) {
+    if (m_blackholeEnabled != enabled) {
+        m_blackholeEnabled = enabled;
+        emit blackholeEnabledChanged();
+        
+        if (enabled) {
+            emit logEvent("SECURITY", "Blackhole attack simulation ENABLED. Node will drop incoming routed packets.");
+        } else {
+            emit logEvent("SECURITY", "Blackhole attack simulation DISABLED. Normal routing restored.");
+        }
     }
 }
 

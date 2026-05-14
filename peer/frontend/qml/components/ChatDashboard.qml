@@ -91,6 +91,30 @@ Rectangle {
             }
         }
 
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+            
+            Text {
+                text: "ATTACK SIMULATION:"
+                color: "#EF4444"
+                font.weight: Font.Bold
+                font.pixelSize: 11
+                Layout.preferredWidth: 120
+            }
+            
+            Switch {
+                id: blackholeSwitch
+                checked: appController.blackholeEnabled
+                onToggled: appController.blackholeEnabled = checked
+            }
+            Text {
+                text: "Blackhole Attack (Drop Routed Packets)"
+                color: blackholeSwitch.checked ? "#EF4444" : "#64748B"
+                font.pixelSize: 11
+            }
+        }
+
         ListView {
             id: chatList
             Layout.fillWidth: true
@@ -107,9 +131,9 @@ Rectangle {
                     anchors.left: from !== "Me" ? parent.left : undefined
                     width: chatList.width * 0.7
                     height: 60
-                    color: from === "Me" ? "#1E293B" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827")
+                    color: from === "Me" ? "#1E293B" : (from === "Blackhole" ? "#3F181D" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827"))
                     radius: 10
-                    border.color: from === "Me" ? "#4DA3FF" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937")
+                    border.color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937"))
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -120,14 +144,14 @@ Rectangle {
                             Layout.fillWidth: true
                             Text { 
                                 text: from; 
-                                color: from === "Me" ? "#4DA3FF" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8"); 
+                                color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8")); 
                                 font.weight: Font.Bold; 
                                 font.pixelSize: 10 
                             }
                             Item { Layout.fillWidth: true }
                             Text { 
                                 text: status; 
-                                color: status === "Received" ? "#3DFFB3" : "#4DA3FF"; 
+                                color: from === "Blackhole" ? "#EF4444" : (status === "Received" ? "#3DFFB3" : "#4DA3FF"); 
                                 font.pixelSize: 9; 
                                 font.italic: true 
                             }

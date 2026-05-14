@@ -24,12 +24,12 @@ Rectangle {
     ListModel { id: tamperModel }
 
     function logEvent(tag, message, level) {
-        const color = level === "error" ? errorColor : (level === "warn" ? warnColor : accentColor)
+        const clr = level === "error" ? errorColor : (level === "warn" ? warnColor : accentColor)
         eventLogModel.insert(0, {
             "time": new Date().toLocaleTimeString(),
             "tag": tag,
             "message": message,
-            "color": color
+            "entryColor": clr.toString()
         })
         while (eventLogModel.count > 120)
             eventLogModel.remove(eventLogModel.count - 1)
@@ -437,26 +437,27 @@ Rectangle {
                         radius: 4
 
                         Item {
+                            id: dataView
                             anchors.fill: parent
                             anchors.margins: 8
 
                             property var selectedData: selectedPacketData()
 
                             Repeater {
-                                model: selectedData ? selectedData.routeArray.length : 0
+                                model: dataView.selectedData ? dataView.selectedData.routeArray.length : 0
                                 Rectangle {
                                     width: 92
                                     height: 26
                                     radius: 13
                                     color: "#1e293b"
-                                    border.color: index <= (selectedData ? selectedData.currentHop : 0) ? okColor : borderColor
+                                    border.color: index <= (dataView.selectedData ? dataView.selectedData.currentHop : 0) ? okColor : borderColor
 
                                     x: (index * ((parent.width - 92) / Math.max(1, model - 1)))
                                     y: parent.height * 0.55
 
                                     Text {
                                         anchors.centerIn: parent
-                                        text: selectedData ? selectedData.routeArray[index] : ""
+                                        text: dataView.selectedData ? dataView.selectedData.routeArray[index] : ""
                                         color: textColor
                                         font.pixelSize: 9
                                     }
@@ -465,18 +466,18 @@ Rectangle {
 
                             Rectangle {
                                 id: packetDot
-                                visible: selectedData && selectedData.routeArray.length > 1
+                                visible: dataView.selectedData && dataView.selectedData.routeArray.length > 1
                                 width: 12
                                 height: 12
                                 radius: 6
-                                color: selectedData && selectedData.tampered ? errorColor : accentColor
+                                color: dataView.selectedData && dataView.selectedData.tampered ? errorColor : accentColor
                                 y: parent.height * 0.45
                                 x: {
-                                    if (!selectedData)
+                                    if (!dataView.selectedData)
                                         return 0
-                                    const routeSize = Math.max(2, selectedData.routeArray.length)
+                                    const routeSize = Math.max(2, dataView.selectedData.routeArray.length)
                                     const step = (parent.width - 12) / (routeSize - 1)
-                                    return Math.min(parent.width - 12, step * selectedData.currentHop)
+                                    return Math.min(parent.width - 12, step * dataView.selectedData.currentHop)
                                 }
                                 Behavior on x { NumberAnimation { duration: 280; easing.type: Easing.InOutQuad } }
                             }
@@ -535,7 +536,7 @@ Rectangle {
                                     delegate: Text {
                                         width: parent.width
                                         text: time + " [" + tag + "] " + message
-                                        color: model.color
+                                        color: model.entryColor ? model.entryColor : accentColor
                                         font.pixelSize: 9
                                         wrapMode: Text.WordWrap
                                     }

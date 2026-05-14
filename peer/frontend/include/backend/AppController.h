@@ -51,6 +51,7 @@ class AppController : public QObject {
     Q_PROPERTY(QObject* trustAdapter READ trustAdapter CONSTANT)
     Q_PROPERTY(QObject* rollingSignaturesAdapter READ rollingSignaturesAdapter CONSTANT)
     Q_PROPERTY(QObject* pkCertChainAdapter READ pkCertChainAdapter CONSTANT)
+    Q_PROPERTY(bool blackholeEnabled READ blackholeEnabled WRITE setBlackholeEnabled NOTIFY blackholeEnabledChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
@@ -58,10 +59,14 @@ public:
 
     int executionStep() const { return m_executionStep; }
     bool autoRun() const { return m_autoRun; }
+    bool blackholeEnabled() const { return m_blackholeEnabled; }
+    
     QObject* trustAdapter() const { return m_trustAdapter.get(); }
     QObject* rollingSignaturesAdapter() const { return m_rollingSignaturesAdapter.get(); }
     QObject* pkCertChainAdapter() const { return m_pkCertChainAdapter.get(); }
+    
     void setAutoRun(bool autoRun);
+    void setBlackholeEnabled(bool enabled);
 
     Q_INVOKABLE void startEngine();
     Q_INVOKABLE void nextStep();
@@ -88,6 +93,7 @@ signals:
 
     void executionStepChanged();
     void autoRunChanged();
+    void blackholeEnabledChanged();
 
 private:
     void executeCurrentStep();
@@ -105,6 +111,7 @@ private:
 
     std::thread m_receiverThread;
     std::atomic<bool> m_receiverRunning{false};
+    std::atomic<bool> m_blackholeEnabled{false};
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };
