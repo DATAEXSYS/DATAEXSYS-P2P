@@ -115,6 +115,30 @@ Rectangle {
             }
         }
 
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+            
+            Text {
+                text: "BYPASS SIMULATION:"
+                color: "#A855F7"
+                font.weight: Font.Bold
+                font.pixelSize: 11
+                Layout.preferredWidth: 120
+            }
+            
+            Switch {
+                id: wormholeSwitch
+                checked: appController.wormholeEnabled
+                onToggled: appController.wormholeEnabled = checked
+            }
+            Text {
+                text: "Wormhole Attack (Direct Send, Bypass Router)"
+                color: wormholeSwitch.checked ? "#A855F7" : "#64748B"
+                font.pixelSize: 11
+            }
+        }
+
         ListView {
             id: chatList
             Layout.fillWidth: true
@@ -131,9 +155,9 @@ Rectangle {
                     anchors.left: from !== "Me" ? parent.left : undefined
                     width: chatList.width * 0.7
                     height: 60
-                    color: from === "Me" ? "#1E293B" : (from === "Blackhole" ? "#3F181D" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827"))
+                    color: from === "Me" ? "#1E293B" : (from === "Blackhole" ? "#3F181D" : (from.indexOf("WORMHOLE") !== -1 ? "#2E1A40" : (from.indexOf("Sybil") !== -1 ? "#3F2605" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827"))))
                     radius: 10
-                    border.color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937"))
+                    border.color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937"))))
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -144,14 +168,14 @@ Rectangle {
                             Layout.fillWidth: true
                             Text { 
                                 text: from; 
-                                color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8")); 
+                                color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#D8B4FE" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8")))); 
                                 font.weight: Font.Bold; 
                                 font.pixelSize: 10 
                             }
                             Item { Layout.fillWidth: true }
                             Text { 
                                 text: status; 
-                                color: from === "Blackhole" ? "#EF4444" : (status === "Received" ? "#3DFFB3" : "#4DA3FF"); 
+                                color: from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (status === "Received" ? "#3DFFB3" : "#4DA3FF"))); 
                                 font.pixelSize: 9; 
                                 font.italic: true 
                             }
@@ -176,6 +200,16 @@ Rectangle {
                 placeholderText: "Type a message..."
                 color: "white"
                 background: Rectangle { color: "#111827"; radius: 4; border.color: "#1F2937" }
+            }
+            Button {
+                text: "SYBIL FLOOD"
+                onClicked: {
+                    if (destIpInput.text !== "") {
+                        appController.launchSybilAttack(destIpInput.text, msgInput.text)
+                    }
+                }
+                background: Rectangle { color: "#F59E0B"; radius: 4 }
+                contentItem: Text { text: parent.text; color: "white"; font.weight: Font.Bold; horizontalAlignment: Text.AlignHCenter }
             }
             Button {
                 text: "SEND"

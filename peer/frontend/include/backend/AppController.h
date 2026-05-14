@@ -52,6 +52,7 @@ class AppController : public QObject {
     Q_PROPERTY(QObject* rollingSignaturesAdapter READ rollingSignaturesAdapter CONSTANT)
     Q_PROPERTY(QObject* pkCertChainAdapter READ pkCertChainAdapter CONSTANT)
     Q_PROPERTY(bool blackholeEnabled READ blackholeEnabled WRITE setBlackholeEnabled NOTIFY blackholeEnabledChanged)
+    Q_PROPERTY(bool wormholeEnabled READ wormholeEnabled WRITE setWormholeEnabled NOTIFY wormholeEnabledChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
@@ -60,6 +61,7 @@ public:
     int executionStep() const { return m_executionStep; }
     bool autoRun() const { return m_autoRun; }
     bool blackholeEnabled() const { return m_blackholeEnabled; }
+    bool wormholeEnabled() const { return m_wormholeEnabled; }
     
     QObject* trustAdapter() const { return m_trustAdapter.get(); }
     QObject* rollingSignaturesAdapter() const { return m_rollingSignaturesAdapter.get(); }
@@ -67,6 +69,7 @@ public:
     
     void setAutoRun(bool autoRun);
     void setBlackholeEnabled(bool enabled);
+    void setWormholeEnabled(bool enabled);
 
     Q_INVOKABLE void startEngine();
     Q_INVOKABLE void nextStep();
@@ -75,6 +78,7 @@ public:
     Q_INVOKABLE void sendMessage(const QString &from, const QString &to, const QString &text);
     Q_INVOKABLE void sendRealMessage(const QString &destIp, const QString &text);
     Q_INVOKABLE void sendRoutedMessage(const QString &destIp, const QString &intermediateIp, const QString &text);
+    Q_INVOKABLE void launchSybilAttack(const QString &destIp, const QString &text);
 
 signals:
     void nodeJoined(QString nodeId);
@@ -94,6 +98,7 @@ signals:
     void executionStepChanged();
     void autoRunChanged();
     void blackholeEnabledChanged();
+    void wormholeEnabledChanged();
 
 private:
     void executeCurrentStep();
@@ -112,6 +117,7 @@ private:
     std::thread m_receiverThread;
     std::atomic<bool> m_receiverRunning{false};
     std::atomic<bool> m_blackholeEnabled{false};
+    std::atomic<bool> m_wormholeEnabled{false};
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };

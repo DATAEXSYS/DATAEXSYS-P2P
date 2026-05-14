@@ -78,6 +78,25 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                         network::send_message(destIp.toStdString(), fwdMsg.toStdString());
                         return;
                     }
+                } else if (qMsg.startsWith("SYBIL:")) {
+                    int sep = qMsg.indexOf('|');
+                    if (sep != -1) {
+                        QString fakeIp = qMsg.mid(6, sep - 6);
+                        QString realMsg = qMsg.mid(sep + 1);
+                        emit logEvent("ATTACK", QString("Sybil flood packet received from spoofed IP %1").arg(fakeIp));
+                        emit realMessageReceived(fakeIp + " (Sybil)", realMsg);
+                        return;
+                    }
+                } else if (qMsg.startsWith("WORMHOLE:")) {
+                    int sep = qMsg.indexOf('|');
+                    if (sep != -1) {
+                        QString fakeIntermediate = qMsg.mid(9, sep - 9);
+                        QString realMsg = qMsg.mid(sep + 1);
+                        emit logEvent("ATTACK", QString("WORMHOLE packet received directly from %1 bypassing %2").arg(qIp, fakeIntermediate));
+                        QString displayIp = QString("%1 (WORMHOLE via %2)").arg(qIp, fakeIntermediate);
+                        emit realMessageReceived(displayIp, realMsg);
+                        return;
+                    }
                 } else if (qMsg.startsWith("ACK_ROUTE:")) {
                     QString destIp = qMsg.mid(10);
                     emit realMessageReceived("Network ACK", QString("Intermediate router %1 acknowledged packet for %2").arg(qIp, destIp));
@@ -126,6 +145,19 @@ void AppController::setBlackholeEnabled(bool enabled) {
             emit logEvent("SECURITY", "Blackhole attack simulation ENABLED. Node will drop incoming routed packets.");
         } else {
             emit logEvent("SECURITY", "Blackhole attack simulation DISABLED. Normal routing restored.");
+        }
+    }
+}
+
+void AppController::setWormholeEnabled(bool enabled) {
+    if (m_wormholeEnabled != enabled) {
+        m_wormholeEnabled = enabled;
+        emit wormholeEnabledChanged();
+        
+        if (enabled) {
+            emit logEvent("SECURITY", "Wormhole attack simulation ENABLED. Node will bypass intermediate routers.");
+        } else {
+            emit logEvent("SECURITY", "Wormhole attack simulation DISABLED.");
         }
     }
 }
@@ -196,12 +228,40 @@ void AppController::sendRoutedMessage(const QString &destIp, const QString &inte
         sendRealMessage(destIp, text);
         return;
     }
+    
+    if (m_wormholeEnabled.load()) {
+        QString wormholePayload = QString("WORMHOLE:%1|%2").arg(intermediateIp, text);
+        if (network::send_message(destIp.toStdString(), wormholePayload.toStdString())) {
+            emit logEvent("ATTACK", QString("WORMHOLE: Bypassed %1, sent directly to %2").arg(intermediateIp, destIp));
+            emit messageSent("Me", destIp + " (WORMHOLE via " + intermediateIp + ")", text);
+        } else {
+            emit logEvent("CHAT_ERR", QString("Failed to wormhole to %1").arg(destIp));
+        }
+        return;
+    }
+
     QString routePayload = QString("ROUTE:%1|%2").arg(destIp, text);
     if (network::send_message(intermediateIp.toStdString(), routePayload.toStdString())) {
         emit logEvent("CHAT_SEND", QString("Sent to %1 via %2: %3").arg(destIp, intermediateIp, text));
         emit messageSent("Me", destIp + " (via " + intermediateIp + ")", text);
     } else {
         emit logEvent("CHAT_ERR", QString("Failed to route to %1 via %2").arg(destIp, intermediateIp));
+    }
+}
+
+void AppController::launchSybilAttack(const QString &destIp, const QString &text) {
+    if (destIp.isEmpty() || destIp.trimmed() == "") return;
+    
+    emit logEvent("ATTACK", QString("Launching Sybil Attack on %1").arg(destIp));
+    emit realMessageReceived("Sybil Attacker", "Launching flood of 5 spoofed identities...");
+    
+    for (int i = 0; i < 5; ++i) {
+        QString fakeIp = QString("2001:db8::%1:%2")
+            .arg(QRandomGenerator::global()->generate() % 9999)
+            .arg(QRandomGenerator::global()->generate() % 9999);
+            
+        QString payload = QString("SYBIL:%1|%2").arg(fakeIp, text.isEmpty() ? "Sybil Spam Packet" : text);
+        network::send_message(destIp.toStdString(), payload.toStdString());
     }
 }
 
