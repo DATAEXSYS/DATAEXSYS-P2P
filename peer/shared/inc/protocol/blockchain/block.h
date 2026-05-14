@@ -6,6 +6,8 @@
 #include "protocol/proofs/mini_pow/mini_pow_result.h"
 #include "protocol/proofs/tier_pow/TierPowResult.h"
 #include <stdbool.h>
+#include "protocol/blockchain/certificate.h"
+#include "core/enums/Tier.h"
 // Add necessary includes
 
 typedef struct __attribute__((aligned(4)))

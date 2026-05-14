@@ -1,3 +1,4 @@
+#include "protocol/proofs/mini_pow/MiniPowTracker.h"
 #pragma once
 
 #include <stdint.h>

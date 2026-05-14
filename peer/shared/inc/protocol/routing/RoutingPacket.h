@@ -5,6 +5,9 @@
 #include <stdbool.h>
 // Add necessary includes
 
+#define MAX_PATH_HOPS 16
+#define ROUTING_HMAC_SIZE 32
+
 typedef struct {
     uint8_t payload[256];
     size_t payload_len;

@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "core/enums/Tier.h"
+#include "protocol/proofs/mini_pow/mini_pow_Matrix.h"
+#include "protocol/proofs/mini_pow/SolvedMatricPoW.h"
 // Add necessary includes
 
 typedef struct {

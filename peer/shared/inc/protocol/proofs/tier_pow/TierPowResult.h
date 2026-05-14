@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "core/enums/Tier.h"
+#include "protocol/proofs/tier_pow/tier_pow_challenge_t.h"
+#include "protocol/proofs/tier_pow/tier_pow_solve_t.h"
 // Add necessary includes
 
 typedef struct __attribute__((aligned(4))) {

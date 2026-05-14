@@ -117,9 +117,9 @@ static inline void deserialize_def(const uint8_t *in, void *value, size_t size)
 #include "protocol/blockchain/certificate.h"
 #include "protocol/blockchain/block.h"
 #include "protocol/proofs/mini_pow/mini_pow_result.h"
-#include "protocol/proofs/tier_pow/TierPowResult.h"
 #include "protocol/proofs/tier_pow/tier_pow_challenge_t.h"
 #include "protocol/proofs/tier_pow/tier_pow_solve_t.h"
+#include "protocol/proofs/tier_pow/TierPowResult.h"
 #include "protocol/trust/TrustNode.h"
 #include "protocol/routing/RoutingPacket.h"
 
@@ -142,6 +142,13 @@ static inline void deserialize_def(const uint8_t *in, void *value, size_t size)
 #ifndef TRUST_NODE_INLINE
 #define TRUST_NODE_INLINE static inline
 #endif
+
+static inline OpStatus_t uint256_serialize_be(const uint256 *u, uint8_t *out, size_t out_size);
+static inline OpStatus_t uint256_deserialize_be(const uint8_t *in, size_t in_size, uint256 *u);
+static inline OpStatus_t uint512_serialize_be(const uint512 *u, uint8_t *out, size_t out_size);
+static inline OpStatus_t uint512_deserialize_be(const uint8_t *in, size_t in_size, uint512 *u);
+static inline int ipv6_serialize(const ipv6_t *ip, uint8_t *out, size_t out_size);
+static inline int ipv6_deserialize(const uint8_t *in, size_t in_size, ipv6_t *ip);
 
 CERT_INLINE OpStatus_t cert_serialize(const certificate *cert,
                                       uint8_t *out,

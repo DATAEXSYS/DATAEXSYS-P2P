@@ -2,7 +2,7 @@
 #define SEED_UTIL_H
 
 
-#include "blockchain/certificate.h"
+#include "protocol/blockchain/certificate.h"
 #include "system/utilities.h"
 #include <string.h>
 #include <openssl/rand.h>

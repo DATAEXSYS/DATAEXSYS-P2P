@@ -7,5 +7,5 @@
 typedef struct {
     uint32_t sessionID;
     uint32_t challengeID;
-    bool ACK;
+    bool isAck;
 } MiniPoW_ACK;
