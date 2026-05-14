@@ -69,6 +69,7 @@ public:
     Q_INVOKABLE void mineBlock();
     Q_INVOKABLE void sendMessage(const QString &from, const QString &to, const QString &text);
     Q_INVOKABLE void sendRealMessage(const QString &destIp, const QString &text);
+    Q_INVOKABLE void sendRoutedMessage(const QString &destIp, const QString &intermediateIp, const QString &text);
 
 signals:
     void nodeJoined(QString nodeId);

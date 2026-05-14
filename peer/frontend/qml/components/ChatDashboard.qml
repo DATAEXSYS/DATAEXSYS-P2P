@@ -57,6 +57,7 @@ Rectangle {
                 color: "#64748B"
                 font.weight: Font.Bold
                 font.pixelSize: 11
+                Layout.preferredWidth: 120
             }
             
             TextField {
@@ -65,6 +66,27 @@ Rectangle {
                 placeholderText: "Enter IPv6 Address (e.g. ::1)"
                 color: "white"
                 text: "::1"
+                background: Rectangle { color: "#111827"; radius: 4; border.color: "#1F2937" }
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+            
+            Text {
+                text: "INTERMEDIATE IP:"
+                color: "#64748B"
+                font.weight: Font.Bold
+                font.pixelSize: 11
+                Layout.preferredWidth: 120
+            }
+            
+            TextField {
+                id: intermediateIpInput
+                Layout.fillWidth: true
+                placeholderText: "(Optional) Enter Router IPv6 Address"
+                color: "white"
                 background: Rectangle { color: "#111827"; radius: 4; border.color: "#1F2937" }
             }
         }
@@ -81,13 +103,13 @@ Rectangle {
                 height: 70
                 
                 Rectangle {
-                    anchors.right: from === activeNode ? parent.right : undefined
-                    anchors.left: from !== activeNode ? parent.left : undefined
+                    anchors.right: from === "Me" ? parent.right : undefined
+                    anchors.left: from !== "Me" ? parent.left : undefined
                     width: chatList.width * 0.7
                     height: 60
-                    color: from === activeNode ? "#1E293B" : "#111827"
+                    color: from === "Me" ? "#1E293B" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827")
                     radius: 10
-                    border.color: from === activeNode ? "#4DA3FF" : "#1F2937"
+                    border.color: from === "Me" ? "#4DA3FF" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937")
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -98,7 +120,7 @@ Rectangle {
                             Layout.fillWidth: true
                             Text { 
                                 text: from; 
-                                color: from === activeNode ? "#4DA3FF" : "#94A3B8"; 
+                                color: from === "Me" ? "#4DA3FF" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8"); 
                                 font.weight: Font.Bold; 
                                 font.pixelSize: 10 
                             }
@@ -135,7 +157,7 @@ Rectangle {
                 text: "SEND"
                 onClicked: {
                     if (msgInput.text !== "" && destIpInput.text !== "") {
-                        appController.sendRealMessage(destIpInput.text, msgInput.text)
+                        appController.sendRoutedMessage(destIpInput.text, intermediateIpInput.text, msgInput.text)
                         msgInput.text = ""
                     }
                 }

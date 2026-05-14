@@ -49,8 +49,46 @@ AppController::AppController(QObject *parent) : QObject(parent) {
     m_receiverThread = std::thread([this]() {
         network::start_receiver([this](const std::string& ip, const std::string& msg) {
             QMetaObject::invokeMethod(this, [this, ip, msg]() {
-                emit realMessageReceived(QString::fromStdString(ip), QString::fromStdString(msg));
-                emit logEvent("CHAT_RECV", QString("Received from %1: %2").arg(QString::fromStdString(ip), QString::fromStdString(msg)));
+                QString qMsg = QString::fromStdString(msg);
+                QString qIp = QString::fromStdString(ip);
+                
+                if (qMsg.startsWith("ROUTE:")) {
+                    int sep = qMsg.indexOf('|');
+                    if (sep != -1) {
+                        QString destIp = qMsg.mid(6, sep - 6);
+                        QString realMsg = qMsg.mid(sep + 1);
+                        emit logEvent("ROUTING", QString("Forwarding message from %1 to %2").arg(qIp, destIp));
+                        
+                        // Send ACK back to the source
+                        QString ackMsg = QString("ACK_ROUTE:%1").arg(destIp);
+                        network::send_message(ip, ackMsg.toStdString());
+                        
+                        // Show in UI that this node is forwarding
+                        emit realMessageReceived("Router (" + qIp + ")", QString("Forwarding to %1: %2").arg(destIp, realMsg));
+
+                        // Forward the message
+                        QString fwdMsg = QString("FWD_FROM:%1|%2").arg(qIp, realMsg);
+                        network::send_message(destIp.toStdString(), fwdMsg.toStdString());
+                        return;
+                    }
+                } else if (qMsg.startsWith("ACK_ROUTE:")) {
+                    QString destIp = qMsg.mid(10);
+                    emit realMessageReceived("Network ACK", QString("Intermediate router %1 acknowledged packet for %2").arg(qIp, destIp));
+                    return;
+                } else if (qMsg.startsWith("FWD_FROM:")) {
+                    int sep = qMsg.indexOf('|');
+                    if (sep != -1) {
+                        QString origIp = qMsg.mid(9, sep - 9);
+                        QString realMsg = qMsg.mid(sep + 1);
+                        QString displayIp = QString("%1 (via %2)").arg(origIp, qIp);
+                        emit realMessageReceived(displayIp, realMsg);
+                        emit logEvent("CHAT_RECV", QString("Received forwarded msg from %1").arg(displayIp));
+                        return;
+                    }
+                }
+
+                emit realMessageReceived(qIp, qMsg);
+                emit logEvent("CHAT_RECV", QString("Received from %1: %2").arg(qIp, qMsg));
             }, Qt::QueuedConnection);
         }, m_receiverRunning);
     });
@@ -130,6 +168,20 @@ void AppController::sendRealMessage(const QString &destIp, const QString &text) 
         emit messageSent("Me", destIp, text);
     } else {
         emit logEvent("CHAT_ERR", QString("Failed to send to %1").arg(destIp));
+    }
+}
+
+void AppController::sendRoutedMessage(const QString &destIp, const QString &intermediateIp, const QString &text) {
+    if (intermediateIp.isEmpty() || intermediateIp.trimmed() == "") {
+        sendRealMessage(destIp, text);
+        return;
+    }
+    QString routePayload = QString("ROUTE:%1|%2").arg(destIp, text);
+    if (network::send_message(intermediateIp.toStdString(), routePayload.toStdString())) {
+        emit logEvent("CHAT_SEND", QString("Sent to %1 via %2: %3").arg(destIp, intermediateIp, text));
+        emit messageSent("Me", destIp + " (via " + intermediateIp + ")", text);
+    } else {
+        emit logEvent("CHAT_ERR", QString("Failed to route to %1 via %2").arg(destIp, intermediateIp));
     }
 }
 
