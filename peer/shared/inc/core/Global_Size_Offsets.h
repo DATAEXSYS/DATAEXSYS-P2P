@@ -13,8 +13,10 @@
 
 //STRUCTS SIZES
 
-#define TRUST_NODE_SIZE 28
+
 #define IPV6_SIZE 16
+#define TRUST_NODE_SIZE  (IPV6_SIZE + 4*UINT32_SIZE)
+
 
 #define CERT_SIZE (UINT8_SIZE + 2 * UINT256_SIZE + 3 * UINT8_SIZE)                            // 1 + 32 + 32 + 1+1+1 = 68
 #define BLOCK_SIZE (CERT_SIZE + 2 * UINT256_SIZE + UINT512_SIZE + 2 * UINT64_SIZE + 4 * UINT8_SIZE) // 68 + 32 + 32 + 64 + 2*8 + 4 = 216
