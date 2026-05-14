@@ -66,12 +66,12 @@ include CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/progress.make
 
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
 CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt6/libexec/uic
 CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/qt6/libexec/moc
 CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
-CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Quick.so.6.4.2
 CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Qml.so.6.4.2
+CMakeFiles/P2PFrontend_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Quick.so.6.4.2
 
 P2PFrontend_autogen_timestamp_deps: CMakeFiles/P2PFrontend_autogen_timestamp_deps
 P2PFrontend_autogen_timestamp_deps: CMakeFiles/P2PFrontend_autogen_timestamp_deps.dir/build.make

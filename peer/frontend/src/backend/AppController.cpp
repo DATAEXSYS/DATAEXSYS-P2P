@@ -128,6 +128,14 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                         }
                         return;
                     }
+                } else if (qMsg.startsWith("REGISTER:")) {
+                    emit logEvent("NETWORK", QString("New Node Registered and Synced on the network: %1").arg(qIp));
+                    if (m_trustAdapter) {
+                        m_trustAdapter->createPeer(qIp);
+                        m_trustAdapter->recordInteraction(qIp, "NODE_SYNC", true);
+                    }
+                    emit realMessageReceived("System", QString("Node %1 has joined the network.").arg(qIp));
+                    return;
                 }
                 
                 // Normal direct message

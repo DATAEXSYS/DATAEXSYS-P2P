@@ -77,6 +77,7 @@ P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSY
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/MiningDashboard.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/Settings.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/Home.qml
+P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/NodeRegistration.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/TrustDashboard.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/pages/PacketRoutingDashboard.qml
 P2PFrontend_autogen/EWIEGA46WW/qrc_qml.cpp: /home/binaryhive/Public/fyp/DATAEXSYS-P2P/peer/frontend/qml/components/CertificateFlow.qml
