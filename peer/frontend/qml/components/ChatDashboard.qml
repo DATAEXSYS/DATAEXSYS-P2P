@@ -149,6 +149,30 @@ Rectangle {
             }
         }
 
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+            
+            Text {
+                text: "REPLAY SIMULATION:"
+                color: "#14B8A6"
+                font.weight: Font.Bold
+                font.pixelSize: 11
+                Layout.preferredWidth: 120
+            }
+            
+            Switch {
+                id: replaySwitch
+                checked: appController.replayEnabled
+                onToggled: appController.replayEnabled = checked
+            }
+            Text {
+                text: "Replay Attack (Re-transmit packets automatically)"
+                color: replaySwitch.checked ? "#14B8A6" : "#64748B"
+                font.pixelSize: 11
+            }
+        }
+
         ListView {
             id: chatList
             Layout.fillWidth: true
@@ -165,9 +189,9 @@ Rectangle {
                     anchors.left: from !== "Me" ? parent.left : undefined
                     width: chatList.width * 0.7
                     height: 60
-                    color: from === "Me" ? "#1E293B" : (from === "Blackhole" ? "#3F181D" : (from.indexOf("WORMHOLE") !== -1 ? "#2E1A40" : (from.indexOf("Sybil") !== -1 ? "#3F2605" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827"))))
+                    color: from === "Me" ? "#1E293B" : (from === "Blackhole" ? "#3F181D" : (from.indexOf("WORMHOLE") !== -1 ? "#2E1A40" : (from.indexOf("Sybil") !== -1 ? "#3F2605" : (from.indexOf("REPLAY") !== -1 ? "#0D2E2B" : (from.indexOf("Network ACK") !== -1 || from.indexOf("Router") !== -1 ? "#1A1A1A" : "#111827")))))
                     radius: 10
-                    border.color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937"))))
+                    border.color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("REPLAY") !== -1 ? "#14B8A6" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#1F2937")))))
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -178,14 +202,14 @@ Rectangle {
                             Layout.fillWidth: true
                             Text { 
                                 text: from; 
-                                color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#D8B4FE" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8")))); 
+                                color: from === "Me" ? "#4DA3FF" : (from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#D8B4FE" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("REPLAY") !== -1 ? "#5EEAD4" : (from.indexOf("Network ACK") !== -1 ? "#3DFFB3" : "#94A3B8"))))); 
                                 font.weight: Font.Bold; 
                                 font.pixelSize: 10 
                             }
                             Item { Layout.fillWidth: true }
                             Text { 
                                 text: status; 
-                                color: from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (status === "Received" ? "#3DFFB3" : "#4DA3FF"))); 
+                                color: from === "Blackhole" ? "#EF4444" : (from.indexOf("WORMHOLE") !== -1 ? "#A855F7" : (from.indexOf("Sybil") !== -1 ? "#F59E0B" : (from.indexOf("REPLAY") !== -1 ? "#14B8A6" : (status === "Received" ? "#3DFFB3" : "#4DA3FF")))); 
                                 font.pixelSize: 9; 
                                 font.italic: true 
                             }
@@ -204,15 +228,16 @@ Rectangle {
 
         Rectangle {
             Layout.fillWidth: true
-            Layout.preferredHeight: 120
+            Layout.preferredHeight: 200
+            Layout.minimumHeight: 150
             color: "#111827"
             border.color: "#1F2937"
             radius: 4
 
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: 8
-                spacing: 4
+                anchors.margins: 10
+                spacing: 6
 
                 Text { text: "CONSOLE LOGS"; color: "#38bdf8"; font.pixelSize: 11; font.bold: true }
 
@@ -222,13 +247,13 @@ Rectangle {
                     Layout.fillHeight: true
                     model: logModel
                     clip: true
-                    spacing: 2
+                    spacing: 4
                     delegate: Text {
-                        width: parent.width
+                        width: logList.width
                         text: time + " [" + tag + "] " + message
                         color: tag === "ATTACK" ? "#EF4444" : (tag === "ROUTING" ? "#F59E0B" : (tag.indexOf("ERR") !== -1 ? "#EF4444" : "#9CA3AF"))
                         font.pixelSize: 10
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.WrapAnywhere
                         font.family: "monospace"
                     }
                 }

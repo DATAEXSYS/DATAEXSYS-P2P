@@ -26,8 +26,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/P2PFrontend.dir/src/backend/PollingManager.cpp.o.d"
   "CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.o"
   "CMakeFiles/P2PFrontend.dir/src/backend/RollingSignaturesAdapter.cpp.o.d"
-  "CMakeFiles/P2PFrontend.dir/src/backend/SimulatorEngine.cpp.o"
-  "CMakeFiles/P2PFrontend.dir/src/backend/SimulatorEngine.cpp.o.d"
   "CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.o"
   "CMakeFiles/P2PFrontend.dir/src/backend/StateStore.cpp.o.d"
   "CMakeFiles/P2PFrontend.dir/src/main.cpp.o"

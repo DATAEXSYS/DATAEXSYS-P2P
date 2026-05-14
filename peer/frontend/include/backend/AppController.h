@@ -53,6 +53,7 @@ class AppController : public QObject {
     Q_PROPERTY(QObject* pkCertChainAdapter READ pkCertChainAdapter CONSTANT)
     Q_PROPERTY(bool blackholeEnabled READ blackholeEnabled WRITE setBlackholeEnabled NOTIFY blackholeEnabledChanged)
     Q_PROPERTY(bool wormholeEnabled READ wormholeEnabled WRITE setWormholeEnabled NOTIFY wormholeEnabledChanged)
+    Q_PROPERTY(bool replayEnabled READ replayEnabled WRITE setReplayEnabled NOTIFY replayEnabledChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
@@ -62,6 +63,7 @@ public:
     bool autoRun() const { return m_autoRun; }
     bool blackholeEnabled() const { return m_blackholeEnabled; }
     bool wormholeEnabled() const { return m_wormholeEnabled; }
+    bool replayEnabled() const { return m_replayEnabled; }
     
     QObject* trustAdapter() const { return m_trustAdapter.get(); }
     QObject* rollingSignaturesAdapter() const { return m_rollingSignaturesAdapter.get(); }
@@ -70,6 +72,7 @@ public:
     void setAutoRun(bool autoRun);
     void setBlackholeEnabled(bool enabled);
     void setWormholeEnabled(bool enabled);
+    void setReplayEnabled(bool enabled);
 
     Q_INVOKABLE void startEngine();
     Q_INVOKABLE void nextStep();
@@ -99,6 +102,7 @@ signals:
     void autoRunChanged();
     void blackholeEnabledChanged();
     void wormholeEnabledChanged();
+    void replayEnabledChanged();
 
 private:
     void executeCurrentStep();
@@ -118,6 +122,7 @@ private:
     std::atomic<bool> m_receiverRunning{false};
     std::atomic<bool> m_blackholeEnabled{false};
     std::atomic<bool> m_wormholeEnabled{false};
+    std::atomic<bool> m_replayEnabled{false};
 
     const int MAX_STEPS = 9; // Increased steps for blockchain and chat
 };

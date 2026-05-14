@@ -83,7 +83,7 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                     if (sep != -1) {
                         QString fakeIp = qMsg.mid(6, sep - 6);
                         QString realMsg = qMsg.mid(sep + 1);
-                        emit logEvent("ATTACK", QString("Sybil flood packet received from spoofed IP %1").arg(fakeIp));
+                        emit logEvent("ATTACK", QString("SYBIL ATTACK DETECTED: flood packet received from spoofed IP %1").arg(fakeIp));
                         emit realMessageReceived(fakeIp + " (Sybil)", realMsg);
                         return;
                     }
@@ -92,7 +92,7 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                     if (sep != -1) {
                         QString fakeIntermediate = qMsg.mid(9, sep - 9);
                         QString realMsg = qMsg.mid(sep + 1);
-                        emit logEvent("ATTACK", QString("WORMHOLE packet received directly from %1 bypassing %2").arg(qIp, fakeIntermediate));
+                        emit logEvent("ATTACK", QString("WORMHOLE ATTACK DETECTED: packet received directly from %1 bypassing %2").arg(qIp, fakeIntermediate));
                         QString displayIp = QString("%1 (WORMHOLE via %2)").arg(qIp, fakeIntermediate);
                         emit realMessageReceived(displayIp, realMsg);
                         return;
@@ -100,21 +100,44 @@ AppController::AppController(QObject *parent) : QObject(parent) {
                 } else if (qMsg.startsWith("ACK_ROUTE:")) {
                     QString destIp = qMsg.mid(10);
                     emit realMessageReceived("Network ACK", QString("Intermediate router %1 acknowledged packet for %2").arg(qIp, destIp));
+                    emit logEvent("ACK", QString("Router %1 acknowledged packet for %2").arg(qIp, destIp));
+                    
+                    if (m_trustAdapter) {
+                        m_trustAdapter->createPeer(qIp);
+                        m_trustAdapter->recordInteraction(qIp, "ACK_RECEIVED", true);
+                        emit logEvent("TRUST", "On each hop update bayesian trust");
+                    }
                     return;
                 } else if (qMsg.startsWith("FWD_FROM:")) {
                     int sep = qMsg.indexOf('|');
                     if (sep != -1) {
                         QString origIp = qMsg.mid(9, sep - 9);
                         QString realMsg = qMsg.mid(sep + 1);
+                        emit logEvent("RECV_FWD", QString("Message from %1 via router %2: %3").arg(origIp, qIp, realMsg));
                         QString displayIp = QString("%1 (via %2)").arg(origIp, qIp);
                         emit realMessageReceived(displayIp, realMsg);
-                        emit logEvent("CHAT_RECV", QString("Received forwarded msg from %1").arg(displayIp));
+                        
+                        if (m_trustAdapter) {
+                            m_trustAdapter->createPeer(qIp);
+                            m_trustAdapter->recordInteraction(qIp, "FWD_DELIVERY", true);
+                            emit logEvent("TRUST", "On each hop update bayesian trust");
+                        }
+                        if (m_pkCertChainAdapter) {
+                            m_pkCertChainAdapter->createBlock(QString("Recv FWD from %1").arg(origIp));
+                            m_pkCertChainAdapter->startMining(1);
+                        }
                         return;
                     }
                 }
-
+                
+                // Normal direct message
+                emit logEvent("RECV_DIRECT", QString("Direct message from %1: %2").arg(qIp, qMsg));
                 emit realMessageReceived(qIp, qMsg);
-                emit logEvent("CHAT_RECV", QString("Received from %1: %2").arg(qIp, qMsg));
+                
+                if (m_trustAdapter) {
+                    m_trustAdapter->createPeer(qIp);
+                    m_trustAdapter->recordInteraction(qIp, "DIRECT_DELIVERY", true);
+                }
             }, Qt::QueuedConnection);
         }, m_receiverRunning);
     });
@@ -158,6 +181,19 @@ void AppController::setWormholeEnabled(bool enabled) {
             emit logEvent("SECURITY", "Wormhole attack simulation ENABLED. Node will bypass intermediate routers.");
         } else {
             emit logEvent("SECURITY", "Wormhole attack simulation DISABLED.");
+        }
+    }
+}
+
+void AppController::setReplayEnabled(bool enabled) {
+    if (m_replayEnabled != enabled) {
+        m_replayEnabled = enabled;
+        emit replayEnabledChanged();
+        
+        if (enabled) {
+            emit logEvent("SECURITY", "Replay attack simulation ENABLED. Node will resend packets continuously.");
+        } else {
+            emit logEvent("SECURITY", "Replay attack simulation DISABLED.");
         }
     }
 }
@@ -216,8 +252,18 @@ void AppController::sendMessage(const QString &from, const QString &to, const QS
 
 void AppController::sendRealMessage(const QString &destIp, const QString &text) {
     if (network::send_message(destIp.toStdString(), text.toStdString())) {
-        emit logEvent("CHAT_SEND", QString("Sent to %1: %2").arg(destIp, text));
+        emit logEvent("CHAT_SEND", QString("Direct message to %1: %2").arg(destIp, text));
         emit messageSent("Me", destIp, text);
+        
+        if (m_pkCertChainAdapter) {
+            m_pkCertChainAdapter->createBlock(QString("Direct %1").arg(destIp));
+            m_pkCertChainAdapter->startMining(1);
+            emit logEvent("BLOCKCHAIN", "Blockchain is added registered to the network now it is able to send data into the network");
+        }
+        if (m_rollingSignaturesAdapter) {
+            m_rollingSignaturesAdapter->createPacket("Me", destIp, text);
+            emit logEvent("ROLLING", "Send data into the packet where rolling signatures work and send by destinations");
+        }
     } else {
         emit logEvent("CHAT_ERR", QString("Failed to send to %1").arg(destIp));
     }
@@ -241,11 +287,36 @@ void AppController::sendRoutedMessage(const QString &destIp, const QString &inte
     }
 
     QString routePayload = QString("ROUTE:%1|%2").arg(destIp, text);
-    if (network::send_message(intermediateIp.toStdString(), routePayload.toStdString())) {
-        emit logEvent("CHAT_SEND", QString("Sent to %1 via %2: %3").arg(destIp, intermediateIp, text));
-        emit messageSent("Me", destIp + " (via " + intermediateIp + ")", text);
-    } else {
-        emit logEvent("CHAT_ERR", QString("Failed to route to %1 via %2").arg(destIp, intermediateIp));
+    int timesToSend = m_replayEnabled.load() ? 5 : 1; // Replay attack sends it 5 times
+
+    for (int i = 0; i < timesToSend; ++i) {
+        if (network::send_message(intermediateIp.toStdString(), routePayload.toStdString())) {
+            if (i == 0) {
+                emit logEvent("CHAT_SEND", QString("Sent to %1 via %2: %3").arg(destIp, intermediateIp, text));
+                emit messageSent("Me", destIp + " (via " + intermediateIp + ")", text);
+                
+                if (m_trustAdapter) {
+                    m_trustAdapter->createPeer(intermediateIp);
+                    m_trustAdapter->recordInteraction(intermediateIp, "PACKET_SENT", true);
+                    emit logEvent("TRUST", "On each hop update bayesian trust");
+                }
+                if (m_pkCertChainAdapter) {
+                    m_pkCertChainAdapter->createBlock(QString("Route %1 -> %2").arg(intermediateIp, destIp));
+                    m_pkCertChainAdapter->startMining(1);
+                    emit logEvent("BLOCKCHAIN", "Blockchain is added registered to the network now it is able to send data into the network");
+                }
+                if (m_rollingSignaturesAdapter) {
+                    m_rollingSignaturesAdapter->createPacket("Me", destIp, text);
+                    emit logEvent("ROLLING", "Send data into the packet where rolling signatures work and send by destinations");
+                }
+            } else {
+                emit logEvent("ATTACK", QString("REPLAY ATTACK: Re-sending packet to %1 via %2").arg(destIp, intermediateIp));
+            }
+        } else {
+            if (i == 0) {
+                emit logEvent("CHAT_ERR", QString("Failed to route to %1 via %2").arg(destIp, intermediateIp));
+            }
+        }
     }
 }
 

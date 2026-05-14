@@ -46,7 +46,7 @@ Window {
                 RowLayout {
                     spacing: 20
                     Repeater {
-                        model: ["TOPOLOGY", "BLOCKCHAIN", "P2P CHAT", "SECURE SIMULATOR"]
+                        model: ["TOPOLOGY", "BLOCKCHAIN", "P2P CHAT"]
                         Button {
                             text: modelData
                             flat: true
@@ -159,7 +159,6 @@ Window {
                     if (currentTab === "ROLLING") return 4
                     if (currentTab === "TRUST") return 3
                     if (currentTab === "MINING") return 5
-                    if (currentTab === "SECURE SIMULATOR") return 6
                     return 2
                 }
                 
@@ -190,11 +189,6 @@ Window {
                 // PKCertChain MINING DASHBOARD
                 Loader {
                     source: "pages/MiningDashboard.qml"
-                }
-
-                // SECURE P2P CHAT SIMULATOR
-                Loader {
-                    source: "pages/SecureP2PChat.qml"
                 }
             }
 
