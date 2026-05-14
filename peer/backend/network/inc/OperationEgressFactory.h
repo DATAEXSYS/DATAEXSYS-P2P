@@ -2,9 +2,12 @@
 
 #include "net/PacketCreationContext.h"
 #include "protocol/routing/RoutingPacket.h"
+#include "StatusEgressCateogry.h"
 
-class SubCategoryEgressFactory
+class OperationEgressFactory
 {
+    StatusEgressFactory statusFactory;
+    
 public:
 
     RoutingPacket buildControl(PacketCreationContext pkc);

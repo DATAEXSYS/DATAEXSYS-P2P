@@ -4,8 +4,9 @@
 #include "protocol/routing/PacketHeader.h"
 #include "protocol/routing/RoutingPacket.h"
 #include "net/PacketCreationContext.h"
-#include "SubCategoryEfressFactory.h"
-class EgressCategoryFactory
+#include "OperationEgressFactory.h"
+
+class CategoryEgressFactory
 {
 public:
 
@@ -18,5 +19,5 @@ private:
     RoutingPacket buildProof(PacketCreationContext pkc);
     RoutingPacket buildSync(PacketCreationContext pkc);
 
-    EgressSubCategoryFactory subFactory;
-};
+    OperationEgressFactory opFactory;
+};  

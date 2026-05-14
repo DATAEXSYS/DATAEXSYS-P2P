@@ -1,7 +1,7 @@
 
 #include "CategoryEgressFactory.h"
 
-RoutingPacket EgressCategoryFactory::build(PacketCreationContext pkc)
+RoutingPacket CategoryEgressFactory::build(PacketCreationContext pkc)
 {
     switch (pkc.category)
     {
@@ -22,22 +22,22 @@ RoutingPacket EgressCategoryFactory::build(PacketCreationContext pkc)
     }
 }
 
-RoutingPacket EgressCategoryFactory::buildControl(PacketCreationContext pkc)
+RoutingPacket CategoryEgressFactory::buildControl(PacketCreationContext pkc)
 {
-    return subFactory.buildControl(pkc);
+    return opFactory.buildControl(pkc);
 }
 
-RoutingPacket EgressCategoryFactory::buildRouting(PacketCreationContext pkc)
+RoutingPacket CategoryEgressFactory::buildRouting(PacketCreationContext pkc)
 {
-    return subFactory.buildRouting(pkc);
+    return opFactory.buildRouting(pkc);
 }
 
-RoutingPacket EgressCategoryFactory::buildProof(PacketCreationContext pkc)
+RoutingPacket CategoryEgressFactory::buildProof(PacketCreationContext pkc)
 {
-    return subFactory.buildProof(pkc);
+    return opFactory.buildProof(pkc);
 }
 
-RoutingPacket EgressCategoryFactory::buildSync(PacketCreationContext pkc)
+RoutingPacket CategoryEgressFactory::buildSync(PacketCreationContext pkc)
 {
-    return subFactory.buildSync(pkc);
+    return opFactory.buildSync(pkc);
 }
