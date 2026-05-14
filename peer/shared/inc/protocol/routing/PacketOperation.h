@@ -2,44 +2,41 @@
 
 #include <stdint.h>
 
-enum PacketType : uint16_t
+enum PacketOperation : uint16_t
 {
-    PACKET_INVALID = 0,
+    PACKET_OP_INVALID = 0,
 
     // =================================================
-    // DSR ROUTING
+    // DSR
     // =================================================
-    PACKET_DSR_RREQ,
-    PACKET_DSR_RREP,
-    PACKET_DSR_RERR,
-    PACKET_DSR_DATA,
-    PACKET_DSR_ACK,
-    PACKET_DSR_NACK,
+    PACKET_OP_DSR_RREQ,
+    PACKET_OP_DSR_RREP,
+    PACKET_OP_DSR_RERR,
+    PACKET_OP_DSR_DATA,
 
     // =================================================
     // MINI POW
     // =================================================
-    PACKET_MINIPOW_CHALLENGE,
-    PACKET_MINIPOW_ACK,
-    PACKET_MINIPOW_RESULT,
+    PACKET_OP_MINIPOW_CHALLENGE,
+    PACKET_OP_MINIPOW_RESULT,
 
     // =================================================
     // TIER POW
     // =================================================
-    PACKET_TIERPOW_CHALLENGE,
-    PACKET_TIERPOW_RESULT,
+    PACKET_OP_TIERPOW_CHALLENGE,
+    PACKET_OP_TIERPOW_RESULT,
 
     // =================================================
-    // STATE SYNC
+    // SYNC
     // =================================================
-    PACKET_PKC_SYNC,
-    PACKET_LTD_SYNC,
-    PACKET_RTC_SYNC,
+    PACKET_OP_PKC_SYNC,
+    PACKET_OP_LTD_SYNC,
+    PACKET_OP_RTC_SYNC,
 
     // =================================================
     // CONTROL
     // =================================================
-    PACKET_PING,
-    PACKET_PONG,
-    PACKET_HEARTBEAT
+    PACKET_OP_PING,
+    PACKET_OP_PONG,
+    PACKET_OP_HEARTBEAT
 };
