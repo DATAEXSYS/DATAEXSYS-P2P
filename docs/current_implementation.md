@@ -1,6 +1,6 @@
 # DATAEXSYS-P2P — Current Implementation State
 
-> Status snapshot as of: 2026-05-12
+> Status snapshot as of: 2026-05-15
 > Build: `cmake -S . -B build && cmake --build build` ✅ Clean
 
 ---
@@ -14,7 +14,8 @@
 | RollingSignatures (HMAC routing) | ✅ Core API complete + tested | 5-hop tamper test passes |
 | LocalTrustDiaries (trust ledger) | 🟡 Data structure defined | `update_trust()` body is empty |
 | nodeEngine (task runtime) | 🟡 Runtime functional, not integrated | No peer subsystems wired yet |
-| frontend (Qt dashboard) | 🟡 UI complete, backend wiring partial | Not in default build |
+| network (egress factory) | 🔴 Disconnected | Missing from backend CMakeLists |
+| frontend (Qt dashboard) | 🔴 Missing | Directory not present in repo |
 | Bootstrapper (Java registry) | ✅ Spring Boot complete | Separate Maven build |
 
 ---
@@ -116,6 +117,20 @@ All logic is inline in `inc/hmac_routing.h`:
 
 ---
 
+## Network (`peer/backend/network/`)
+
+### ✅ Implemented
+- `CategoryEgressFactory` and `OperationEgressFactory` classes (serialization utilities for network payloads).
+
+### 🔴 Not Yet Implemented
+
+| Item | Notes |
+|---|---|
+| CMake Integration | `network` is entirely missing from `backend/CMakeLists.txt` and is not linked. |
+| Attack Simulation | Functional logic for Blackhole, Wormhole, Sybil, Replay not yet implemented here. |
+
+---
+
 ## nodeEngine (`peer/nodeEngine/`)
 
 ### ✅ Implemented
@@ -150,15 +165,10 @@ All logic is inline in `inc/hmac_routing.h`:
 
 ## Frontend (`peer/frontend/`)
 
-### ✅ Implemented
-- QML "Dark Neural Grid" dashboard (glassmorphism theme)
-- State store + diff engine
-- Adaptive REST polling (2 – 5 s)
-- `QNetworkAccessManager` integration against Bootstrapper API
-
-### 🔴 Not Yet Implemented
-- Direct P2P node status (polls Bootstrapper only, not nodeEngine)
-- Local nodeEngine IPC / socket bridge
+### 🔴 Missing / Not Yet Implemented
+- The `frontend` directory is currently **missing** from the repository tree.
+- Previously documented components (QML dashboard, state store, REST polling) are not present in the current local codebase.
+- Needs to be restored or re-implemented and integrated with `nodeEngine`.
 
 ---
 
